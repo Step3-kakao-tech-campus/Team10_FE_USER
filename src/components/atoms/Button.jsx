@@ -2,7 +2,7 @@ import React from "react";
 
 export const Button = ({ type = "long", label, ...props }) => {
   return (
-    <>
+    <div className="absolute left-0 bottom-0">
       <button
         type="button"
         className="block w-96 h-14 p-4 bg-sky-500 text-white font-semibold rounded-none"
@@ -10,6 +10,6 @@ export const Button = ({ type = "long", label, ...props }) => {
         {label}
       </button>
       <div className="w-96 h-6 bg-gray-100"></div>
-    </>
+    </div>
   );
 };

@@ -13,8 +13,8 @@ export default {
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Hi = {
+export const withButton = {
   args: {
-    children: "안녕",
+    children: "ㅋㅋㅋ",
   },
 };

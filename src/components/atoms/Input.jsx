@@ -4,7 +4,8 @@ export const Input = ({ placeholder, ...props }) => {
   return (
     <input
       type="text"
-      className="w-96 h-14 bg-gray-100 border-2 border-solid border-black text-black p-4 rounded-xl"
-      placeholder={placeholder}></input>
+      className="w-full h-14 bg-gray-100 border border-solid border-gray-500 text-black p-4 rounded-xl outline-none"
+      placeholder={placeholder}
+      {...props}></input>
   );
 };

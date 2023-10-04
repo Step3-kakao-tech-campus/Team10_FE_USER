@@ -5,7 +5,7 @@
  */
 const DistanceFromHere = ({ distance = "100" }) => {
   return (
-    <div className="w-11 h-11 relative">
+    <div className="w-11 h-11 relative ml-auto mr-3">
       <div className="w-6 h-6 left-[9px] top-0 absolute flex-col justify-start items-start inline-flex">
         <img
           className="w-6 h-6 absolute"

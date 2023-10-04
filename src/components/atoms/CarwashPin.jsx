@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Photo from "./Photo";
+import React from "react";
 
 // 선택 시와 선택 안 될 시 세차장 주변 테두리 색상 변경
 const getSelected = (selected) => {

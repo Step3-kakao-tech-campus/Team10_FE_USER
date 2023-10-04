@@ -9,7 +9,7 @@ export default {
   tags: ["autodocs"],
 };
 
-export const withButton = {
+export const defaultpin = {
   args: {
     selected: true,
     picurl: "",

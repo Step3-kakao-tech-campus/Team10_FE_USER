@@ -9,7 +9,7 @@ export default {
   tags: ["autodocs"],
 };
 
-export const defaultstar = {
+export const defaultStar = {
   args: {
     starcount: "0.0",
     reviewcount: "0.0",

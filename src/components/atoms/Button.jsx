@@ -1,6 +1,12 @@
 import React from "react";
 
-export const Button = ({ type = "long", className, label, ...props }) => {
+export const Button = ({
+  type = "long",
+  className,
+  onClick,
+  label,
+  ...props
+}) => {
   const getType = (type) => {
     switch (type) {
       case "long":
@@ -14,6 +20,7 @@ export const Button = ({ type = "long", className, label, ...props }) => {
     <button
       type="button"
       className={`${getType(type)} ${className}`}
+      onClick={onClick}
       {...props}>
       {label}
     </button>

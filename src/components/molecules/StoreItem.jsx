@@ -18,7 +18,7 @@ const StoreItem = ({
   // 나중에 클릭 시 이동하는 기능 추가
 
   return (
-    <div className="w-96 h-24 relative bg-white rounded-xl border border-gray-200 flex items-center gap-3.5 ">
+    <div className="w-auto h-24 relative bg-white rounded-xl border border-gray-200 flex items-center gap-3.5 ">
       {/* 세차장 사진 부분 */}
       <picture className="flex block w-[74px] h-[74px] rounded-xl ml-3">
         <img

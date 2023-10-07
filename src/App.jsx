@@ -1,19 +1,26 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
-import CarwashDetailPage from './pages/CarwashDetailPage';
-import ReservationPage from "./pages/ReservationPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HomePage } from "./pages/HomePage";
+import { MainLayout } from "./layouts/MainLayout";
+import { ReservationListPage } from "./pages/ReservationListPage";
+import { ReservationPage } from "./pages/ReservationPage";
+import {CarwashDetailPage} from './pages/CarwashDetailPage';
+import {ReservationPage} from "./pages/ReservationPage";
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/carwashdetail" element={<CarwashDetailPage/>}></Route>
-          <Route path="/reservation" element={<ReservationPage />}</Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/reservation" element={<ReservationPage />}></Route>
+          <Route
+            path="/reservationlist"
+            element={<ReservationListPage />}></Route>
+            <Route path="/carwashdetail" element={<CarwashDetailPage/>}></Route>
+          <Route path="/reservation" element={<ReservationPage />}></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 export default App;

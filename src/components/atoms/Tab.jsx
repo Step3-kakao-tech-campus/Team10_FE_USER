@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import TabInfo from './TabInfo';
-import TabReview from './TabReview';
 
 export const Tab = () => {
   const [currentTab, clickTab] = useState(0);

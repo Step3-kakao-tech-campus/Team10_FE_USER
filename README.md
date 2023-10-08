@@ -32,8 +32,8 @@
 ## 시작 가이드
 
 ```
-$ git clone https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER.git
-$ cd Team10_FE_OWNER
+$ git clone https://github.com/Step3-kakao-tech-campus/Team10_FE_USER.git
+$ cd Team10_FE_USER
 $ npm install
 $ npm run dev
 ```

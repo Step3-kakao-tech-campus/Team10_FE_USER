@@ -2,7 +2,7 @@ import React from 'react';
 // 키포인트 받아와서 개수가 다를 때 배치 구상 필요 
 const KeyPointInfo = () => {
     return (
-        <div className='w-[361px] h-[116px] bg-gray-100 rounded-lg'>
+        <div className='w-96 py-2 bg-gray-100 rounded-lg'>
             <div className='font-bold text-left ml-4 mt-2'>키포인트</div>
             <div className='flex flex-col gap-2 ml-4 mt-2'>
                 <div className='flex flex-items gap-4 '>

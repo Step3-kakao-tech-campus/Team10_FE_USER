@@ -2,7 +2,7 @@ import React from 'react';
 import ImageCarousel from '../atoms/ImageCarousel';
 import StoreInfo from '../atoms/StoreInfo';
 import KeyPointInfo from '../atoms/KeyPointInfo';
-import { Tab } from '../atoms/Tab';
+import { Tab } from '../molecules/Tab';
 
 const CarwashDetailTemplate = () => {
   const imageData = [
@@ -25,8 +25,7 @@ const CarwashDetailTemplate = () => {
 
   return (
     
-    <div className='border border-black w-[393px] h-[852px]'>
-      {/*세차장 상세정보 페이지*/}
+    <div className='w-full h-full overflow-y-auto'>
       {/*캐러셀*/}
       <ImageCarousel images={imageData} />
       <div className='flex flex-row justify-center gap-20'>
@@ -51,7 +50,8 @@ const CarwashDetailTemplate = () => {
       <div className='mt-2'>
         <Tab/>
       </div>
-      
+      {/* 예약하기 버튼*/}
+    
     </div>
   );
 };

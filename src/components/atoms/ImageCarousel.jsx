@@ -26,7 +26,7 @@ const ImageCarousel = ({ images }) => {
         showThumbs={false}
         selectedItem={images[currentIndex]}
         onChange={handleChange}
-        className="w-auto h-[262px]"
+        className="w-full h-4/5 mb-2"
       >
         {renderSlides}
       </Carousel>

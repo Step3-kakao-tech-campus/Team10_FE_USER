@@ -9,9 +9,9 @@ const KeywordReview = ({ keyword, reviewCount }) => {
   }, [reviewCount]);
 
   return (
-    <div className="mb-2 mt-2">
+    <div className="my-2">
       <div className="flex items-center">
-        <div className="w-96 p-2 ml-4 bg-gray-200 text-gray-700 rounded-lg relative flex justify-between items-center">
+        <div className="w-full p-2 bg-gray-200 text-gray-700 rounded-lg relative flex justify-between items-center">
           <div className="text-black font-semibold">
             {keyword}
           </div>

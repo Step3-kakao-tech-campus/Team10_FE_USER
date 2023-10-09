@@ -34,12 +34,14 @@ const TabReview = () => {
   return (
     <div>
       <div className=" overflow-y-auto">
-        <div className="text-left font-semibold ml-4 mt-2">평균별점</div>
-        <div className="ml-4 mt-2">
+        <div className="text-left text-lg font-semibold ml-4 mt-2">평균별점</div>
+        <div className="ml-4 my-2">
           <UserStar popularity={averageStar} /> 
         </div>
-        <div className="text-left font-semibold ml-4 mt-4">키워드 평가</div>
-        <div className="mt-4 justify-center">
+        <hr/>
+        {/*키워드 평가*/}
+        <div className="text-left text-lg font-semibold ml-4 mt-2">키워드 리뷰</div>
+        <div className="mt-4 mx-2 justify-center">
           {exampleKeywordReview.map((data, index) => (
             <KeywordReview
               key={index}
@@ -48,7 +50,7 @@ const TabReview = () => {
             />
           ))}
         </div>
-        <div className="text-left font-semibold ml-4 mt-4">리뷰 432건</div>
+        <div className="text-left text-lg font-semibold ml-4 mt-4">리뷰 432건</div>
         <div>
           <ReviewList reviews={reviews} />
         </div>
@@ -58,4 +60,3 @@ const TabReview = () => {
 };
 
 export default TabReview;
-

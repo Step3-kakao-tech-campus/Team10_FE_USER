@@ -4,7 +4,7 @@ import { BsFillTelephoneFill } from'react-icons/bs';
 
 const StoreInfo = () => {
     return (
-        <div className='w-96 py-2 bg-gray-100 rounded-lg'>
+        <div className='w-auto h-auto justify-center bg-gray-100 rounded-lg'>
             <div className='flex flex-col mt-1 gap-2'>
             <div className='flex flex-items gap-2 ml-4 mt-25'>
             <BiSolidTimeFive className='mt-1' />

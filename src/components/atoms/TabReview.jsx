@@ -19,7 +19,7 @@ const TabReview = () => {
     }
   ];
 
-  const exampleKeywordReview = [
+  const KeywordReviewData = [
     { keyword: "여름엔 시원하고 겨울엔 따뜻해요", reviewCount: 192 },
     { keyword: "사장님이 친절해요", reviewCount: 102 },
     { keyword: "가격이 합리적이에요", reviewCount: 24 },
@@ -39,10 +39,9 @@ const TabReview = () => {
           <UserStar popularity={averageStar} /> 
         </div>
         <hr/>
-        {/*키워드 평가*/}
         <div className="text-left text-lg font-semibold ml-4 mt-2">키워드 리뷰</div>
         <div className="mt-4 mx-2 justify-center">
-          {exampleKeywordReview.map((data, index) => (
+          {KeywordReviewData.map((data, index) => (
             <KeywordReview
               key={index}
               keyword={data.keyword}

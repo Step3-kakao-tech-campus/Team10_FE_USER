@@ -4,7 +4,7 @@ const KeywordReview = ({ keyword, reviewCount }) => {
   const [fillPercentage, setFillPercentage] = useState(0);
 
   useEffect(() => {
-    const calculatedFillPercentage = (reviewCount / 200) * 100; // 최대 200건을 기준으로 계산
+    const calculatedFillPercentage = (reviewCount / 200) * 100; // 최대 200건으로 설정
     setFillPercentage(calculatedFillPercentage);
   }, [reviewCount]);
 

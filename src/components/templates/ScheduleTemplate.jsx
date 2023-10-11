@@ -41,7 +41,7 @@ const ScheduleTemplate = (
                 <DurationPicker />
             </div>
             {/*예약 일정 출력*/}
-            <div> 예약 일정 </div>
+            <div className="ml-2"> 예약 일정 </div>
 
         </div>
 

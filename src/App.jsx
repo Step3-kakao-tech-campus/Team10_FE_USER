@@ -5,7 +5,7 @@ import { MainLayout } from "./layouts/MainLayout";
 import { ReservationListPage } from "./pages/ReservationListPage";
 import ReservationPage from "./pages/ReservationPage";
 import CarwashDetailPage from "./pages/CarwashDetailPage";
-import ReviewPostPage from "./pages/ReviewPostPage";
+import ReservationHistoryPage from "./pages/ReservationHistoryPage";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
           ></Route>
           <Route path="/carwashdetail" element={<CarwashDetailPage />}></Route>
           <Route path="/reservation" element={<ReservationPage />}></Route>
-          <Route path="/reviewpost" element={<ReviewPostPage />}></Route>
+          <Route path="/history" element={<ReservationHistoryPage />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

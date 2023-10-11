@@ -20,10 +20,14 @@ const TabReview = () => {
   ];
 
   const KeywordReviewData = [
-    { keyword: "여름엔 시원하고 겨울엔 따뜻해요", reviewCount: 192 },
-    { keyword: "사장님이 친절해요", reviewCount: 102 },
-    { keyword: "가격이 합리적이에요", reviewCount: 24 },
+    { keyword: "여름엔 시원하고 겨울엔 따뜻해요", reviewCount: 300 },
+    { keyword: "사장님이 친절해요", reviewCount: 120 },
+    { keyword: "가격이 합리적이에요", reviewCount: 50 },
   ];
+
+  const sortedKeywordReviewData = [...KeywordReviewData].sort((a, b) => b.reviewCount - a.reviewCount);
+
+  const totalReviews = KeywordReviewData.reduce((total, data) => total + data.reviewCount, 0);
 
   const [averageStar, setAverageStar] = useState(0);
 
@@ -41,11 +45,12 @@ const TabReview = () => {
         <hr/>
         <div className="text-left text-lg font-semibold ml-4 mt-2">키워드 리뷰</div>
         <div className="mt-4 mx-2 justify-center">
-          {KeywordReviewData.map((data, index) => (
+          {sortedKeywordReviewData.map((data, index) => (
             <KeywordReview
               key={index}
               keyword={data.keyword}
               reviewCount={data.reviewCount}
+              totalReviews={totalReviews}
             />
           ))}
         </div>

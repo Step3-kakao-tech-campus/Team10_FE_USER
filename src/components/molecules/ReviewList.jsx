@@ -3,7 +3,7 @@ import ReviewItem from "../atoms/ReviewItem";
 
 const ReviewList = ({ reviews }) => {
   return (
-    <div className="mt-2">
+    <div className="m-2">
       {reviews.map((review, index) => (
         <div key={index} className="mb-2">
           <ReviewItem

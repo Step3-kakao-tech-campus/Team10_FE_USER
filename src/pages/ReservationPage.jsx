@@ -4,7 +4,7 @@ import StoreItem from "../components/molecules/StoreItem";
 import { Input } from "../components/atoms/Input";
 import { useEffect, useState } from "react";
 import { Button } from "../components/atoms/Button";
-import Badge from "../components/atoms/Badge";
+import { Badge } from "../components/atoms/Badge";
 import DualBottomsheet from "../components/atoms/DualBottomsheet";
 
 const ReservationPage = () => {

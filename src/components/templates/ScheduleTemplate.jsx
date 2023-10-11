@@ -1,4 +1,5 @@
-import { BiSolidTimeFive } from "react-icons/bi";
+import TimeImage from "/StoreInfo/Time.svg";
+import Photo from "../atoms/Photo";
 import DatePicker from "../molecules/DatePicker";
 import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
@@ -20,8 +21,8 @@ const ScheduleTemplate = (
                 <div className="font-bold text-xl">{name}: 베이 {bay_count}</div>
             </div>
             {/*영업시간*/}
-            <div className='flex flex-items gap-2 ml-4 mt-4 text-gray-500'>
-                <BiSolidTimeFive className='mt-1' />
+            <div className='flex flex-items gap-2 ml-4 mt-2'>
+                <Photo src={TimeImage} alt="영업시간" className='mt-1' />
                 <div>
                     <div>{weekhour}</div>
                     <div className='text-left'>{weekendhour}</div>

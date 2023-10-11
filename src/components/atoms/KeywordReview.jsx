@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const KeywordReview = ({ keyword, reviewCount }) => {
+const KeywordReview = ({ keyword, reviewCount, totalReviews }) => {
   const [fillPercentage, setFillPercentage] = useState(0);
 
   useEffect(() => {
-    const calculatedFillPercentage = (reviewCount / 200) * 100; // 최대 200건으로 설정
+    const calculatedFillPercentage = (reviewCount / totalReviews) * 100;
     setFillPercentage(calculatedFillPercentage);
-  }, [reviewCount]);
+  }, [reviewCount, totalReviews]);
 
   return (
     <div className="my-2">

@@ -3,7 +3,7 @@ import React from "react";
 const TabInfo = ({ introduction }) => {
   return (
     <div>
-        <div className="scrollable-text h-48 overflow-y-auto">
+        <div className="overflow-y-auto my-4 text-left mx-2">
             { introduction }
         </div>
     </div>

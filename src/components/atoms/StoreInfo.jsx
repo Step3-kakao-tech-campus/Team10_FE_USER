@@ -1,4 +1,3 @@
-// StoreInfo.js
 import React from "react";
 import Photo from "./Photo";
 import TimeImage from "/StoreInfo/Time.svg";
@@ -17,7 +16,9 @@ const StoreInfo = ({ weekhour, weekendhour, tel, address }) => {
       </div>
       <div className="flex items-center gap-2">
         <Photo src={TelImage} alt="전화번호" />
-        <div className="text-xs">{tel}</div>
+        <a href={`tel:${tel}`} className="text-xs text-primary">
+          {tel}
+        </a>
       </div>
       <div className="flex items-center gap-2">
         <Photo src={MapImage} alt="주소" />

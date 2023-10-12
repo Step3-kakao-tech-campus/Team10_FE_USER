@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
 import ReviewList from "../molecules/ReviewList";
 import KeywordReview from "./KeywordReview";
 import UserStar from "./UserStar";
 
 const TabReview = () => {
+  const averageStar = 4.5;
+
   const reviews = [
     {
       rating: 5.0,
@@ -35,18 +36,12 @@ const TabReview = () => {
     0
   );
 
-  const [averageStar, setAverageStar] = useState(0);
-
-  useEffect(() => {
-    setAverageStar(3.5);
-  }, []);
-
   return (
     <div>
       <div className="grid gap-2">
         <div className="font-semibold">평균별점</div>
         <div>
-          <UserStar popularity={averageStar} />
+          <UserStar averageStar={averageStar} />
         </div>
         <hr />
         <div className="font-semibold">키워드 리뷰</div>

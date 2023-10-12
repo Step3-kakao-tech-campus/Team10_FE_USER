@@ -20,7 +20,7 @@ const CancelSheet = ({ className, reservetime, bayname, priceinfo }) => {
           <div>취소금액</div>
           <div className="ml-auto">{priceinfo}</div>
         </div>
-        <Button type="long" label="취소하기" />
+        <Button type="long" className="bg-red-500" label="취소하기" />
       </div>
     </Bottomsheet>
   );

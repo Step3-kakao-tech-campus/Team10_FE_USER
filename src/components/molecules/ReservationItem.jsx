@@ -65,7 +65,7 @@ const ReservationItem = ({
       {buttontype === "review" && <Button type="review" label="리뷰 작성" />}
 
       {showCancelSheet && (
-        <div ref={cancelSheetRef} className="fixed left-0 bottom-[60px]">
+        <div ref={cancelSheetRef} className="fixed left-0 bottom-[60px] z-10">
           <CancelSheet
             reservetime={reservetime}
             bayname={bayname}

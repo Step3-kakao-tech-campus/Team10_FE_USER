@@ -25,7 +25,5 @@ export const MapWithPin = ({ lat, lng, text, className }) => {
     });
   }, []);
 
-  return (
-    <div id="map" className={`w-[353px] h-72 rounded-3xl ${className}`}></div>
-  );
+  return <div id="map" className={`h-72 rounded-3xl ${className}`}></div>;
 };

@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 
-const DatePicker = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
+const DatePicker = ({ handleButtonClick }) => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleClick = (date) => {
+    setSelectedDate(date);
+    handleButtonClick(date);
+  };
 
   const generateWeekDates = () => {
     const today = new Date();
@@ -14,25 +19,45 @@ const DatePicker = () => {
     return dates;
   };
 
+  const isWeekend = (date) => {
+    return date.getDay() === 0 || date.getDay() === 6;
+  };
+
   const weekDates = generateWeekDates();
 
   return (
     <div className="bg-gray-100 p-4">
       <div className="flex justify-between">
         {weekDates.map((date) => (
-          <div 
-            key={date.toDateString()} 
-            className="px-4 py-2 text-center cursor-pointer"
-            onClick={() => setSelectedDate(date)}
-          >
-            <div className="mb-4">{date.toLocaleDateString("ko-KR", { weekday: "short" })}</div>
-            <div 
+          <div
+            key={date.toDateString()}
+            className="w-10 text-center grid gap-2"
+            onClick={() => {
+              setSelectedDate(date);
+              handleClick(date);
+            }}>
+            {/* 즉시실행함수(IIFE)로 토요일, 일요일 색상 구분 */}
+            {(() => {
+              if (isWeekend(date)) {
+                if (date.getDay() === 0) {
+                  return <div className="text-red-500">일</div>;
+                } else {
+                  return <div className="text-blue-500">토</div>;
+                }
+              } else {
+                return (
+                  <div>
+                    {date.toLocaleDateString("ko-KR", { weekday: "short" })}
+                  </div>
+                );
+              }
+            })()}
+            <div
               className={`${
-                selectedDate && selectedDate.toDateString() === date.toDateString()
-                  ? "bg-sky-500 text-white mt-2 rounded-full font-bold mt-2rounded-full w-10 h-10 flex items-center justify-center"
+                selectedDate.toDateString() === date.toDateString()
+                  ? "bg-primary text-white rounded-full font-bold w-10 h-10 flex items-center justify-center"
                   : ""
-              }`}
-            >
+              }`}>
               {date.getDate()}
             </div>
           </div>

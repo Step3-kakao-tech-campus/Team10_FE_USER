@@ -5,8 +5,9 @@ const { kakao } = window;
 
 const markerdata = [
   {
-    content:
-      '<img className="w-4 h-4" src="https://i.namu.wiki/i/tqNflgUosZW0OSqwPfuF0SXeV4CD2yO3t2ZLCnRyZr2xYs1iv-AEEPgxYRp0g_QPi0mUe9KdK_xIgYO5y3Kyrhn6kCP6PSnMgSz-5SZNYRWnp4gPmbO9rWnykZdB6kHeLb0zuHaYDpDZKsFliG4XuQ.webp" />',
+    imageSrc:
+      "https://i.namu.wiki/i/tqNflgUosZW0OSqwPfuF0SXeV4CD2yO3t2ZLCnRyZr2xYs1iv-AEEPgxYRp0g_QPi0mUe9KdK_xIgYO5y3Kyrhn6kCP6PSnMgSz-5SZNYRWnp4gPmbO9rWnykZdB6kHeLb0zuHaYDpDZKsFliG4XuQ.webp",
+
     title: "콜드스퀘어",
     lat: 37.62197524055062,
     lng: 127.16017523675508,
@@ -28,20 +29,23 @@ const KakaoMap = ({ className }) => {
       level: 3,
     };
     const map = new kakao.maps.Map(container, options);
-    const imageSrc = "";
+
     markerdata.forEach((el) => {
-      new kakao.maps.Marker({
+      var imageSize = new kakao.maps.Size(64, 69);
+      var imageOption = { offset: new kakao.maps.Point(27, 69) };
+
+      var markerImage = new kakao.maps.MarkerImage(
+        el.imageSrc,
+        imageSize,
+        imageOption
+      );
+      var marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(el.lat, el.lng),
         title: el.title,
+        image: markerImage,
       });
-
-      new kakao.maps.CustomOverlay({
-        map: map,
-        position: new kakao.maps.LatLng(el.lat, el.lng),
-        content: el.content,
-        yAnchor: 1,
-      });
+      marker.setMap(map);
     });
   }, []);
 

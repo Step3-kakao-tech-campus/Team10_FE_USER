@@ -21,7 +21,7 @@ const TabReview = () => {
   ];
 
   const KeywordReviewData = [
-    { keyword: "여름엔 시원하고 겨울엔 따뜻해요", reviewCount: 300 },
+    { keyword: "여름엔 시원하고 겨울엔 따뜻해요", reviewCount: 20 },
     { keyword: "사장님이 친절해요", reviewCount: 120 },
     { keyword: "가격이 합리적이에요", reviewCount: 50 },
   ];

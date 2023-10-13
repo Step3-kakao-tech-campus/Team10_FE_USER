@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
 import ReviewList from "../molecules/ReviewList";
 import KeywordReview from "./KeywordReview";
 import UserStar from "./UserStar";
 
 const TabReview = () => {
+  const averageStar = 4.5;
+
   const reviews = [
     {
       rating: 5.0,
@@ -18,10 +19,34 @@ const TabReview = () => {
       date: "2023-09-16",
       content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
     },
+    {
+      rating: 4.5,
+      username: "사용자2",
+      date: "2023-09-16",
+      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
+    },
+    {
+      rating: 4.5,
+      username: "사용자2",
+      date: "2023-09-16",
+      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
+    },
+    {
+      rating: 4.5,
+      username: "사용자2",
+      date: "2023-09-16",
+      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
+    },
+    {
+      rating: 4.5,
+      username: "사용자2",
+      date: "2023-09-16",
+      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
+    },
   ];
 
   const KeywordReviewData = [
-    { keyword: "여름엔 시원하고 겨울엔 따뜻해요", reviewCount: 300 },
+    { keyword: "여름엔 시원하고 겨울엔 따뜻해요", reviewCount: 20 },
     { keyword: "사장님이 친절해요", reviewCount: 120 },
     { keyword: "가격이 합리적이에요", reviewCount: 50 },
   ];
@@ -35,18 +60,12 @@ const TabReview = () => {
     0
   );
 
-  const [averageStar, setAverageStar] = useState(0);
-
-  useEffect(() => {
-    setAverageStar(3.5);
-  }, []);
-
   return (
     <div>
       <div className="grid gap-2">
         <div className="font-semibold">평균별점</div>
         <div>
-          <UserStar popularity={averageStar} />
+          <UserStar averageStar={averageStar} />
         </div>
         <hr />
         <div className="font-semibold">키워드 리뷰</div>

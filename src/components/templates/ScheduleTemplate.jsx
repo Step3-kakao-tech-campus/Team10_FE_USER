@@ -1,34 +1,27 @@
+import React, { useState } from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Photo from "../atoms/Photo";
 import DatePicker from "../molecules/DatePicker";
 import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
 import { Button } from "../atoms/Button";
-import { useState } from "react";
 
 const ScheduleTemplate = ({
   name = "포세이돈워시 용봉점",
   bay_count = "7",
   openingHours = {
-    weekdayStartTime: new Date(),
-    weekdayEndTime: new Date(),
-    weekendStartTime: new Date(),
-    weekendEndTime: new Date(),
+    weekday: { start: "09:00", end: "18:00" },
+    weekend: { start: "09:00", end: "18:00" },
   },
+  scheduledTimes = [
+    { start: "10:30", end: "11:30" },
+    { start: "14:00", end: "14:30" },
+    { start: "15:30", end: "16:00" },
+  ],
 }) => {
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
-
-  openingHours.weekdayStartTime.setHours(9);
-  openingHours.weekdayStartTime.setMinutes(0);
-  openingHours.weekdayEndTime.setHours(18);
-  openingHours.weekdayEndTime.setMinutes(0);
-  openingHours.weekendStartTime.setHours(9);
-  openingHours.weekendStartTime.setMinutes(0);
-  openingHours.weekendEndTime.setHours(18);
-  openingHours.weekendEndTime.setMinutes(0);
-
+  const [duration, setDuration] = useState();
   const handleDateChange = (date) => {
     setDate(date);
   };
@@ -37,69 +30,73 @@ const ScheduleTemplate = ({
     setStartTime(time);
   };
 
-  const handleEndTimeChange = (time) => {
-    setEndTime(time);
+  const handleDurationChange = (duration) => {
+    setDuration(duration);
   };
 
+  const computeEndTime = () => {
+    if (!startTime || !duration) return;
+
+    const [hours, minutes] = startTime.split(":").map(Number);
+    const endTimeInMinutes = hours * 60 + minutes + duration;
+    const endHour = Math.floor(endTimeInMinutes / 60);
+    const endMinute = endTimeInMinutes % 60;
+
+    return `${String(endHour).padStart(2, "0")}:${String(endMinute).padStart(
+      2,
+      "0"
+    )}`;
+  };
+  const computedEndTime = computeEndTime();
+
   return (
-    <div className="relative">
-      {/*뒤로가기 버튼 상단바 */}
-      <div className="font-bold">{"<"}</div>
+    <div className="relative p-4">
+      <div className="flex-grow overflow-y-auto pb-12">
+        <div className="mb-4 font-bold">{"<"}</div>
+        <div className="mb-4 font-bold text-xl">
+          {name}: 베이 {bay_count}
+        </div>
 
-      {/*매장명 + 베이 번호 */}
-      <div className="font-bold text-xl">
-        {name}: 베이 {bay_count}
-      </div>
-
-      {/*영업시간*/}
-      <div className="flex gap-2">
-        <Photo src={TimeImage} alt="영업시간" />
-        <div>
+        <div className="flex gap-2 mb-4">
+          <Photo src={TimeImage} alt="영업시간" />
           <div>
-            평일 {openingHours.weekdayStartTime.getHours() + ":00"} ~{" "}
-            {openingHours.weekdayEndTime.getHours() + ":00"}
+            <div>
+              평일 {openingHours.weekday.start} ~ {openingHours.weekday.end}
+            </div>
+            <div>
+              주말 {openingHours.weekend.start} ~ {openingHours.weekend.end}
+            </div>
           </div>
-          <div>
-            주말 {openingHours.weekendStartTime.getHours() + ":00"} ~{" "}
-            {openingHours.weekendEndTime.getHours() + ":00"}
+        </div>
+
+        <DatePicker handleButtonClick={handleDateChange} />
+
+        <div className="my-4">
+          <div className="font-bold my-1">시작 시간</div>
+          <TimePicker
+            openingHours={openingHours}
+            handleButtonClick={handleStartTimeChange}
+            scheduledTimes={scheduledTimes}
+            duration={duration}
+          />
+        </div>
+        <div className="my-4">
+          <div className="font-bold mb-2">사용 시간</div>
+          <DurationPicker handleButtonClick={handleDurationChange} />
+        </div>
+        <div className="bg-gray-100 rounded-lg p-4">
+          <div className="mb-2">예약 일정</div>
+          <div className="mb-4">
+            {date &&
+              `${date?.getFullYear()}년 ${
+                date?.getMonth() + 1
+              }월 ${date?.getDate()}일 ${startTime ? startTime : ""} ${
+                computedEndTime ? `~ ${computedEndTime}` : ""
+              }`}
           </div>
         </div>
       </div>
-
-      {/*날짜 선택 */}
-      <DatePicker handleButtonClick={handleDateChange} />
-
-      {/*시작 시간 선택*/}
-      <div>
-        <div className="font-bold">시작 시간</div>
-        <TimePicker
-          openingHours={openingHours}
-          handleButtonClick={handleStartTimeChange}
-        />
-      </div>
-
-      {/*이용 시간 선택*/}
-      <div>
-        <DurationPicker handleButtonClick={handleEndTimeChange} />
-      </div>
-
-      {/*예약 일정 출력*/}
-      <div>예약 일정</div>
-      <div>
-        {date?.getFullYear() +
-          "년 " +
-          (date?.getMonth() + 1) +
-          "월 " +
-          date?.getDate() +
-          "일 " +
-          startTime +
-          "시부터 " +
-          endTime +
-          "분동안"}
-      </div>
-
-      {/*예약 일정 출력*/}
-      <Button label="예약하기" className="fixed bottom-0" />
+      <Button type="long" label="예약하기" className="fixed left-0 bottom-0" />
     </div>
   );
 };

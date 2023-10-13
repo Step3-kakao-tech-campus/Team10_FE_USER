@@ -26,7 +26,7 @@ const DatePicker = ({ handleButtonClick }) => {
   const weekDates = generateWeekDates();
 
   return (
-    <div className="bg-gray-100 p-4">
+    <div className="bg-gray-100 p-4 rounded-lg">
       <div className="flex justify-between">
         {weekDates.map((date) => (
           <div
@@ -35,7 +35,8 @@ const DatePicker = ({ handleButtonClick }) => {
             onClick={() => {
               setSelectedDate(date);
               handleClick(date);
-            }}>
+            }}
+          >
             {/* 즉시실행함수(IIFE)로 토요일, 일요일 색상 구분 */}
             {(() => {
               if (isWeekend(date)) {
@@ -57,7 +58,8 @@ const DatePicker = ({ handleButtonClick }) => {
                 selectedDate.toDateString() === date.toDateString()
                   ? "bg-primary text-white rounded-full font-bold w-10 h-10 flex items-center justify-center"
                   : ""
-              }`}>
+              }`}
+            >
               {date.getDate()}
             </div>
           </div>

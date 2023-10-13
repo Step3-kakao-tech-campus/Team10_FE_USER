@@ -17,7 +17,7 @@ export const Tab = ({ introduction }) => {
   return (
     <div>
       <ul className="bg-gray-300 text-gray-800 font-bold flex items-center">
-        {menuArr.map((el, index) => (
+        {menuArr.map((item, index) => (
           <li
             className={`w-1/2 p-4 text-center transition duration-500 ${
               index === currentTab
@@ -25,8 +25,9 @@ export const Tab = ({ introduction }) => {
                 : ""
             }`}
             onClick={() => selectMenuHandler(index)}
-            key={index}>
-            {el.name}
+            key={index}
+          >
+            {item.name}
           </li>
         ))}
       </ul>

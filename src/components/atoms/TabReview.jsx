@@ -19,6 +19,30 @@ const TabReview = () => {
       date: "2023-09-16",
       content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
     },
+    {
+      rating: 4.5,
+      username: "사용자2",
+      date: "2023-09-16",
+      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
+    },
+    {
+      rating: 4.5,
+      username: "사용자2",
+      date: "2023-09-16",
+      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
+    },
+    {
+      rating: 4.5,
+      username: "사용자2",
+      date: "2023-09-16",
+      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
+    },
+    {
+      rating: 4.5,
+      username: "사용자2",
+      date: "2023-09-16",
+      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
+    },
   ];
 
   const KeywordReviewData = [

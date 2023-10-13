@@ -1,4 +1,5 @@
 import React from "react";
+import StarImg from "/StarPicker/checkedStar.svg";
 
 const UserStar = ({ averageStar }) => {
   const STAR_IDX_ARR = ["1", "2", "3", "4", "5"];
@@ -27,7 +28,7 @@ const UserStar = ({ averageStar }) => {
             width="22"
             height="20"
             viewBox="0 0 14 13"
-            fill="#cacaca"
+            fill="#F4F4F4"
           >
             <clipPath id={`${item}StarClip`}>
               <rect width={`${ratesResArr[idx]}`} height="39" />
@@ -40,7 +41,7 @@ const UserStar = ({ averageStar }) => {
             <use
               clipPath={`url(#${item}StarClip)`}
               href={`#${item}Star`}
-              fill="#ffe500"
+              fill="#FABF35"
             />
           </svg>
         </div>

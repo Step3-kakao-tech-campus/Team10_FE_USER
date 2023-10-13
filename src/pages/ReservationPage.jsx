@@ -37,8 +37,8 @@ const ReservationPage = () => {
   return (
     <div>
       <div className="w-screen h-screen bg-white flex items-end gap-0">
-        <KakaoMap className="z-0 w-screen h-screen absolute" />
-        <DualBottomsheet className="z-10">
+        <KakaoMap className="z-0 fixed left-0 w-screen h-screen absolute" />
+        <DualBottomsheet className="z-10 fixed left-0">
           <Bottomsheet className="z-20 flex flex-col gap-3 h-full	overflow-y: scroll;">
             <Input placeholder="검색"></Input>
             <div className="flex flex-row gap-2">

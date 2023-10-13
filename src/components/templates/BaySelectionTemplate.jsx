@@ -1,37 +1,58 @@
+import React, { useState } from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Photo from "../atoms/Photo";
-import BayItem from "../atoms/BayItem";
+import BayList from "../molecules/BayList";
 
-const BaySelectionTemplate = (
+const BaySelectionTemplate = ({
+  name = "포세이돈워시 용봉점",
+  openingHours = {
+    weekday: { start: "09:00", end: "18:00" },
+    weekend: { start: "09:00", end: "18:00" },
+  },
+  bayscheduledata = [
     {
-        name = "포세이돈워시 용봉점",
-        bay_count = "7",
-        weekhour = '평일 오전 7:00 ~ 오후 11:00',
-        weekendhour = '주말 24시간 영업'
-    }
-) => {
-    return (
+      bay_count: 1,
+      scheduledTimes: [
+        { start: "10:00", end: "13:30" },
+        { start: "14:00", end: "14:30" },
+      ],
+    },
+    {
+      bay_count: 2,
+      scheduledTimes: [
+        { start: "11:00", end: "12:30" },
+        { start: "15:00", end: "16:00" },
+      ],
+    },
+    {
+      bay_count: 3,
+      scheduledTimes: [
+        { start: "11:00", end: "12:30" },
+        { start: "15:00", end: "16:00" },
+      ],
+    },
+  ],
+}) => {
+  return (
+    <div className="relative p-4">
+      <div className="mb-4 font-bold">{"<"}</div>
+      <div className="mb-4 font-bold text-xl">{name}</div>
+      <div className="flex gap-2 mb-4">
+        <Photo src={TimeImage} alt="영업시간" />
         <div>
-            {/*뒤로가기 버튼 상단바 */}
-            <div className="font-bold mt-2 ml-4 ">뒤로가기</div>
-            {/*매장명 + 베이 번호 */}
-            <div className="flex flex-items mt-4 ml-4">
-                <div className="font-bold text-xl">{name}: 베이 {bay_count}</div>
-            </div>
-            {/*영업시간*/}
-            <div className='flex flex-items gap-2 ml-4 mt-2'>
-                <Photo src={TimeImage} alt="영업시간" className='mt-1' />
-            <div>
-            <div>{weekhour}</div>
-            <div className='text-left'>{weekendhour}</div>
-            </div>
+          <div>
+            평일 {openingHours.weekday.start} ~ {openingHours.weekday.end}
+          </div>
+          <div>
+            주말 {openingHours.weekend.start} ~ {openingHours.weekend.end}
+          </div>
         </div>
-            {/*베이 현황*/}
-              <BayItem />
-        </div>
-
-    )
-
-}
+      </div>
+      <div>
+        <BayList bays={bayscheduledata} />
+      </div>
+    </div>
+  );
+};
 
 export default BaySelectionTemplate;

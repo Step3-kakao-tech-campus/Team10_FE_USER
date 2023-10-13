@@ -1,9 +1,7 @@
 import React from "react";
 import BaySelectionTemplate from "../components/templates/BaySelectionTemplate";
 const BaySelectionPage = () => {
-  return (
-      <BaySelectionTemplate />
-  );
+  return <BaySelectionTemplate />;
 };
 
 export default BaySelectionPage;

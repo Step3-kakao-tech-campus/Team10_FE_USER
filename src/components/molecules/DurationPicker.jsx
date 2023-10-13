@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const DurationPicker = ({ handleButtonClick }) => {
-  const [selectedDuration, setSelectedDuration] = useState(30);
+  const [selectedDuration, setSelectedDuration] = useState();
   const durations = [30, 60, 90, 120, 180, 240];
 
   const handleDurationClick = (duration) => {

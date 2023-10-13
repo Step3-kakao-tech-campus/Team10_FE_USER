@@ -11,7 +11,7 @@ const DurationPicker = ({ handleButtonClick }) => {
 
   return (
     <div>
-      <div className="flex gap-4">
+      <div className="flex gap-2">
         {durations.map((duration) => (
           <button
             key={duration}
@@ -20,12 +20,12 @@ const DurationPicker = ({ handleButtonClick }) => {
               selectedDuration === duration
                 ? "bg-sky-500 text-white"
                 : "bg-white"
-            } rounded-md cursor-pointer`}>
+            } rounded-md cursor-pointer`}
+          >
             {duration}분
           </button>
         ))}
       </div>
-      <div>선택한 사용 시간: {selectedDuration}분</div>
     </div>
   );
 };

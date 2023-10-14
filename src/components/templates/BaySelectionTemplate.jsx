@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Photo from "../atoms/Photo";
 import BayList from "../molecules/BayList";
@@ -6,8 +6,8 @@ import BayList from "../molecules/BayList";
 const BaySelectionTemplate = ({
   name = "포세이돈워시 용봉점",
   openingHours = {
-    weekday: { start: "09:00", end: "18:00" },
-    weekend: { start: "09:00", end: "18:00" },
+    weekday: { start: "00:00", end: "23:00" },
+    weekend: { start: "00:00", end: "23:00" },
   },
   bayscheduledata = [
     {
@@ -49,7 +49,7 @@ const BaySelectionTemplate = ({
         </div>
       </div>
       <div>
-        <BayList bays={bayscheduledata} />
+        <BayList bays={bayscheduledata} openingHours={openingHours} />
       </div>
     </div>
   );

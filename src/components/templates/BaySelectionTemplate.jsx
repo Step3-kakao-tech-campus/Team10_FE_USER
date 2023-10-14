@@ -6,8 +6,8 @@ import BayList from "../molecules/BayList";
 const BaySelectionTemplate = ({
   name = "포세이돈워시 용봉점",
   openingHours = {
-    weekday: { start: "00:00", end: "23:00" },
-    weekend: { start: "00:00", end: "23:00" },
+    weekday: { start: "00:00", end: "24:00" },
+    weekend: { start: "00:00", end: "24:00" },
   },
   bayscheduledata = [
     {

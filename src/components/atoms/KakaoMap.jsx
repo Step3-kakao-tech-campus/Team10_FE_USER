@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { CarwashPin } from "./CarwashPin";
 
 const { kakao } = window;
 

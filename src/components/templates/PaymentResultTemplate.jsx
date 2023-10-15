@@ -14,7 +14,7 @@ const PaymentResultTemplate = () => {
     <div className="relative grid gap-8">
       <section className="grid gap-4">
         <div className="text-2xl font-bold ">결제가 완료되었습니다!</div>
-        <div className="text-left text-sm">득광하세요!</div>
+        <div className="text-sm text-left">득광하세요!</div>
       </section>
       <section className="grid gap-4">
         <TextWithIcon text="2023/09/08" iconsrc={iconsrc.calendar} />

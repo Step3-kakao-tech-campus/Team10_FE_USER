@@ -1,6 +1,6 @@
 import React from "react";
 import TimeImage from "/StoreInfo/Time.svg";
-import Photo from "../atoms/Photo";
+import Image from "../atoms/Image";
 import BayList from "../molecules/BayList";
 
 const BaySelectionTemplate = ({}) => {
@@ -46,9 +46,9 @@ const BaySelectionTemplate = ({}) => {
   return (
     <div className="relative p-4">
       <div className="mb-4 font-bold">{"<"}</div>
-      <div className="mb-4 font-bold text-xl">{name}</div>
+      <div className="mb-4 text-xl font-bold">{name}</div>
       <div className="flex gap-2 mb-4">
-        <Photo src={TimeImage} alt="영업시간" />
+        <Image src={TimeImage} alt="영업시간" />
         <div>
           <div>
             평일 {openingHours.weekday.start} ~ {openingHours.weekday.end}

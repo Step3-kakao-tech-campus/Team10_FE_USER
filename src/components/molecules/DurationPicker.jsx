@@ -12,7 +12,6 @@ const DurationPicker = ({
   const [selectedDuration, setSelectedDuration] = useState();
   const durations = [30, 60, 90, 120, 180, 240];
 
-  // Filter the scheduled times for the given bayId and bayNo
   const bayScheduledTimes =
     scheduledTimes.find((bay) => bay.bayId === bayId && bay.bayNo === bayNo)
       ?.times || [];

@@ -11,7 +11,6 @@ const TimePicker = ({
   const [selectedTime, setSelectedTime] = useState(null);
   const [isMorningSelected, setIsMorningSelected] = useState(true);
 
-  // Filter the scheduled times for the given bayId and bayNo
   const bayScheduledTimes =
     scheduledTimes.find((bay) => bay.bayId === bayId && bay.bayNo === bayNo)
       ?.times || [];

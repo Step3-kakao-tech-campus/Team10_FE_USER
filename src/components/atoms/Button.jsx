@@ -20,7 +20,7 @@ export const Button = ({
   const getType = (type) => {
     switch (type) {
       case "long":
-        return "block w-full h-14 p-4 bg-sky-500 text-white font-semibold rounded-none";
+        return "block w-full h-14 p-4 bg-primary text-white font-semibold rounded-none";
       case "small":
         return "block w-28 h-14 bg-sky-100 text-sky-500 font-semibold rounded-xl";
       case "home":

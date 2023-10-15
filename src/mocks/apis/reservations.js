@@ -1,24 +1,23 @@
 const reservations = {
   success: true,
-  response: [
-    {
-      reservation: {
-        time: {
-          start: "13:00",
-          end: "15:00",
-        },
-        price: 0,
-        bayNo: 1,
+  response: {
+    reservation: {
+      time: {
+        start: "2023-10-13T19:08",
+        end: "2023-10-13T19:38",
       },
-      carwash: {
-        name: "세차장",
-        location: {
-          latitude: 10.0,
-          longitude: 20.0,
-        },
+      price: 20000,
+      bayNo: 1,
+    },
+    carwash: {
+      name: "용봉세차타운:베이7",
+      location: {
+        latitude: 10.0,
+        longitude: 20.0,
       },
     },
-  ],
+  },
+
   error: null,
 };
 

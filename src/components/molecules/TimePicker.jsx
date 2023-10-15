@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 const TimePicker = ({
+  bayId,
+  bayNo,
   openingHours,
   handleButtonClick,
   scheduledTimes = [],
@@ -8,6 +10,11 @@ const TimePicker = ({
 }) => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [isMorningSelected, setIsMorningSelected] = useState(true);
+
+  // Filter the scheduled times for the given bayId and bayNo
+  const bayScheduledTimes =
+    scheduledTimes.find((bay) => bay.bayId === bayId && bay.bayNo === bayNo)
+      ?.times || [];
 
   const generateTime = (start, end) => {
     const times = [];
@@ -31,10 +38,9 @@ const TimePicker = ({
   };
 
   const isScheduled = (time) => {
-    return scheduledTimes.some((schedule) => {
+    return bayScheduledTimes.some((schedule) => {
       const scheduleDate = new Date(schedule.start).toLocaleDateString();
       const selectedDateStr = selectedDate.toLocaleDateString();
-
       if (scheduleDate !== selectedDateStr) {
         return false;
       }

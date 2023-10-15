@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 const DurationPicker = ({
+  bayId,
+  bayNo,
   handleButtonClick,
   startTime,
   scheduledTimes = [],
@@ -10,19 +12,17 @@ const DurationPicker = ({
   const [selectedDuration, setSelectedDuration] = useState();
   const durations = [30, 60, 90, 120, 180, 240];
 
-  const getFullTime = (time) => {
-    if (!selectedDate || !time) return;
-    return `${selectedDate.toISOString().split("T")[0]}T${time}:00`;
-  };
+  // Filter the scheduled times for the given bayId and bayNo
+  const bayScheduledTimes =
+    scheduledTimes.find((bay) => bay.bayId === bayId && bay.bayNo === bayNo)
+      ?.times || [];
 
   const getEndTime = (duration) => {
     if (!startTime) return;
-
     const [hours, minutes] = startTime.split(":").map(Number);
     const endTimeInMinutes = hours * 60 + minutes + duration;
     const endHour = Math.floor(endTimeInMinutes / 60);
     const endMinute = endTimeInMinutes % 60;
-
     return `${String(endHour).padStart(2, "0")}:${String(endMinute).padStart(
       2,
       "0"
@@ -30,40 +30,21 @@ const DurationPicker = ({
   };
 
   const isDurationOverlapping = (duration) => {
-    const startTimeWithDate = new Date(getFullTime(startTime));
-    const endTimeWithDate = new Date(getFullTime(getEndTime(duration)));
+    if (!startTime) return true;
 
-    // 1. 영업 시간 대조
-    const businessEndTime = new Date(
-      getFullTime(
-        openingHours[
-          selectedDate.getDay() === 0 || selectedDate.getDay() === 6
-            ? "weekend"
-            : "weekday"
-        ].end
-      )
+    const startTimeWithDate = new Date(
+      `${selectedDate.toISOString().split("T")[0]}T${startTime}:00`
     );
-    if (endTimeWithDate > businessEndTime) {
-      return true;
-    }
+    const endTimeWithDate = new Date(
+      `${selectedDate.toISOString().split("T")[0]}T${getEndTime(duration)}:00`
+    );
 
-    // 2. 예약된 시간과 대조
-    for (let i = 0; i < scheduledTimes.length; i++) {
-      const scheduleStart = new Date(scheduledTimes[i].start);
-      const scheduleEnd = new Date(scheduledTimes[i].end);
+    for (let i = 0; i < bayScheduledTimes.length; i++) {
+      const scheduleStart = new Date(bayScheduledTimes[i].start);
+      const scheduleEnd = new Date(bayScheduledTimes[i].end);
 
-      // 원하는 예약이 예약된 예약 내에 있는지 확인
       if (startTimeWithDate < scheduleEnd && endTimeWithDate > scheduleStart) {
         return true;
-      }
-
-      // 원하는 예약이 두 예약된 예약 사이에 있는 경우 유효합니다.
-      if (
-        i + 1 < scheduledTimes.length &&
-        endTimeWithDate <= new Date(scheduledTimes[i + 1].start) &&
-        startTimeWithDate >= scheduleEnd
-      ) {
-        break;
       }
     }
 

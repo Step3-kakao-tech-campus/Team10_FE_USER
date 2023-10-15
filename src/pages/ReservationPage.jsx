@@ -13,7 +13,7 @@ const ReservationPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("/washlists")
+    fetch("/carwashes/nearby")
       .then((res) => res.json())
       .then((data) => {
         setWashlists(data);
@@ -45,8 +45,8 @@ const ReservationPage = () => {
               <Badge label="하부세차" />
               <Badge label="스노우폼" />
             </div>
-            {washlists &&
-              washlists.map((item, index) => {
+            {washlists.response &&
+              washlists.response.map((item, index) => {
                 return (
                   <StoreItem
                     key={index}

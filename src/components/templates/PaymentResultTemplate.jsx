@@ -1,6 +1,7 @@
 import { TextWithIcon } from "../atoms/TextWithIcon";
 import { MapWithPin } from "../atoms/MapWithPin";
 import { Button } from "../atoms/Button";
+import { useEffect, useState } from "react";
 
 const iconsrc = {
   calendar: "/TextWithIcon/calendar.png",
@@ -10,6 +11,22 @@ const iconsrc = {
 };
 
 const PaymentResultTemplate = () => {
+  const [paymentresult, setpaymentresult] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch("/reservations")
+      .then((res) => res.json())
+      .then((data) => {
+        setpaymentresult(data);
+        setLoading(false);
+      });
+  }, []);
+
+  const starttime = paymentresult?.response?.reservation?.time.start;
+  const endtime = paymentresult?.response?.reservation?.time.end;
+
   return (
     <div className="relative grid gap-8">
       <section className="grid gap-4">
@@ -19,7 +36,10 @@ const PaymentResultTemplate = () => {
       <section className="grid gap-4">
         <TextWithIcon text="2023/09/08" iconsrc={iconsrc.calendar} />
         <hr />
-        <TextWithIcon text="13:00 ~ 15:00" iconsrc={iconsrc.clock} />
+        <TextWithIcon
+          text={{ starttime } + "~" + { endtime }}
+          iconsrc={iconsrc.clock}
+        />
         <hr />
         <TextWithIcon text="용봉세차타운:베이 7" iconsrc={iconsrc.location} />
         <hr />

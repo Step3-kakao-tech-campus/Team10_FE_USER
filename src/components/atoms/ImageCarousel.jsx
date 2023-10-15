@@ -16,7 +16,7 @@ const ImageCarousel = ({ images }) => {
   ));
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex items-center justify-center">
       <Carousel
         showArrows={true}
         showStatus={false}
@@ -26,7 +26,7 @@ const ImageCarousel = ({ images }) => {
         showThumbs={false}
         selectedItem={images[currentIndex]}
         onChange={handleChange}
-        className="w-full h-4/5 mb-2"
+        className="w-full mb-2 h-4/5"
       >
         {renderSlides}
       </Carousel>

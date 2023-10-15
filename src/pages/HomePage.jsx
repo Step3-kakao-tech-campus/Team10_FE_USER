@@ -55,9 +55,9 @@ export const HomePage = () => {
   return (
     <>
       <main className="grid gap-6">
-        <h1 className="font-semibold text-2xl">노주영님 안녕하세요!</h1>
+        <h1 className="text-2xl font-semibold">노주영님 안녕하세요!</h1>
         {/* 메뉴 링크 */}
-        <section className="flex gap-4 justify-between">
+        <section className="flex justify-between gap-4">
           <Button
             type="home"
             icon={Reservation}
@@ -68,13 +68,13 @@ export const HomePage = () => {
 
         {/* 이런 세차장 어때요? */}
         <section className="grid gap-4">
-          <h2 className="font-semibold text-xl">이런 세차장 어때요?</h2>
+          <h2 className="text-xl font-semibold">이런 세차장 어때요?</h2>
           <CarwashCard />
         </section>
 
         {/* 최근 이용 내역 */}
         <section className="grid gap-4">
-          <h2 className="font-semibold text-xl">최근 이용 내역</h2>
+          <h2 className="text-xl font-semibold">최근 이용 내역</h2>
           <RecentCarwashSlider recentList={recentList} />
         </section>
       </main>

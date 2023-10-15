@@ -20,7 +20,7 @@ const StoreItem = ({
   return (
     <div className="w-auto h-24 relative bg-white rounded-xl border border-gray-200 flex items-center gap-3.5 ">
       {/* 세차장 사진 부분 */}
-      <picture className="flex block w-[74px] h-[74px] rounded-xl ml-3">
+      <picture className="flex w-[74px] h-[74px] rounded-xl ml-3">
         <img
           className="w-[74px] h-[74px] rounded-xl"
           src={imgsrc}
@@ -28,12 +28,10 @@ const StoreItem = ({
         />
       </picture>
       {/* 별점, 세차장이름, 가격정보 부분 */}
-      <div className="flex flex-col w-56 h-16 gap-1 block">
+      <div className="flex flex-col w-56 h-16 gap-1">
         <Star starcount={starcount} reviewcount={reviewcount} />
-        <div className=" text-black text-base font-semibold font-['Pretendard']">
-          {storename}
-        </div>
-        <div className="left-0 top-[53px] text-sky-500 text-sm font-normal font-['Pretendard'] ">
+        <div className="font-semibold ">{storename}</div>
+        <div className="left-0 top-[53px] text-primary text-sm ">
           {priceinfo}
         </div>
       </div>

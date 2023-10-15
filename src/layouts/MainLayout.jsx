@@ -5,7 +5,9 @@ import { GNB } from "../components/atoms/GNB";
 export const MainLayout = () => {
   return (
     <div className="relative h-screen">
-      <Outlet />
+      <div className="p-4">
+        <Outlet />
+      </div>
       <GNB />
     </div>
   );

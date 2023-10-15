@@ -14,9 +14,10 @@ const ScheduleTemplate = ({
     weekend: { start: "09:00", end: "18:00" },
   },
   scheduledTimes = [
-    { start: "10:30", end: "11:30" },
-    { start: "14:00", end: "14:30" },
-    { start: "15:30", end: "16:00" },
+    { start: "2023-10-19T15:30", end: "2023-10-19T17:30" },
+    { start: "2023-10-14T14:00", end: "2023-10-14T14:30" },
+    { start: "2023-10-15T10:30", end: "2023-10-15T12:30" },
+    { start: "2023-10-15T14:30", end: "2023-10-15T15:30" },
   ],
 }) => {
   const [date, setDate] = useState(new Date());
@@ -24,10 +25,13 @@ const ScheduleTemplate = ({
   const [duration, setDuration] = useState();
   const handleDateChange = (date) => {
     setDate(date);
+    setStartTime(undefined);
+    setDuration(undefined);
   };
 
   const handleStartTimeChange = (time) => {
     setStartTime(time);
+    setDuration(undefined);
   };
 
   const handleDurationChange = (duration) => {
@@ -78,11 +82,18 @@ const ScheduleTemplate = ({
             handleButtonClick={handleStartTimeChange}
             scheduledTimes={scheduledTimes}
             duration={duration}
+            selectedDate={date}
           />
         </div>
         <div className="my-4">
           <div className="font-bold mb-2">사용 시간</div>
-          <DurationPicker handleButtonClick={handleDurationChange} />
+          <DurationPicker
+            handleButtonClick={handleDurationChange}
+            selectedDate={date}
+            startTime={startTime} // <-- Pass this
+            scheduledTimes={scheduledTimes} // <-- Pass this
+            openingHours={openingHours}
+          />
         </div>
         <div className="bg-gray-100 rounded-lg p-4">
           <div className="mb-2">예약 일정</div>

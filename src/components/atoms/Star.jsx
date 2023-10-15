@@ -9,13 +9,9 @@ const Star = ({ starcount = "0.0", reviewcount }) => {
   return (
     <div className="w-14 h-4 items-center gap-1 inline-flex">
       <img className="w-3 h-3" src={StarImg} alt="Star" />
-      <div className="text-black text-sm font-normal font-['Pretendard']">
-        {starcount}
-      </div>
+      <div className="text-black text-sm">{starcount}</div>
       {reviewcount && (
-        <div className="text-neutral-400 text-sm font-normal font-['Pretendard']">
-          ({reviewcount})
-        </div>
+        <div className="text-neutral-400 text-sm">({reviewcount})</div>
       )}
     </div>
   );

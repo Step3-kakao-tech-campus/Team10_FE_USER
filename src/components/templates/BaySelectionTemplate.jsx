@@ -9,26 +9,36 @@ const BaySelectionTemplate = ({
     weekday: { start: "00:00", end: "24:00" },
     weekend: { start: "00:00", end: "24:00" },
   },
-  bayscheduledata = [
+
+  // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
+  bayList = [
     {
-      bay_count: 1,
-      scheduledTimes: [
-        { start: "10:00", end: "13:30" },
-        { start: "14:00", end: "14:30" },
+      bayId: 2,
+      bayNo: 1,
+      bayBookedTime: [
+        {
+          startTime: "2023-10-15T18:30",
+          endTime: "2023-10-15T20:30:",
+        },
+        {
+          startTime: "2023-10-15T22:00",
+          endTime: "2023-10-15T23:00",
+        },
       ],
     },
     {
-      bay_count: 2,
-      scheduledTimes: [
-        { start: "11:00", end: "12:30" },
-        { start: "15:00", end: "16:00" },
-      ],
-    },
-    {
-      bay_count: 3,
-      scheduledTimes: [
-        { start: "11:00", end: "12:30" },
-        { start: "15:00", end: "16:00" },
+      bayId: 3,
+      bayNo: 2,
+      bayBookedTime: [
+        {
+          startTime: "2023-10-15T18:00",
+          endTime: "2023-10-15T20:00:",
+        },
+
+        {
+          startTime: "2023-10-15T20:00",
+          endTime: "2023-10-15T22:00",
+        },
       ],
     },
   ],
@@ -49,7 +59,11 @@ const BaySelectionTemplate = ({
         </div>
       </div>
       <div>
-        <BayList bays={bayscheduledata} openingHours={openingHours} />
+        <BayList
+          bays={bayList}
+          openingHours={openingHours}
+          selectedDate={new Date()}
+        />
       </div>
     </div>
   );

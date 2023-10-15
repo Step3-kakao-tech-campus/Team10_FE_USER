@@ -11,7 +11,7 @@ const iconsrc = {
 };
 
 const PaymentResultTemplate = () => {
-  const [paymentresult, setpaymentresult] = useState([]);
+  const [paymentresult, setpaymentresult] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -19,13 +19,43 @@ const PaymentResultTemplate = () => {
     fetch("/reservations")
       .then((res) => res.json())
       .then((data) => {
-        setpaymentresult(data);
+        setpaymentresult(data.response); // 바로 response에 접근
         setLoading(false);
       });
   }, []);
 
-  const starttime = paymentresult?.response?.reservation?.time.start;
-  const endtime = paymentresult?.response?.reservation?.time.end;
+  if (loading) return <div>Loading...</div>;
+  if (!paymentresult) return null;
+
+  const {
+    reservation: {
+      time: { start, end },
+      price,
+    },
+    carwash: {
+      name: carwashname,
+      location: { latitude, longitude },
+    },
+  } = paymentresult;
+
+  const extractTime = (dateTime) => {
+    const date = new Date(dateTime);
+    return (
+      date.getHours().toString().padStart(2, "0") +
+      ":" +
+      date.getMinutes().toString().padStart(2, "0")
+    );
+  };
+
+  const extractDay = (dateTime) => {
+    const date = new Date(dateTime);
+    return (
+      date.getMonth().toString().padStart(2, "0") +
+      "월 " +
+      date.getDay().toString().padStart(2, "0") +
+      "일"
+    );
+  };
 
   return (
     <div className="relative grid gap-8">
@@ -34,17 +64,17 @@ const PaymentResultTemplate = () => {
         <div className="text-left text-sm">득광하세요!</div>
       </section>
       <section className="grid gap-4">
-        <TextWithIcon text="2023/09/08" iconsrc={iconsrc.calendar} />
+        <TextWithIcon text={extractDay(start)} iconsrc={iconsrc.calendar} />
         <hr />
         <TextWithIcon
-          text={{ starttime } + "~" + { endtime }}
+          text={`${extractTime(start)}~${extractTime(end)}`}
           iconsrc={iconsrc.clock}
         />
         <hr />
-        <TextWithIcon text="용봉세차타운:베이 7" iconsrc={iconsrc.location} />
+        <TextWithIcon text={carwashname} iconsrc={iconsrc.location} />
         <hr />
-        <TextWithIcon text="20,000원" iconsrc={iconsrc.price} />
-        <MapWithPin lat="35.17388" lng="126.9112" text="용봉세차타운" />
+        <TextWithIcon text={`${price}원`} iconsrc={iconsrc.price} />
+        <MapWithPin lat={latitude} lng={longitude} text="용봉세차타운" />
       </section>
       <Button className="fixed bottom-0" label="홈으로" />
     </div>

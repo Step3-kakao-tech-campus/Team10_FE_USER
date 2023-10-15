@@ -1,17 +1,17 @@
 import React from "react";
 import TimeImage from "/StoreInfo/Time.svg";
-import Photo from "../atoms/Photo";
+import Image from "../atoms/Image";
 import BayList from "../molecules/BayList";
 
-const BaySelectionTemplate = ({
-  name = "포세이돈워시 용봉점",
-  openingHours = {
+const BaySelectionTemplate = ({}) => {
+  const name = "포세이돈워시 용봉점";
+  const openingHours = {
     weekday: { start: "00:00", end: "24:00" },
     weekend: { start: "00:00", end: "24:00" },
-  },
+  };
 
   // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
-  bayList = [
+  const bayList = [
     {
       bayId: 2,
       bayNo: 1,
@@ -41,14 +41,14 @@ const BaySelectionTemplate = ({
         },
       ],
     },
-  ],
-}) => {
+  ];
+
   return (
     <div className="relative p-4">
       <div className="mb-4 font-bold">{"<"}</div>
-      <div className="mb-4 font-bold text-xl">{name}</div>
+      <div className="mb-4 text-xl font-bold">{name}</div>
       <div className="flex gap-2 mb-4">
-        <Photo src={TimeImage} alt="영업시간" />
+        <Image src={TimeImage} alt="영업시간" />
         <div>
           <div>
             평일 {openingHours.weekday.start} ~ {openingHours.weekday.end}

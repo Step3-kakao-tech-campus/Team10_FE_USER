@@ -9,7 +9,7 @@ const ReviewPostTemplate = () => {
       <StarPicker />
       <BadgeSet />
       <textarea
-        className="h-40 p-4 rounded-lg items-center bg-slate-100 resize-none"
+        className="items-center h-40 p-4 rounded-lg resize-none bg-slate-100"
         placeholder="후기를 입력해주세요."
       />
       <Button label="후기등록" className="fixed bottom-0" />

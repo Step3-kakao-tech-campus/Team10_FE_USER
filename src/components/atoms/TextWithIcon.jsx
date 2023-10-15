@@ -6,7 +6,7 @@
 export const TextWithIcon = ({ iconsrc, text, className }) => {
   return (
     <div className={`h-6 items-left gap-1 inline-flex ${className}`}>
-      <picture className="w-6 h-6 relative">
+      <picture className="relative w-6 h-6">
         <img className="w-6 h-6" src={iconsrc} />
         {/* src 변수로 가져오기 */}
       </picture>

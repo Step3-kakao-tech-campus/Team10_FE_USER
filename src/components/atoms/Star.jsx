@@ -7,11 +7,11 @@ import StarImg from "/StarPicker/checkedstar.svg";
  */
 const Star = ({ starcount = "0.0", reviewcount }) => {
   return (
-    <div className="w-14 h-4 items-center gap-1 inline-flex">
+    <div className="inline-flex items-center h-4 gap-1 w-14">
       <img className="w-3 h-3" src={StarImg} alt="Star" />
-      <div className="text-black text-sm">{starcount}</div>
+      <div className="text-sm text-black">{starcount}</div>
       {reviewcount && (
-        <div className="text-neutral-400 text-sm">({reviewcount})</div>
+        <div className="text-sm text-neutral-400">({reviewcount})</div>
       )}
     </div>
   );

@@ -4,10 +4,10 @@ import { Button } from "../atoms/Button";
 const CancelSheet = ({ className, reservetime, bayname, priceinfo }) => {
   return (
     <Bottomsheet className={className}>
-      <div className="text-black text-2xl font-bold p-4">
+      <div className="p-4 text-2xl font-bold text-black">
         예약을 취소하시겠습니까?
       </div>
-      <div className="flex flex-col w-screen  rounded-lg p-4 bg-slate-200">
+      <div className="flex flex-col w-screen p-4 rounded-lg bg-slate-200">
         <div className="flex flex-row">
           <div>매장명</div>
           <div className="ml-auto">{bayname}</div>

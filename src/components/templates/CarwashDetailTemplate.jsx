@@ -52,14 +52,14 @@ const CarwashDetailTemplate = ({
 }) => {
   return (
     <div className="relative">
-      <div className="flex-grow overflow-y-auto pb-20">
+      <div className="flex-grow pb-20 overflow-y-auto">
         {/* 캐러셀 */}
         <ImageCarousel images={image} />
         <div className="p-4">
           <div className="flex justify-between">
             <div className="flex flex-col">
               {/* 매장명 */}
-              <div className="font-bold text-xl">{name}</div>
+              <div className="text-xl font-bold">{name}</div>
               {/* 별점 */}
               <Star starcount={starcount} reviewcount={reviewcount} />
             </div>

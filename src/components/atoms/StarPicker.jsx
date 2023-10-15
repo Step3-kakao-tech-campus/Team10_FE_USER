@@ -11,7 +11,7 @@ export const StarPicker = () => {
   };
 
   return (
-    <div className="flex justify-center items-center ">
+    <div className="flex items-center justify-center ">
       {Array.from({ length: 5 }).map((_, index) => (
         <React.Fragment key={index}>
           <input
@@ -32,7 +32,7 @@ export const StarPicker = () => {
                   : uncheckedStar
               }
               alt={`star ${index + 1}`}
-              className="h-11 w-11 cursor-pointer"
+              className="cursor-pointer h-11 w-11"
             />
           </label>
         </React.Fragment>

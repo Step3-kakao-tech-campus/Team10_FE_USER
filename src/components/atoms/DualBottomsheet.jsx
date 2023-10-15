@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useSpring, animated, config } from "react-spring";
 import { useDrag } from "react-use-gesture";
-import { Bottomsheet } from "./Bottomsheet";
 
 const BOTTOM_THRESHOLD = 241;
 

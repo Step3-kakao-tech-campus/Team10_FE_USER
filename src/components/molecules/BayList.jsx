@@ -1,15 +1,17 @@
 import React from "react";
-import BayItem from "../atoms/BayItem"; // Adjust the import path as needed
+import BayItem from "../atoms/BayItem";
 
-const BayList = ({ bays, openingHours }) => {
+const BayList = ({ bays, openingHours, selectedDate }) => {
   return (
     <div className="grid gap-2">
       {bays.map((item, index) => (
         <BayItem
           key={index}
-          bay_count={item.bay_count}
-          scheduledTimes={item.scheduledTimes}
+          bayId={item.bayId}
+          bayNo={item.bayNo}
+          bayBookedTime={item.bayBookedTime}
           openingHours={openingHours}
+          selectedDate={selectedDate}
         />
       ))}
     </div>

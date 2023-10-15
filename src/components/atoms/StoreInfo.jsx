@@ -1,29 +1,31 @@
-import React from 'react';
-import { BiSolidTimeFive, BiSolidMap} from 'react-icons/bi';
-import { BsFillTelephoneFill } from'react-icons/bs';
+import React from "react";
+import Image from "./Image";
+import TimeImage from "/StoreInfo/Time.svg";
+import MapImage from "/StoreInfo/Map.svg";
+import TelImage from "/StoreInfo/Tel.svg";
 
-const StoreInfo = () => {
-    return (
-        <div className='w-96 py-2 bg-gray-100 rounded-lg'>
-            <div className='flex flex-col mt-1 gap-2'>
-            <div className='flex flex-items gap-2 ml-4 mt-25'>
-            <BiSolidTimeFive className='mt-1' />
-                <div>
-                    <div>평일 오전 7:00 ~ 오후 11:00</div>
-                    <div className='text-left'>주말 24시간 영업</div>
-                </div>
-            </div>
-            <div className='flex flex-items gap-2 ml-4 mt-25'>
-                <BsFillTelephoneFill />
-                <div> 062-000-0000</div>
-            </div>
-            <div className='flex flex-items gap-2 ml-4 mt-25'>
-                <BiSolidMap className='mt-1'/>
-                <div>광주 북구 설죽로 266</div>
-            </div>
-            </div>
+const StoreInfo = ({ weekhour, weekendhour, tel, address }) => {
+  return (
+    <div className="grid gap-2 p-4 bg-gray-100 rounded-lg">
+      <div className="flex items-center gap-2">
+        <Image src={TimeImage} alt="영업시간" />
+        <div className="text-xs">
+          <div>{weekhour}</div>
+          <div className="text-left">{weekendhour}</div>
         </div>
-    );
+      </div>
+      <div className="flex items-center gap-2">
+        <Image src={TelImage} alt="전화번호" />
+        <a href={`tel:${tel}`} className="text-xs text-primary">
+          {tel}
+        </a>
+      </div>
+      <div className="flex items-center gap-2">
+        <Image src={MapImage} alt="주소" />
+        <div className="text-xs">{address}</div>
+      </div>
+    </div>
+  );
 };
 
 export default StoreInfo;

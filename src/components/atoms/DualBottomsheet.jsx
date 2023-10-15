@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { useSpring, animated, config } from "react-spring";
 import { useDrag } from "react-use-gesture";
-import { Bottomsheet } from "./Bottomsheet";
 
 const BOTTOM_THRESHOLD = 241;
 
-const expandedcss = "z-10 flex flex-col gap-3 h-80 overflow-y: scroll";
-const closedcss = "z-10 flex flex-col gap-3 h-40 overflow-y: scroll";
-
 const DualBottomsheet = ({ className, children }) => {
-  const [active, setActive] = useState({ top: false, bottom: false });
+  const [active, setActive] = useState({ bottom: false });
   const [expanded, setExpanded] = useState(false);
   const [{ y: bottomY }, bottomSet] = useSpring(() => ({
     y: 400,
@@ -19,8 +15,7 @@ const DualBottomsheet = ({ className, children }) => {
   }));
   const y = bottomY;
   const set = bottomSet;
-  const onActive = (bottomActive) =>
-    setActive({ ...active, bottom: bottomActive });
+  const onActive = (bottomActive) => setActive({ bottom: bottomActive });
   const onProgress = (y, reset) => {
     if (active.bottom) {
       if (reset) {

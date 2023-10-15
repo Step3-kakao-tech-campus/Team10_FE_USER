@@ -1,26 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-const KeywordReview = ({ keyword, reviewCount }) => {
-  const [fillPercentage, setFillPercentage] = useState(0);
-
-  useEffect(() => {
-    const calculatedFillPercentage = (reviewCount / 200) * 100; // 최대 200건을 기준으로 계산
-    setFillPercentage(calculatedFillPercentage);
-  }, [reviewCount]);
+const KeywordReview = ({ keyword, reviewCount, totalReviews }) => {
+  const fillPercentage = (reviewCount / totalReviews) * 100;
 
   return (
-    <div className="mb-2 mt-2">
-      <div className="flex items-center">
-        <div className="w-96 p-2 ml-4 bg-gray-200 text-gray-700 rounded-lg relative flex justify-between items-center">
-          <div className="text-black font-semibold">
-            {keyword}
-          </div>
-          <div className="text-sky-500 font-semibold">
-            {reviewCount}
-          </div>
-          <div className="h-full absolute left-0 top-0 rounded-lg" style={{ width: `${fillPercentage}%`, backgroundColor: "rgba(14, 165, 233, 0.3)" }}></div>
-        </div>
-      </div>
+    <div className="relative flex items-center justify-between w-auto p-2 text-gray-700 bg-gray-200 rounded-lg">
+      <div className="text-sm font-semibold text-black">{keyword}</div>
+      <div className="text-sm font-semibold text-primary">{reviewCount}</div>
+      <div
+        className="absolute top-0 left-0 h-full rounded-lg bg-primary opacity-20"
+        style={{
+          width: `${fillPercentage}%`,
+        }}
+      ></div>
     </div>
   );
 };

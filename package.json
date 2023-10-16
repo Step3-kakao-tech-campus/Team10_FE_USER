@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "host": "vite --host",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
@@ -49,8 +48,7 @@
     "storybook": "^7.4.5",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "^3.3.3",
-    "vite": "^4.4.5",
-    "vite-plugin-pwa": "^0.16.5"
+    "vite": "^4.4.5"
   },
   "msw": {
     "workerDirectory": "public"

@@ -1,6 +1,7 @@
 import { rest } from "msw";
 import carwashes_nearby from "./apis/carwashes_nearby";
 import reservations from "./apis/reservations";
+import carwashes_introduction from "./apis/carwashes_introduction";
 const currentpos = [];
 
 export const handlers = [
@@ -9,6 +10,9 @@ export const handlers = [
   }),
   rest.get("/reservations", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(reservations));
+  }),
+  rest.get("/carwashes/introduction", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(carwashes_introduction));
   }),
 
   rest.post("/currentpos", (req, res, ctx) => {

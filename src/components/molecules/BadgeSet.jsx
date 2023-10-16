@@ -2,7 +2,7 @@ import { Badge } from "../atoms/Badge";
 
 export const BadgeSet = () => {
   return (
-    <div className="flex gap-2 justify-center items-center flex-wrap">
+    <div className="flex flex-wrap items-center justify-center gap-2">
       <Badge label="사장님이 친절해요" />
       <Badge label="간단한 용품을 팔아요" />
       <Badge label="휴게공간이 있어요" />

@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 
 const TimePicker = ({
+  bayId,
+  bayNo,
   openingHours,
   handleButtonClick,
   scheduledTimes = [],
+  selectedDate,
 }) => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [isMorningSelected, setIsMorningSelected] = useState(true);
+
+  const bayScheduledTimes =
+    scheduledTimes.find((bay) => bay.bayId === bayId && bay.bayNo === bayNo)
+      ?.times || [];
 
   const generateTime = (start, end) => {
     const times = [];
@@ -30,11 +37,19 @@ const TimePicker = ({
   };
 
   const isScheduled = (time) => {
-    return scheduledTimes.some((schedule) => {
+    return bayScheduledTimes.some((schedule) => {
+      const scheduleDate = new Date(schedule.start).toLocaleDateString();
+      const selectedDateStr = selectedDate.toLocaleDateString();
+      if (scheduleDate !== selectedDateStr) {
+        return false;
+      }
+
       let [scheduleStartHour, scheduleStartMin] = schedule.start
+        .split("T")[1]
         .split(":")
         .map(Number);
       let [scheduleEndHour, scheduleEndMin] = schedule.end
+        .split("T")[1]
         .split(":")
         .map(Number);
       let [checkHour, checkMin] = time.split(":").map(Number);
@@ -62,7 +77,7 @@ const TimePicker = ({
         <button
           onClick={() => setIsMorningSelected(true)}
           className={`p-2 border ${
-            isMorningSelected ? "bg-sky-500 text-white" : "bg-white"
+            isMorningSelected ? "bg-primary text-white" : "bg-white"
           } rounded-md cursor-pointer`}
         >
           오전
@@ -70,7 +85,7 @@ const TimePicker = ({
         <button
           onClick={() => setIsMorningSelected(false)}
           className={`p-2 border ${
-            !isMorningSelected ? "bg-sky-500 text-white" : "bg-white"
+            !isMorningSelected ? "bg-primary text-white" : "bg-white"
           } rounded-md cursor-pointer`}
         >
           오후
@@ -83,7 +98,7 @@ const TimePicker = ({
             onClick={() => handleTimeClick(time)}
             disabled={isScheduled(time)}
             className={`w-16 h-12 border rounded-md ${
-              selectedTime === time ? "bg-sky-500 text-white" : "bg-white"
+              selectedTime === time ? "bg-primary text-white" : "bg-white"
             } ${isScheduled(time) && "opacity-50 cursor-not-allowed"}`}
           >
             {time}

@@ -5,48 +5,32 @@ import DatePicker from "../molecules/DatePicker";
 import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
 
-const ScheduleTemplate = ({}) => {
+const ScheduleTemplate = () => {
   const name = "포세이돈워시 용봉점";
   const openingHours = {
     weekday: { start: "00:00", end: "24:00" },
     weekend: { start: "00:00", end: "24:00" },
   };
 
-  // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
-  const bayList = [
-    {
-      bayId: 2,
-      bayNo: 1,
-      bayBookedTime: [
-        {
-          startTime: "2023-10-15T18:30",
-          endTime: "2023-10-15T20:30:",
-        },
-        {
-          startTime: "2023-10-15T22:00",
-          endTime: "2023-10-15T23:00",
-        },
-      ],
-    },
-    {
-      bayId: 3,
-      bayNo: 2,
-      bayBookedTime: [
-        {
-          startTime: "2023-10-15T18:00",
-          endTime: "2023-10-15T20:00:",
-        },
+  const bayInfo = {
+    bayId: 2,
+    bayNo: 1,
+    bayBookedTime: [
+      {
+        startTime: "2023-10-18T15:30",
+        endTime: "2023-10-18T17:30",
+      },
+      {
+        startTime: "2023-10-18T12:00",
+        endTime: "2023-10-18T14:00",
+      },
+    ],
+  };
 
-        {
-          startTime: "2023-10-15T20:00",
-          endTime: "2023-10-15T22:00",
-        },
-      ],
-    },
-  ];
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
   const [duration, setDuration] = useState();
+
   const handleDateChange = (date) => {
     setDate(date);
     setStartTime(null);
@@ -64,17 +48,16 @@ const ScheduleTemplate = ({}) => {
 
   const computeEndTime = () => {
     if (!startTime || !duration) return;
-
     const [hours, minutes] = startTime.split(":").map(Number);
     const endTimeInMinutes = hours * 60 + minutes + duration;
     const endHour = Math.floor(endTimeInMinutes / 60);
     const endMinute = endTimeInMinutes % 60;
-
     return `${String(endHour).padStart(2, "0")}:${String(endMinute).padStart(
       2,
       "0"
     )}`;
   };
+
   const computedEndTime = computeEndTime();
 
   const combineDateTime = (date, time) => {
@@ -89,11 +72,11 @@ const ScheduleTemplate = ({}) => {
       <div className="flex-grow pb-12 overflow-y-auto">
         <div className="mb-4 font-bold">{"<"}</div>
         <div className="mb-4 text-xl font-bold">
-          {name}: 베이 {bayList.bayNo}
+          {name}: 베이 {bayInfo.bayNo}
         </div>
 
         <div className="flex gap-2 mb-4">
-          <Image src={TimeImage} alt="영업시간" />
+          <Image src={TimeImage} alt="영업시간" className="py-1" />
           <div>
             <div>
               평일 {openingHours.weekday.start} ~ {openingHours.weekday.end}
@@ -109,10 +92,10 @@ const ScheduleTemplate = ({}) => {
         <div className="my-4">
           <div className="my-1 font-bold">시작 시간</div>
           <TimePicker
-            bayId={bayList.bayId}
+            bayId={bayInfo.bayId}
             openingHours={openingHours}
             handleButtonClick={handleStartTimeChange}
-            scheduledTimes={bayList.bayBookedTime}
+            scheduledTimes={bayInfo.bayBookedTime}
             duration={duration}
             selectedDate={date}
           />
@@ -120,11 +103,11 @@ const ScheduleTemplate = ({}) => {
         <div className="my-4">
           <div className="mb-2 font-bold">사용 시간</div>
           <DurationPicker
-            bayId={bayList.bayId}
+            bayId={bayInfo.bayId}
             handleButtonClick={handleDurationChange}
             selectedDate={date}
             startTime={startTime}
-            scheduledTimes={bayList.bayBookedTime}
+            scheduledTimes={bayInfo.bayBookedTime}
             openingHours={openingHours}
           />
         </div>
@@ -132,9 +115,9 @@ const ScheduleTemplate = ({}) => {
           <div className="mb-2">예약 일정</div>
           <div className="mb-4">
             {date &&
-              `${date?.getFullYear()}년 ${
-                date?.getMonth() + 1
-              }월 ${date?.getDate()}일 ${startTime ? startTime : ""} ${
+              `${date.getFullYear()}년 ${
+                date.getMonth() + 1
+              }월 ${date.getDate()}일 ${startTime || ""} ${
                 computedEndTime ? `~ ${computedEndTime}` : ""
               }`}
           </div>

@@ -34,8 +34,8 @@ const BayItem = ({ bayNo, bayBookedTime = [], openingHours, selectedDate }) => {
   const closingHour = getClosingHour();
 
   return (
-    <div className="py-4 border border-gray-300 rounded-xl overflow-x-auto">
-      <div className="font-semibold p-2">베이 {bayNo}</div>
+    <div className="py-4 overflow-x-auto border border-gray-300 rounded-xl">
+      <div className="p-2 font-semibold">베이 {bayNo}</div>
       <div className="flex justify-center px-4">
         <div className="flex">
           {Array.from({ length: closingHour - currentHour }).map((_, index) => {
@@ -45,7 +45,7 @@ const BayItem = ({ bayNo, bayBookedTime = [], openingHours, selectedDate }) => {
 
             return (
               <div key={hour} className="flex flex-col items-center px-1">
-                <div className="w-2 h-8 flex flex-col">
+                <div className="flex flex-col w-2 h-8">
                   <div
                     className={`flex-grow ${
                       startReserved ? "bg-primary" : "bg-gray-200"

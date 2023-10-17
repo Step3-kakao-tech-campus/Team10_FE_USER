@@ -48,7 +48,7 @@ const BaySelectionTemplate = ({}) => {
       <div className="mb-4 font-bold">{"<"}</div>
       <div className="mb-4 text-xl font-bold">{name}</div>
       <div className="flex gap-2 mb-4">
-        <Image src={TimeImage} alt="영업시간" />
+        <Image src={TimeImage} alt="영업시간" className="py-1" />
         <div>
           <div>
             평일 {openingHours.weekday.start} ~ {openingHours.weekday.end}

@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const DurationPicker = ({
-  bayId,
-  bayNo,
   handleButtonClick,
   startTime,
   scheduledTimes = [],
   selectedDate,
   openingHours,
 }) => {
-  const [selectedDuration, setSelectedDuration] = useState();
   const durations = [30, 60, 90, 120, 180, 240];
-
-  const bayScheduledTimes =
-    scheduledTimes.find((bay) => bay.bayId === bayId && bay.bayNo === bayNo)
-      ?.times || [];
+  const [selectedDuration, setSelectedDuration] = useState();
+  useEffect(() => {
+    setSelectedDuration(null);
+  }, [selectedDate, startTime]);
 
   const getEndTime = (duration) => {
     if (!startTime) return;
@@ -28,21 +25,49 @@ const DurationPicker = ({
     )}`;
   };
 
+  const getMaxEndTime = () => {
+    const weekday = [1, 2, 3, 4, 5];
+    const dayOfWeek = selectedDate.getDay();
+
+    let endHour;
+    if (weekday.includes(dayOfWeek)) {
+      [endHour] = openingHours.weekday.end.split(":").map(Number);
+    } else {
+      [endHour] = openingHours.weekend.end.split(":").map(Number);
+    }
+    return endHour * 60;
+  };
+
   const isDurationOverlapping = (duration) => {
     if (!startTime) return true;
 
-    const startTimeWithDate = new Date(
-      `${selectedDate.toISOString().split("T")[0]}T${startTime}:00`
-    );
-    const endTimeWithDate = new Date(
-      `${selectedDate.toISOString().split("T")[0]}T${getEndTime(duration)}:00`
-    );
+    const [startHours, startMinutes] = startTime.split(":").map(Number);
+    const startTimeInMinutes = startHours * 60 + startMinutes;
+    const endTimeInMinutes = startTimeInMinutes + duration;
 
-    for (let i = 0; i < bayScheduledTimes.length; i++) {
-      const scheduleStart = new Date(bayScheduledTimes[i].start);
-      const scheduleEnd = new Date(bayScheduledTimes[i].end);
+    if (endTimeInMinutes > getMaxEndTime()) return true;
 
-      if (startTimeWithDate < scheduleEnd && endTimeWithDate > scheduleStart) {
+    for (let i = 0; i < scheduledTimes.length; i++) {
+      const [schedStartHours, schedStartMinutes] = scheduledTimes[i].startTime
+        .split("T")[1]
+        .split(":")
+        .map(Number);
+      const schedStartTimeInMinutes = schedStartHours * 60 + schedStartMinutes;
+
+      const [schedEndHours, schedEndMinutes] = scheduledTimes[i].endTime
+        .split("T")[1]
+        .split(":")
+        .map(Number);
+      const schedEndTimeInMinutes = schedEndHours * 60 + schedEndMinutes;
+
+      if (
+        (startTimeInMinutes >= schedStartTimeInMinutes &&
+          startTimeInMinutes < schedEndTimeInMinutes) ||
+        (endTimeInMinutes > schedStartTimeInMinutes &&
+          endTimeInMinutes <= schedEndTimeInMinutes) ||
+        (startTimeInMinutes <= schedStartTimeInMinutes &&
+          endTimeInMinutes >= schedEndTimeInMinutes)
+      ) {
         return true;
       }
     }
@@ -63,12 +88,14 @@ const DurationPicker = ({
             key={duration}
             onClick={() => handleDurationClick(duration)}
             disabled={isDurationOverlapping(duration)}
-            className={`p-2 border ${
+            className={`p-2 border rounded-md ${
               selectedDuration === duration
-                ? "bg-primary text-white rounded-md"
-                : "bg-white rounded-md"
+                ? "bg-primary text-white"
+                : "bg-white"
             } ${
-              isDurationOverlapping(duration) && "opacity-50 cursor-not-allowed"
+              isDurationOverlapping(duration)
+                ? "opacity-50 cursor-not-allowed"
+                : "cursor-pointer"
             }`}
           >
             {duration}분

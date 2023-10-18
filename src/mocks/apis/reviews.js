@@ -14,6 +14,10 @@ const reviews = {
         id: 3,
         keyword: "시설이 청결해요",
       },
+      {
+        id: 4,
+        keyword: "가격이 합리적이에요",
+      },
     ],
   },
   error: null,

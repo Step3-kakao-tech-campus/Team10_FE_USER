@@ -46,7 +46,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(reservations_payment));
   }),
 
-  rest.post("/currentpos", (req, res, ctx) => {
+  rest.post("/carwashespost", (req, res, ctx) => {
     currentpos.push(JSON.stringify(req.body));
     console.log(currentpos);
     return res(ctx.status(200));

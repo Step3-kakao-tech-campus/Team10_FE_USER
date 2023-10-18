@@ -20,14 +20,14 @@ const DualBottomsheet = ({ className, children }) => {
     if (active.bottom) {
       if (reset) {
         if (y === 400) {
-          topSet({ y: 320, config: { duration: 250 } });
+          set.start({ y: 320, config: { duration: 250 } });
         } else if (y === 82) {
-          topSet({ y: 60, config: { duration: 250 } });
+          set.start({ y: 60, config: { duration: 250 } });
         }
         return;
       }
       if (y < 342) {
-        topSet({ y: y - 22, config: { duration: 60 } });
+        set.start({ y: y - 22, config: { duration: 60 } });
       }
     }
   };

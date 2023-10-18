@@ -1,9 +1,25 @@
 import ReviewList from "../molecules/ReviewList";
 import KeywordReview from "./KeywordReview";
 import UserStar from "./UserStar";
-
+import { useEffect, useState } from "react";
 const TabReview = () => {
   const averageStar = 4.5;
+
+  const [carwashreviews, setReview] = useState(null);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    fetch("/carwashes/reviews")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setReview(data.response);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (!carwashreviews) return null;
 
   const reviews = [
     {
@@ -45,6 +61,8 @@ const TabReview = () => {
     },
   ];
 
+  // api 문서를 보면 각각의 review에 keywordidlist가 id(int) 속성으로 개별적으로 부여되어 있고,
+  // 해당 keyword의 총 개수 이런 건 없는데 어떻게 처리할 지 생각해 봐야 할 것 같아요.
   const KeywordReviewData = [
     { keyword: "여름엔 시원하고 겨울엔 따뜻해요", reviewCount: 20 },
     { keyword: "사장님이 친절해요", reviewCount: 120 },

@@ -4,7 +4,6 @@ import UserStar from "./UserStar";
 import { useEffect, useState } from "react";
 const TabReview = () => {
   const averageStar = 4.5;
-
   const [carwashreviews, setReview] = useState(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -12,54 +11,21 @@ const TabReview = () => {
     fetch("/carwashes/reviews")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        setReview(data.response);
+        // Transform the reviews data from carwashes_reviews to match the expected structure
+        const transformedReviews = data.response.reviews.map((review) => ({
+          rating: review.rate,
+          username: review.username,
+          date: review.created_at.split("T")[0], // Extracting just the date from the ISO string
+          content: review.comment,
+        }));
+
+        setReview(transformedReviews);
         setLoading(false);
       });
   }, []);
 
   if (loading) return <div>Loading...</div>;
   if (!carwashreviews) return null;
-
-  const reviews = [
-    {
-      rating: 5.0,
-      username: "사용자1",
-      date: "2023-09-15",
-      content:
-        "즐겁게 세차하고 왔습니다. 아침 일찍 세차하느라 배고팠는데 사장님께서 빵과 시원한 커피 주셔서 맛있게 먹었습니다!",
-    },
-    {
-      rating: 4.5,
-      username: "사용자2",
-      date: "2023-09-16",
-      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
-    },
-    {
-      rating: 4.5,
-      username: "사용자2",
-      date: "2023-09-16",
-      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
-    },
-    {
-      rating: 4.5,
-      username: "사용자2",
-      date: "2023-09-16",
-      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
-    },
-    {
-      rating: 4.5,
-      username: "사용자2",
-      date: "2023-09-16",
-      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
-    },
-    {
-      rating: 4.5,
-      username: "사용자2",
-      date: "2023-09-16",
-      content: "좋은 경험이었습니다. 깔끔하고 친절한 서비스였어요.",
-    },
-  ];
 
   // api 문서를 보면 각각의 review에 keywordidlist가 id(int) 속성으로 개별적으로 부여되어 있고,
   // 해당 keyword의 총 개수 이런 건 없는데 어떻게 처리할 지 생각해 봐야 할 것 같아요.
@@ -99,7 +65,7 @@ const TabReview = () => {
         </div>
         <hr />
         <div className="font-semibold">리뷰 432건</div>
-        <ReviewList reviews={reviews} />
+        <ReviewList reviews={carwashreviews} />
       </div>
     </div>
   );

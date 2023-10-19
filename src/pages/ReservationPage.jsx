@@ -10,8 +10,11 @@ import DualBottomsheet from "../components/atoms/DualBottomsheet";
 const ReservationPage = () => {
   const [washlists, setWashlists] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [keypoints, setKeypoints] = useState([1, 2, 3]);
 
   useEffect(() => {
+    // Fetch car wash list
     setLoading(true);
     fetch("/carwashes/nearby")
       .then((res) => res.json())
@@ -19,19 +22,42 @@ const ReservationPage = () => {
         setWashlists(data);
         setLoading(false);
       });
+
+    // Get current location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      });
+    }
+    handleSubmit();
   }, []);
 
-  const currentpos = [243, 45];
   const handleSubmit = (event) => {
-    event.preventDefault();
     setLoading(true);
-    fetch("currentpos", {
+    fetch("carwashespost", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: currentpos,
+      body: JSON.stringify({ ...location, keypoints }),
     });
+    setLoading(false);
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (!washlists) return null;
+
+  const handleBadgeClick = (value) => {
+    console.log(keypoints);
+    setKeypoints((prevKeypoints) =>
+      prevKeypoints.includes(value)
+        ? prevKeypoints.filter((point) => point !== value)
+        : [...prevKeypoints, value]
+    );
+    console.log(keypoints);
   };
 
   return (
@@ -42,23 +68,43 @@ const ReservationPage = () => {
           <Bottomsheet className="z-20 flex flex-col h-full gap-3 overflow-y-scroll">
             <Input placeholder="검색"></Input>
             <div className="flex flex-row gap-2">
-              <Badge label="하부세차" />
-              <Badge label="스노우폼" />
+              <Badge
+                key="1"
+                label="하부세차"
+                onClick={() => {
+                  handleBadgeClick(1);
+                  handleSubmit();
+                }}
+              />
+              <Badge
+                key="2"
+                label="폼건세차"
+                onClick={() => {
+                  handleBadgeClick(2);
+                  handleSubmit();
+                }}
+              />
+              <Badge
+                key="3"
+                label="온수세차"
+                onClick={() => {
+                  handleBadgeClick(3);
+                  handleSubmit();
+                }}
+              />
             </div>
             {washlists.response &&
-              washlists.response.map((item, index) => {
-                return (
-                  <StoreItem
-                    key={index}
-                    imgsrc={item.image}
-                    storename={item.name}
-                    starcount={item.star}
-                    reviewcount="0"
-                    priceinfo="15000/60분"
-                    distance={item.distance}
-                  />
-                );
-              })}
+              washlists.response.map((item, index) => (
+                <StoreItem
+                  key={index}
+                  imgsrc={item.image}
+                  storename={item.name}
+                  starcount={item.star}
+                  reviewcount="0"
+                  priceinfo="15000/60분"
+                  distance={item.distance}
+                />
+              ))}
             <Button
               type="small"
               label="재검색"

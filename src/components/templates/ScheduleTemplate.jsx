@@ -5,28 +5,45 @@ import DatePicker from "../molecules/DatePicker";
 import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
 
-const ScheduleTemplate = () => {
+const ScheduleTemplate = ({}) => {
   const name = "포세이돈워시 용봉점";
   const openingHours = {
     weekday: { start: "09:00", end: "17:00" },
-    weekend: { start: "00:00", end: "24:00" },
+    weekend: { start: "00:00", end: "23:59" },
   };
 
-  const bayInfo = {
-    bayId: 2,
-    bayNo: 1,
-    bayBookedTime: [
-      {
-        startTime: "2023-10-20T15:30",
-        endTime: "2023-10-20T16:30",
-      },
-      {
-        startTime: "2023-10-20T12:00",
-        endTime: "2023-10-20T14:00",
-      },
-    ],
-  };
+  // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
+  const bayList = [
+    {
+      bayId: 2,
+      bayNo: 1,
+      bayBookedTime: [
+        {
+          startTime: "2023-10-15T18:30",
+          endTime: "2023-10-15T20:30",
+        },
+        {
+          startTime: "2023-10-15T22:00",
+          endTime: "2023-10-15T23:00",
+        },
+      ],
+    },
+    {
+      bayId: 3,
+      bayNo: 2,
+      bayBookedTime: [
+        {
+          startTime: "2023-10-15T18:00",
+          endTime: "2023-10-15T20:00:",
+        },
 
+        {
+          startTime: "2023-10-15T20:00",
+          endTime: "2023-10-15T22:00",
+        },
+      ],
+    },
+  ];
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
   const [duration, setDuration] = useState();
@@ -72,11 +89,11 @@ const ScheduleTemplate = () => {
       <div className="flex-grow pb-12 overflow-y-auto">
         <div className="mb-4 font-bold">{"<"}</div>
         <div className="mb-4 text-xl font-bold">
-          {name}: 베이 {bayInfo.bayNo}
+          {name}: 베이 {bayList.bayNo}
         </div>
 
         <div className="flex gap-2 mb-4">
-          <Image src={TimeImage} alt="영업시간" className="py-1" />
+          <Image src={TimeImage} alt="영업시간" />
           <div>
             <div>
               평일 {openingHours.weekday.start} ~ {openingHours.weekday.end}
@@ -92,10 +109,10 @@ const ScheduleTemplate = () => {
         <div className="my-4">
           <div className="my-1 font-bold">시작 시간</div>
           <TimePicker
-            bayId={bayInfo.bayId}
+            bayId={bayList.bayId}
             openingHours={openingHours}
             handleButtonClick={handleStartTimeChange}
-            scheduledTimes={bayInfo.bayBookedTime}
+            scheduledTimes={bayList.bayBookedTime}
             duration={duration}
             selectedDate={date}
           />
@@ -103,11 +120,11 @@ const ScheduleTemplate = () => {
         <div className="my-4">
           <div className="mb-2 font-bold">사용 시간</div>
           <DurationPicker
-            bayId={bayInfo.bayId}
+            bayId={bayList.bayId}
             handleButtonClick={handleDurationChange}
             selectedDate={date}
             startTime={startTime}
-            scheduledTimes={bayInfo.bayBookedTime}
+            scheduledTimes={bayList.bayBookedTime}
             openingHours={openingHours}
           />
         </div>

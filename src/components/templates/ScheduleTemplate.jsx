@@ -5,7 +5,7 @@ import DatePicker from "../molecules/DatePicker";
 import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
 
-const ScheduleTemplate = ({}) => {
+const ScheduleTemplate = () => {
   const name = "포세이돈워시 용봉점";
   const openingHours = {
     weekday: { start: "09:00", end: "18:00" },

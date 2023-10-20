@@ -1,9 +1,11 @@
 import React from "react";
+import dayjs from "dayjs";
+import TimeSlot from "./TimeSlot";
 
-const BayItem = ({ bayNo, bayBookedTime = [], openingHours, selectedDate }) => {
+const BayItem = ({ bayNo, bayBookedTime, openingHours, selectedDate }) => {
   const getCurrentHour = () =>
     Math.max(
-      new Date().getHours(),
+      dayjs().hour(),
       parseInt(openingHours.weekday.start.split(":")[0])
     );
 
@@ -11,21 +13,13 @@ const BayItem = ({ bayNo, bayBookedTime = [], openingHours, selectedDate }) => {
 
   const timeIsReserved = (hour, halfHourCheck = false) => {
     return bayBookedTime.some(({ startTime, endTime }) => {
-      const [startHour, startMinute] = startTime
-        .split("T")[1]
-        .split(":")
-        .map(Number);
-      const [endHour, endMinute] = endTime.split("T")[1].split(":").map(Number);
-
-      const scheduleStartMinutes = startHour * 60 + startMinute;
-      const scheduleEndMinutes = endHour * 60 + endMinute;
-      const checkTimeMinutes = hour * 60 + (halfHourCheck ? 30 : 0);
+      const checkTime = halfHourCheck
+        ? dayjs(selectedDate).hour(hour).minute(30)
+        : dayjs(selectedDate).hour(hour).minute(0);
 
       return (
-        new Date(startTime).toLocaleDateString() ===
-          selectedDate.toLocaleDateString() &&
-        checkTimeMinutes >= scheduleStartMinutes &&
-        checkTimeMinutes < scheduleEndMinutes
+        checkTime.isAfter(dayjs(startTime)) &&
+        checkTime.isBefore(dayjs(endTime))
       );
     });
   };
@@ -37,37 +31,11 @@ const BayItem = ({ bayNo, bayBookedTime = [], openingHours, selectedDate }) => {
     <div className="py-4 overflow-x-auto border border-gray-300 rounded-xl">
       <div className="p-2 font-semibold">베이 {bayNo}</div>
       <div className="flex justify-center px-4">
-        <div className="flex">
-          {Array.from({ length: closingHour - currentHour }).map((_, index) => {
-            const hour = currentHour + index;
-            const startReserved = timeIsReserved(hour);
-            const halfReserved = timeIsReserved(hour, true);
-
-            return (
-              <div key={hour} className="flex flex-col items-center px-1">
-                <div className="flex flex-col w-2 h-8">
-                  <div
-                    className={`flex-grow ${
-                      startReserved ? "bg-primary" : "bg-gray-200"
-                    }`}
-                  />
-                  <div
-                    className={`flex-grow ${
-                      halfReserved ? "bg-primary" : "bg-gray-200"
-                    }`}
-                  />
-                </div>
-                <div
-                  className={`text-xs mt-1 ${
-                    hour === currentHour ? "text-yellow-500" : "text-gray-500"
-                  }`}
-                >
-                  {hour}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <TimeSlot
+          startHour={currentHour}
+          endHour={closingHour}
+          isReservedCallback={timeIsReserved}
+        />
       </div>
     </div>
   );

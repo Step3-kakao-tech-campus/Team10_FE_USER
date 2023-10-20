@@ -21,8 +21,8 @@ const BaySelectionTemplate = ({}) => {
           endTime: "2023-10-15T20:30:",
         },
         {
-          startTime: "2023-10-15T22:00",
-          endTime: "2023-10-15T23:00",
+          startTime: "2023-10-20T22:00",
+          endTime: "2023-10-20T23:00",
         },
       ],
     },

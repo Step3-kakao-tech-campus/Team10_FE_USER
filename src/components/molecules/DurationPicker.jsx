@@ -26,6 +26,33 @@ const DurationPicker = ({
     )}`;
   };
 
+  const isWeekend = (date) => {
+    const day = date.getDay();
+    return day === 0 || day === 6;
+  };
+
+  const currentClosingTime = isWeekend(selectedDate)
+    ? openingHours.weekend.end
+    : openingHours.weekday.end;
+
+  const isEndTimeAfterClosingTime = (duration) => {
+    if (!startTime) return true;
+    const endTime = getEndTime(duration);
+    let [endHour, endMin] = endTime.split(":").map(Number);
+    let [closingHour, closingMin] = currentClosingTime.split(":").map(Number);
+
+    if (currentClosingTime !== "24:00") {
+      if (
+        endHour > closingHour ||
+        (endHour === closingHour && endMin > closingMin)
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const isDurationOverlapping = (duration) => {
     if (!startTime) return true;
 
@@ -60,13 +87,18 @@ const DurationPicker = ({
           <button
             key={duration}
             onClick={() => handleDurationClick(duration)}
-            disabled={isDurationOverlapping(duration)}
+            disabled={
+              isEndTimeAfterClosingTime(duration) ||
+              isDurationOverlapping(duration)
+            }
             className={`p-2 border ${
               selectedDuration === duration
                 ? "bg-primary text-white rounded-md"
                 : "bg-white rounded-md"
             } ${
-              isDurationOverlapping(duration) && "opacity-50 cursor-not-allowed"
+              (isEndTimeAfterClosingTime(duration) ||
+                isDurationOverlapping(duration)) &&
+              "opacity-50 cursor-not-allowed"
             }`}
           >
             {duration}분

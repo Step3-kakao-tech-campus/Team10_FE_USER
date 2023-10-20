@@ -24,6 +24,10 @@ const ScheduleTemplate = () => {
         startTime: "2023-10-18T12:00",
         endTime: "2023-10-18T14:00",
       },
+      {
+        startTime: "2023-10-19T01:00",
+        endTime: "2023-10-19T03:00",
+      },
     ],
   };
 
@@ -61,7 +65,13 @@ const ScheduleTemplate = () => {
   const computedEndTime = computeEndTime();
 
   const combineDateTime = (date, time) => {
-    return `${date.toISOString().split("T")[0]}T${time}`;
+    if (!time) return null; // Add this line to handle potential null values
+
+    const [hours, minutes] = time.split(":").map(Number);
+    const newDate = new Date(date);
+    newDate.setHours(hours);
+    newDate.setMinutes(minutes);
+    return newDate.toISOString();
   };
 
   const formattedStartTime = combineDateTime(date, startTime);
@@ -118,7 +128,11 @@ const ScheduleTemplate = () => {
               `${date.getFullYear()}년 ${
                 date.getMonth() + 1
               }월 ${date.getDate()}일 ${startTime || ""} ${
-                computedEndTime ? `~ ${computedEndTime}` : ""
+                computedEndTime
+                  ? `~ ${new Date(formattedEndTime).getDate()}일 ${
+                      computedEndTime.split("T")[1]
+                    }`
+                  : ""
               }`}
           </div>
         </div>
@@ -126,8 +140,11 @@ const ScheduleTemplate = () => {
       <button
         type="long"
         onClick={() => {
-          console.log("Start Time:", formattedStartTime);
-          console.log("End Time:", formattedEndTime);
+          if (formattedStartTime && formattedEndTime) {
+            // Ensure both times are valid
+            console.log("Start Time:", formattedStartTime);
+            console.log("End Time:", formattedEndTime);
+          }
         }}
         className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white rounded-none h-14 bg-primary"
       >

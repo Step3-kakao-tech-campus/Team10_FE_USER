@@ -17,7 +17,7 @@ const DurationPicker = ({
     if (!startTime) return;
     const [hours, minutes] = startTime.split(":").map(Number);
     const endTimeInMinutes = hours * 60 + minutes + duration;
-    const endHour = Math.floor(endTimeInMinutes / 60);
+    const endHour = Math.floor(endTimeInMinutes / 60) % 24;
     const endMinute = endTimeInMinutes % 60;
     return `${String(endHour).padStart(2, "0")}:${String(endMinute).padStart(
       2,
@@ -41,9 +41,12 @@ const DurationPicker = ({
   const isDurationOverlapping = (duration) => {
     if (!startTime) return true;
 
+    const endTime = getEndTime(duration); // Use the already defined function to get the end time
     const [startHours, startMinutes] = startTime.split(":").map(Number);
+    const [endHours, endMinutes] = endTime.split(":").map(Number);
+
     const startTimeInMinutes = startHours * 60 + startMinutes;
-    const endTimeInMinutes = startTimeInMinutes + duration;
+    const endTimeInMinutes = endHours * 60 + endMinutes;
 
     if (endTimeInMinutes > getMaxEndTime()) return true;
 

@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const TimePicker = ({
-  bayId,
-  bayNo,
   openingHours,
   handleButtonClick,
-  scheduledTimes = [],
+  bayBookedTime,
   selectedDate,
 }) => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [isMorningSelected, setIsMorningSelected] = useState(true);
 
-  const bayScheduledTimes =
-    scheduledTimes.find((bay) => bay.bayId === bayId && bay.bayNo === bayNo)
-      ?.times || [];
+  useEffect(() => {
+    setSelectedTime(null);
+  }, [selectedDate]);
 
   const generateTime = (start, end) => {
     const times = [];
@@ -37,18 +35,18 @@ const TimePicker = ({
   };
 
   const isScheduled = (time) => {
-    return bayScheduledTimes.some((schedule) => {
-      const scheduleDate = new Date(schedule.start).toLocaleDateString();
+    return bayBookedTime.some((schedule) => {
+      const scheduleDate = new Date(schedule.startTime).toLocaleDateString();
       const selectedDateStr = selectedDate.toLocaleDateString();
       if (scheduleDate !== selectedDateStr) {
         return false;
       }
 
-      let [scheduleStartHour, scheduleStartMin] = schedule.start
+      let [scheduleStartHour, scheduleStartMin] = schedule.startTime
         .split("T")[1]
         .split(":")
         .map(Number);
-      let [scheduleEndHour, scheduleEndMin] = schedule.end
+      let [scheduleEndHour, scheduleEndMin] = schedule.endTime
         .split("T")[1]
         .split(":")
         .map(Number);
@@ -69,10 +67,9 @@ const TimePicker = ({
 
   const isWeekend = (date) => {
     const day = date.getDay();
-    return day === 0 || day === 6; // 0은 일요일, 6은 토요일
+    return day === 0 || day === 6;
   };
 
-  // 현재 영업시간 결정
   const currentOpeningHours = isWeekend(selectedDate)
     ? openingHours.weekend
     : openingHours.weekday;

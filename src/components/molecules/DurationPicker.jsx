@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const DurationPicker = ({
-  bayId,
-  bayNo,
   handleButtonClick,
   startTime,
-  scheduledTimes = [],
+  bayBookedTime,
   selectedDate,
   openingHours,
 }) => {
   const [selectedDuration, setSelectedDuration] = useState();
-  const durations = [30, 60, 90, 120, 180, 240];
+  const durations = [30, 60, 90, 120, 150, 180, 240];
 
-  const bayScheduledTimes =
-    scheduledTimes.find((bay) => bay.bayId === bayId && bay.bayNo === bayNo)
-      ?.times || [];
+  useEffect(() => {
+    setSelectedDuration(null);
+  }, [selectedDate, startTime]);
 
   const getEndTime = (duration) => {
     if (!startTime) return;
@@ -38,9 +36,9 @@ const DurationPicker = ({
       `${selectedDate.toISOString().split("T")[0]}T${getEndTime(duration)}:00`
     );
 
-    for (let i = 0; i < bayScheduledTimes.length; i++) {
-      const scheduleStart = new Date(bayScheduledTimes[i].start);
-      const scheduleEnd = new Date(bayScheduledTimes[i].end);
+    for (let i = 0; i < bayBookedTime.length; i++) {
+      const scheduleStart = new Date(bayBookedTime[i].startTime);
+      const scheduleEnd = new Date(bayBookedTime[i].endTime);
 
       if (startTimeWithDate < scheduleEnd && endTimeWithDate > scheduleStart) {
         return true;

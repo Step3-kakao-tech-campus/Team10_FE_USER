@@ -2,46 +2,22 @@ import React from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
 import BayList from "../molecules/BayList";
-
+import { useEffect, useState } from "react";
 const BaySelectionTemplate = ({}) => {
   const name = "포세이돈워시 용봉점";
   const openingHours = {
     weekday: { start: "00:00", end: "24:00" },
     weekend: { start: "00:00", end: "24:00" },
   };
+  const [bayList, setBayList] = useState([]);
 
+  useEffect(() => {
+    // replace 'some_id' with actual carwashId
+    fetch("/carwashes/bays")
+      .then((res) => res.json())
+      .then((data) => setBayList(data.response.bayList));
+  }, []);
   // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
-  const bayList = [
-    {
-      bayId: 2,
-      bayNo: 1,
-      bayBookedTime: [
-        {
-          startTime: "2023-10-15T18:30",
-          endTime: "2023-10-15T20:30:",
-        },
-        {
-          startTime: "2023-10-15T22:00",
-          endTime: "2023-10-15T23:00",
-        },
-      ],
-    },
-    {
-      bayId: 3,
-      bayNo: 2,
-      bayBookedTime: [
-        {
-          startTime: "2023-10-15T18:00",
-          endTime: "2023-10-15T20:00:",
-        },
-
-        {
-          startTime: "2023-10-15T20:00",
-          endTime: "2023-10-15T22:00",
-        },
-      ],
-    },
-  ];
 
   return (
     <div className="relative p-4">

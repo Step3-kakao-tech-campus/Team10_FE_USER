@@ -10,7 +10,7 @@ const TimePicker = ({
   const [isMorningSelected, setIsMorningSelected] = useState(true);
 
   useEffect(() => {
-    setSelectedTime(null); // Reset selected time when the date changes
+    setSelectedTime(null);
   }, [selectedDate]);
 
   const generateTime = (start, end) => {
@@ -65,9 +65,18 @@ const TimePicker = ({
     handleButtonClick(time);
   };
 
+  const isWeekend = (date) => {
+    const day = date.getDay();
+    return day === 0 || day === 6; // 0 for Sunday, 6 for Saturday
+  };
+
+  const currentOpeningHours = isWeekend(selectedDate)
+    ? openingHours.weekend
+    : openingHours.weekday;
+
   const currentHours = isMorningSelected
-    ? generateTime(openingHours.weekday.start, "12:00")
-    : generateTime("12:00", openingHours.weekday.end);
+    ? generateTime(currentOpeningHours.start, "12:00")
+    : generateTime("12:00", currentOpeningHours.end);
 
   return (
     <div className="flex flex-wrap gap-2">

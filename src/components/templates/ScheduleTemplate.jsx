@@ -8,7 +8,7 @@ import DurationPicker from "../molecules/DurationPicker";
 const ScheduleTemplate = () => {
   const name = "포세이돈워시 용봉점";
   const openingHours = {
-    weekday: { start: "00:00", end: "24:00" },
+    weekday: { start: "09:00", end: "17:00" },
     weekend: { start: "00:00", end: "24:00" },
   };
 
@@ -17,16 +17,12 @@ const ScheduleTemplate = () => {
     bayNo: 1,
     bayBookedTime: [
       {
-        startTime: "2023-10-18T15:30",
-        endTime: "2023-10-18T17:30",
+        startTime: "2023-10-20T15:30",
+        endTime: "2023-10-20T16:30",
       },
       {
-        startTime: "2023-10-18T12:00",
-        endTime: "2023-10-18T14:00",
-      },
-      {
-        startTime: "2023-10-19T01:00",
-        endTime: "2023-10-19T03:00",
+        startTime: "2023-10-20T12:00",
+        endTime: "2023-10-20T14:00",
       },
     ],
   };
@@ -34,7 +30,6 @@ const ScheduleTemplate = () => {
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
   const [duration, setDuration] = useState();
-
   const handleDateChange = (date) => {
     setDate(date);
     setStartTime(null);
@@ -52,26 +47,21 @@ const ScheduleTemplate = () => {
 
   const computeEndTime = () => {
     if (!startTime || !duration) return;
+
     const [hours, minutes] = startTime.split(":").map(Number);
     const endTimeInMinutes = hours * 60 + minutes + duration;
     const endHour = Math.floor(endTimeInMinutes / 60);
     const endMinute = endTimeInMinutes % 60;
+
     return `${String(endHour).padStart(2, "0")}:${String(endMinute).padStart(
       2,
       "0"
     )}`;
   };
-
   const computedEndTime = computeEndTime();
 
   const combineDateTime = (date, time) => {
-    if (!time) return null; // Add this line to handle potential null values
-
-    const [hours, minutes] = time.split(":").map(Number);
-    const newDate = new Date(date);
-    newDate.setHours(hours);
-    newDate.setMinutes(minutes);
-    return newDate.toISOString();
+    return `${date.toISOString().split("T")[0]}T${time}`;
   };
 
   const formattedStartTime = combineDateTime(date, startTime);
@@ -125,14 +115,10 @@ const ScheduleTemplate = () => {
           <div className="mb-2">예약 일정</div>
           <div className="mb-4">
             {date &&
-              `${date.getFullYear()}년 ${
-                date.getMonth() + 1
-              }월 ${date.getDate()}일 ${startTime || ""} ${
-                computedEndTime
-                  ? `~ ${new Date(formattedEndTime).getDate()}일 ${
-                      computedEndTime.split("T")[1]
-                    }`
-                  : ""
+              `${date?.getFullYear()}년 ${
+                date?.getMonth() + 1
+              }월 ${date?.getDate()}일 ${startTime ? startTime : ""} ${
+                computedEndTime ? `~ ${computedEndTime}` : ""
               }`}
           </div>
         </div>
@@ -140,11 +126,8 @@ const ScheduleTemplate = () => {
       <button
         type="long"
         onClick={() => {
-          if (formattedStartTime && formattedEndTime) {
-            // Ensure both times are valid
-            console.log("Start Time:", formattedStartTime);
-            console.log("End Time:", formattedEndTime);
-          }
+          console.log("Start Time:", formattedStartTime);
+          console.log("End Time:", formattedEndTime);
         }}
         className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white rounded-none h-14 bg-primary"
       >

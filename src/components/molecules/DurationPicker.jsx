@@ -7,8 +7,9 @@ const DurationPicker = ({
   selectedDate,
   openingHours,
 }) => {
-  const durations = [30, 60, 90, 120, 180, 240];
   const [selectedDuration, setSelectedDuration] = useState();
+  const durations = [30, 60, 90, 120, 180, 240];
+
   useEffect(() => {
     setSelectedDuration(null);
   }, [selectedDate, startTime]);
@@ -17,7 +18,7 @@ const DurationPicker = ({
     if (!startTime) return;
     const [hours, minutes] = startTime.split(":").map(Number);
     const endTimeInMinutes = hours * 60 + minutes + duration;
-    const endHour = Math.floor(endTimeInMinutes / 60) % 24;
+    const endHour = Math.floor(endTimeInMinutes / 60);
     const endMinute = endTimeInMinutes % 60;
     return `${String(endHour).padStart(2, "0")}:${String(endMinute).padStart(
       2,
@@ -25,52 +26,21 @@ const DurationPicker = ({
     )}`;
   };
 
-  const getMaxEndTime = () => {
-    const weekday = [1, 2, 3, 4, 5];
-    const dayOfWeek = selectedDate.getDay();
-
-    let endHour;
-    if (weekday.includes(dayOfWeek)) {
-      [endHour] = openingHours.weekday.end.split(":").map(Number);
-    } else {
-      [endHour] = openingHours.weekend.end.split(":").map(Number);
-    }
-    return endHour * 60;
-  };
-
   const isDurationOverlapping = (duration) => {
     if (!startTime) return true;
 
-    const endTime = getEndTime(duration); // Use the already defined function to get the end time
-    const [startHours, startMinutes] = startTime.split(":").map(Number);
-    const [endHours, endMinutes] = endTime.split(":").map(Number);
-
-    const startTimeInMinutes = startHours * 60 + startMinutes;
-    const endTimeInMinutes = endHours * 60 + endMinutes;
-
-    if (endTimeInMinutes > getMaxEndTime()) return true;
+    const startTimeWithDate = new Date(
+      `${selectedDate.toISOString().split("T")[0]}T${startTime}:00`
+    );
+    const endTimeWithDate = new Date(
+      `${selectedDate.toISOString().split("T")[0]}T${getEndTime(duration)}:00`
+    );
 
     for (let i = 0; i < scheduledTimes.length; i++) {
-      const [schedStartHours, schedStartMinutes] = scheduledTimes[i].startTime
-        .split("T")[1]
-        .split(":")
-        .map(Number);
-      const schedStartTimeInMinutes = schedStartHours * 60 + schedStartMinutes;
+      const scheduleStart = new Date(scheduledTimes[i].startTime);
+      const scheduleEnd = new Date(scheduledTimes[i].endTime);
 
-      const [schedEndHours, schedEndMinutes] = scheduledTimes[i].endTime
-        .split("T")[1]
-        .split(":")
-        .map(Number);
-      const schedEndTimeInMinutes = schedEndHours * 60 + schedEndMinutes;
-
-      if (
-        (startTimeInMinutes >= schedStartTimeInMinutes &&
-          startTimeInMinutes < schedEndTimeInMinutes) ||
-        (endTimeInMinutes > schedStartTimeInMinutes &&
-          endTimeInMinutes <= schedEndTimeInMinutes) ||
-        (startTimeInMinutes <= schedStartTimeInMinutes &&
-          endTimeInMinutes >= schedEndTimeInMinutes)
-      ) {
+      if (startTimeWithDate < scheduleEnd && endTimeWithDate > scheduleStart) {
         return true;
       }
     }
@@ -91,14 +61,12 @@ const DurationPicker = ({
             key={duration}
             onClick={() => handleDurationClick(duration)}
             disabled={isDurationOverlapping(duration)}
-            className={`p-2 border rounded-md ${
+            className={`p-2 border ${
               selectedDuration === duration
-                ? "bg-primary text-white"
-                : "bg-white"
+                ? "bg-primary text-white rounded-md"
+                : "bg-white rounded-md"
             } ${
-              isDurationOverlapping(duration)
-                ? "opacity-50 cursor-not-allowed"
-                : "cursor-pointer"
+              isDurationOverlapping(duration) && "opacity-50 cursor-not-allowed"
             }`}
           >
             {duration}분

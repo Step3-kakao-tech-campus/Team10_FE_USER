@@ -65,6 +65,20 @@ const TimePicker = ({
     handleButtonClick(time);
   };
 
+  const isPastTime = (time) => {
+    const currentDate = new Date();
+    const currentHour = currentDate.getHours();
+    const currentMin = currentDate.getMinutes();
+    let [checkHour, checkMin] = time.split(":").map(Number);
+
+    if (currentHour > checkHour) {
+      return true;
+    } else if (currentHour === checkHour && currentMin >= checkMin) {
+      return true;
+    }
+    return false;
+  };
+
   const isWeekend = (date) => {
     const day = date.getDay();
     return day === 0 || day === 6;
@@ -103,10 +117,19 @@ const TimePicker = ({
           <button
             key={time}
             onClick={() => handleTimeClick(time)}
-            disabled={isScheduled(time)}
+            disabled={
+              isScheduled(time) ||
+              (selectedDate.toDateString() === new Date().toDateString() &&
+                isPastTime(time))
+            }
             className={`w-16 h-12 border rounded-md ${
               selectedTime === time ? "bg-primary text-white" : "bg-white"
-            } ${isScheduled(time) && "opacity-50 cursor-not-allowed"}`}
+            } ${
+              (isScheduled(time) ||
+                (selectedDate.toDateString() === new Date().toDateString() &&
+                  isPastTime(time))) &&
+              "opacity-50 cursor-not-allowed"
+            }`}
           >
             {time}
           </button>

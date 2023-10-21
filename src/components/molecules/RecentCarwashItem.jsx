@@ -10,17 +10,17 @@ export const RecentCarwashItem = ({
   return (
     <Link to={`/carwashDetail/${carwashId}`}>
       <div className="w-24">
-        <div className="relative w-24 h-24 rounded-xl bg-slate-600 overflow-hidden">
+        <div className="relative w-24 h-24 overflow-hidden rounded-xl bg-slate-600">
           <img
             src={image}
             alt={`${carwashName}} 사진`}
-            className="absolute top-0 w-24 h-24 object-cover"
+            className="absolute top-0 object-cover w-24 h-24"
           />
         </div>
-        <div className="text-xs text-gray-400 text-center">
+        <div className="text-xs text-center text-gray-400">
           {reservationDate}
         </div>
-        <div className="text-sm text-gray-700 text-center text-ellipsis whitespace-nowrap overflow-hidden">
+        <div className="overflow-hidden text-sm text-center text-gray-700 text-ellipsis whitespace-nowrap">
           {carwashName}
         </div>
       </div>

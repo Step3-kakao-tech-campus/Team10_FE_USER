@@ -1,18 +1,22 @@
 import React from "react";
 
-const PaymentTemplate = () => {
-  const price = 20000;
+const PaymentTemplate = ({
+  price = 20000,
+  reservationDate = "2023/09/08",
+  startTime = "13:00",
+  endTime = "15:00",
+  duration = 2,
+}) => {
   return (
     <div>
       <div className="relative p-4">
-        <div className="m-4 font-bold">&lt;</div>
         <div className="py-8 text-2xl font-bold"> 결제하기</div>
         <div className="p-4 bg-gray-100 rounded-lg">
           <div className="flex justify-between flex-items">
             <div>예약 일정</div>
-            <div>2023/09/08</div>
+            <div>{reservationDate}</div>
           </div>
-          <div className="text-right">13:00 ~ 15:00 (2시간)</div>
+          <div className="text-right">{`${startTime} ~ ${endTime} (${duration}시간)`}</div>
           <div className="flex justify-between py-4 font-semibold text-red-500">
             <div>최종 결제 금액</div>
             <div>{price}원</div>

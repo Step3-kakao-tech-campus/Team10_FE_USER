@@ -5,6 +5,8 @@ import BayList from "../molecules/BayList";
 import { useEffect, useState } from "react";
 import { carwashes_bays } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
+
+
 const BaySelectionTemplate = ({}) => {
   const name = "포세이돈워시 용봉점";
   const openingHours = {
@@ -23,6 +25,38 @@ const BaySelectionTemplate = ({}) => {
     }
   }, []);
   // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
+  const bayList = [
+    {
+      bayId: 2,
+      bayNo: 1,
+      bayBookedTime: [
+        {
+          startTime: "2023-10-21T18:30",
+          endTime: "2023-10-21T20:30:",
+        },
+        {
+          startTime: "2023-10-20T22:00",
+          endTime: "2023-10-20T23:00",
+        },
+      ],
+    },
+    {
+      bayId: 3,
+      bayNo: 2,
+      bayBookedTime: [
+        {
+          startTime: "2023-10-15T18:00",
+          endTime: "2023-10-15T20:00:",
+        },
+
+        {
+          startTime: "2023-10-15T20:00",
+          endTime: "2023-10-15T22:00",
+        },
+      ],
+    },
+  ];
+
   return (
     <div className="relative p-4">
       <div className="mb-4 font-bold">{"<"}</div>

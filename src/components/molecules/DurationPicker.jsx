@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 const DurationPicker = ({
   handleButtonClick,
   startTime,
-  scheduledTimes = [],
+  bayBookedTime,
   selectedDate,
   openingHours,
 }) => {
-  const durations = [30, 60, 90, 120, 180, 240];
   const [selectedDuration, setSelectedDuration] = useState();
+  const durations = [30, 60, 90, 120, 150, 180, 240];
+
   useEffect(() => {
     setSelectedDuration(null);
   }, [selectedDate, startTime]);
@@ -25,49 +26,48 @@ const DurationPicker = ({
     )}`;
   };
 
-  const getMaxEndTime = () => {
-    const weekday = [1, 2, 3, 4, 5];
-    const dayOfWeek = selectedDate.getDay();
+  const isWeekend = (date) => {
+    const day = date.getDay();
+    return day === 0 || day === 6;
+  };
 
-    let endHour;
-    if (weekday.includes(dayOfWeek)) {
-      [endHour] = openingHours.weekday.end.split(":").map(Number);
-    } else {
-      [endHour] = openingHours.weekend.end.split(":").map(Number);
+  const currentClosingTime = isWeekend(selectedDate)
+    ? openingHours.weekend.end
+    : openingHours.weekday.end;
+
+  const isEndTimeAfterClosingTime = (duration) => {
+    if (!startTime) return true;
+    const endTime = getEndTime(duration);
+    let [endHour, endMin] = endTime.split(":").map(Number);
+    let [closingHour, closingMin] = currentClosingTime.split(":").map(Number);
+
+    if (currentClosingTime !== "24:00") {
+      if (
+        endHour > closingHour ||
+        (endHour === closingHour && endMin > closingMin)
+      ) {
+        return true;
+      }
     }
-    return endHour * 60;
+
+    return false;
   };
 
   const isDurationOverlapping = (duration) => {
     if (!startTime) return true;
 
-    const [startHours, startMinutes] = startTime.split(":").map(Number);
-    const startTimeInMinutes = startHours * 60 + startMinutes;
-    const endTimeInMinutes = startTimeInMinutes + duration;
+    const startTimeWithDate = new Date(
+      `${selectedDate.toISOString().split("T")[0]}T${startTime}:00`
+    );
+    const endTimeWithDate = new Date(
+      `${selectedDate.toISOString().split("T")[0]}T${getEndTime(duration)}:00`
+    );
 
-    if (endTimeInMinutes > getMaxEndTime()) return true;
+    for (let i = 0; i < bayBookedTime.length; i++) {
+      const scheduleStart = new Date(bayBookedTime[i].startTime);
+      const scheduleEnd = new Date(bayBookedTime[i].endTime);
 
-    for (let i = 0; i < scheduledTimes.length; i++) {
-      const [schedStartHours, schedStartMinutes] = scheduledTimes[i].startTime
-        .split("T")[1]
-        .split(":")
-        .map(Number);
-      const schedStartTimeInMinutes = schedStartHours * 60 + schedStartMinutes;
-
-      const [schedEndHours, schedEndMinutes] = scheduledTimes[i].endTime
-        .split("T")[1]
-        .split(":")
-        .map(Number);
-      const schedEndTimeInMinutes = schedEndHours * 60 + schedEndMinutes;
-
-      if (
-        (startTimeInMinutes >= schedStartTimeInMinutes &&
-          startTimeInMinutes < schedEndTimeInMinutes) ||
-        (endTimeInMinutes > schedStartTimeInMinutes &&
-          endTimeInMinutes <= schedEndTimeInMinutes) ||
-        (startTimeInMinutes <= schedStartTimeInMinutes &&
-          endTimeInMinutes >= schedEndTimeInMinutes)
-      ) {
+      if (startTimeWithDate < scheduleEnd && endTimeWithDate > scheduleStart) {
         return true;
       }
     }
@@ -87,15 +87,18 @@ const DurationPicker = ({
           <button
             key={duration}
             onClick={() => handleDurationClick(duration)}
-            disabled={isDurationOverlapping(duration)}
-            className={`p-2 border rounded-md ${
-              selectedDuration === duration
-                ? "bg-primary text-white"
-                : "bg-white"
-            } ${
+            disabled={
+              isEndTimeAfterClosingTime(duration) ||
               isDurationOverlapping(duration)
-                ? "opacity-50 cursor-not-allowed"
-                : "cursor-pointer"
+            }
+            className={`p-2 border ${
+              selectedDuration === duration
+                ? "bg-primary text-white rounded-md"
+                : "bg-white rounded-md"
+            } ${
+              (isEndTimeAfterClosingTime(duration) ||
+                isDurationOverlapping(duration)) &&
+              "opacity-50 cursor-not-allowed"
             }`}
           >
             {duration}분

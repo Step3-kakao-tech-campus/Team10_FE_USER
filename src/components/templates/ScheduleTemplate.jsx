@@ -17,12 +17,12 @@ const ScheduleTemplate = () => {
     bayNo: 1,
     bayBookedTime: [
       {
-        startTime: "2023-10-20T15:00",
-        endTime: "2023-10-20T17:30",
+        startTime: "2023-10-21T11:00",
+        endTime: "2023-10-21T13:00",
       },
       {
-        startTime: "2023-10-21T13:00",
-        endTime: "2023-10-21T14:00",
+        startTime: "2023-10-22T16:00",
+        endTime: "2023-10-22T17:00",
       },
     ],
   };
@@ -57,7 +57,7 @@ const ScheduleTemplate = () => {
     let endDate = new Date(date);
     if (endHour >= 24) {
       endHour -= 24;
-      endDate.setDate(endDate.getDate() + 1); // increase the date by 1 if it goes past midnight
+      endDate.setDate(endDate.getDate() + 1);
     }
 
     return {

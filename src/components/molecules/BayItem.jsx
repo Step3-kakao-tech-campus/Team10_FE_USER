@@ -1,6 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
-import TimeSlot from "./TimeSlot";
+import TimeSlot from "../atoms/TimeSlot";
 
 const BayItem = ({ bayNo, bayBookedTime, openingHours, selectedDate }) => {
   const getCurrentHour = () =>

@@ -1,7 +1,7 @@
 import React from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
-import BayList from "../molecules/BayList";
+import BayList from "../organisms/BayList";
 
 const BaySelectionTemplate = ({}) => {
   const name = "포세이돈워시 용봉점";
@@ -17,8 +17,8 @@ const BaySelectionTemplate = ({}) => {
       bayNo: 1,
       bayBookedTime: [
         {
-          startTime: "2023-10-15T18:30",
-          endTime: "2023-10-15T20:30:",
+          startTime: "2023-10-21T18:30",
+          endTime: "2023-10-21T20:30:",
         },
         {
           startTime: "2023-10-20T22:00",

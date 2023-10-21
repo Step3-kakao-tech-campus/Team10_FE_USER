@@ -1,5 +1,5 @@
 import React from "react";
-import BayItem from "../atoms/BayItem";
+import BayItem from "../molecules/BayItem";
 
 const BayList = ({ bays, openingHours, selectedDate }) => {
   return (

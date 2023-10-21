@@ -1,7 +1,11 @@
 import React from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
-import BayList from "../organisms/BayList";
+import BayList from "../molecules/BayList";
+import { useEffect, useState } from "react";
+import { carwashes_bays } from "../../apis/carwashes";
+import { useSuspenseQuery } from "@tanstack/react-query";
+
 
 const BaySelectionTemplate = ({}) => {
   const name = "포세이돈워시 용봉점";
@@ -9,7 +13,17 @@ const BaySelectionTemplate = ({}) => {
     weekday: { start: "00:00", end: "24:00" },
     weekend: { start: "00:00", end: "24:00" },
   };
+  const [bayList, setBayList] = useState([]);
 
+  const { data } = useSuspenseQuery({
+    queryKey: ["baylists"],
+    queryFn: carwashes_bays,
+  });
+  useEffect(() => {
+    if (data) {
+      setBayList(data.data.response.bayList);
+    }
+  }, []);
   // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
   const bayList = [
     {

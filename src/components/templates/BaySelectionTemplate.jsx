@@ -3,6 +3,8 @@ import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
 import BayList from "../molecules/BayList";
 import { useEffect, useState } from "react";
+import { carwashes_bays } from "../../apis/carwashes";
+import { useQuery } from "react-query";
 const BaySelectionTemplate = ({}) => {
   const name = "포세이돈워시 용봉점";
   const openingHours = {
@@ -11,14 +13,13 @@ const BaySelectionTemplate = ({}) => {
   };
   const [bayList, setBayList] = useState([]);
 
-  useEffect(() => {
-    // replace 'some_id' with actual carwashId
-    fetch("/carwashes/bays")
-      .then((res) => res.json())
-      .then((data) => setBayList(data.response.bayList));
-  }, []);
-  // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
+  const { isLoading, data } = useQuery("baylists", carwashes_bays, {
+    onSuccess: (data) => {
+      setBayList(data.data.response.bayList);
+    },
+  });
 
+  // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
   return (
     <div className="relative p-4">
       <div className="mb-4 font-bold">{"<"}</div>

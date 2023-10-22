@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const DurationPicker = ({
-  bayId,
-  bayNo,
   handleButtonClick,
   startTime,
-  scheduledTimes = [],
+  bayBookedTime,
   selectedDate,
   openingHours,
 }) => {
   const [selectedDuration, setSelectedDuration] = useState();
-  const durations = [30, 60, 90, 120, 180, 240];
+  const durations = [30, 60, 90, 120, 150, 180, 240];
 
-  const bayScheduledTimes =
-    scheduledTimes.find((bay) => bay.bayId === bayId && bay.bayNo === bayNo)
-      ?.times || [];
+  useEffect(() => {
+    setSelectedDuration(null);
+  }, [selectedDate, startTime]);
 
   const getEndTime = (duration) => {
     if (!startTime) return;
@@ -28,6 +26,33 @@ const DurationPicker = ({
     )}`;
   };
 
+  const isWeekend = (date) => {
+    const day = date.getDay();
+    return day === 0 || day === 6;
+  };
+
+  const currentClosingTime = isWeekend(selectedDate)
+    ? openingHours.weekend.end
+    : openingHours.weekday.end;
+
+  const isEndTimeAfterClosingTime = (duration) => {
+    if (!startTime) return true;
+    const endTime = getEndTime(duration);
+    let [endHour, endMin] = endTime.split(":").map(Number);
+    let [closingHour, closingMin] = currentClosingTime.split(":").map(Number);
+
+    if (currentClosingTime !== "24:00") {
+      if (
+        endHour > closingHour ||
+        (endHour === closingHour && endMin > closingMin)
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const isDurationOverlapping = (duration) => {
     if (!startTime) return true;
 
@@ -38,9 +63,9 @@ const DurationPicker = ({
       `${selectedDate.toISOString().split("T")[0]}T${getEndTime(duration)}:00`
     );
 
-    for (let i = 0; i < bayScheduledTimes.length; i++) {
-      const scheduleStart = new Date(bayScheduledTimes[i].start);
-      const scheduleEnd = new Date(bayScheduledTimes[i].end);
+    for (let i = 0; i < bayBookedTime.length; i++) {
+      const scheduleStart = new Date(bayBookedTime[i].startTime);
+      const scheduleEnd = new Date(bayBookedTime[i].endTime);
 
       if (startTimeWithDate < scheduleEnd && endTimeWithDate > scheduleStart) {
         return true;
@@ -62,13 +87,18 @@ const DurationPicker = ({
           <button
             key={duration}
             onClick={() => handleDurationClick(duration)}
-            disabled={isDurationOverlapping(duration)}
+            disabled={
+              isEndTimeAfterClosingTime(duration) ||
+              isDurationOverlapping(duration)
+            }
             className={`p-2 border ${
               selectedDuration === duration
                 ? "bg-primary text-white rounded-md"
                 : "bg-white rounded-md"
             } ${
-              isDurationOverlapping(duration) && "opacity-50 cursor-not-allowed"
+              (isEndTimeAfterClosingTime(duration) ||
+                isDurationOverlapping(duration)) &&
+              "opacity-50 cursor-not-allowed"
             }`}
           >
             {duration}분

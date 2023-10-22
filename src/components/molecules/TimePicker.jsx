@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const TimePicker = ({
-  bayId,
-  bayNo,
   openingHours,
   handleButtonClick,
-  scheduledTimes = [],
+  bayBookedTime,
   selectedDate,
 }) => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [isMorningSelected, setIsMorningSelected] = useState(true);
 
-  const bayScheduledTimes =
-    scheduledTimes.find((bay) => bay.bayId === bayId && bay.bayNo === bayNo)
-      ?.times || [];
+  useEffect(() => {
+    setSelectedTime(null);
+  }, [selectedDate]);
 
   const generateTime = (start, end) => {
     const times = [];
@@ -37,18 +35,18 @@ const TimePicker = ({
   };
 
   const isScheduled = (time) => {
-    return bayScheduledTimes.some((schedule) => {
-      const scheduleDate = new Date(schedule.start).toLocaleDateString();
+    return bayBookedTime.some((schedule) => {
+      const scheduleDate = new Date(schedule.startTime).toLocaleDateString();
       const selectedDateStr = selectedDate.toLocaleDateString();
       if (scheduleDate !== selectedDateStr) {
         return false;
       }
 
-      let [scheduleStartHour, scheduleStartMin] = schedule.start
+      let [scheduleStartHour, scheduleStartMin] = schedule.startTime
         .split("T")[1]
         .split(":")
         .map(Number);
-      let [scheduleEndHour, scheduleEndMin] = schedule.end
+      let [scheduleEndHour, scheduleEndMin] = schedule.endTime
         .split("T")[1]
         .split(":")
         .map(Number);
@@ -67,9 +65,32 @@ const TimePicker = ({
     handleButtonClick(time);
   };
 
+  const isPastTime = (time) => {
+    const currentDate = new Date();
+    const currentHour = currentDate.getHours();
+    const currentMin = currentDate.getMinutes();
+    let [checkHour, checkMin] = time.split(":").map(Number);
+
+    if (currentHour > checkHour) {
+      return true;
+    } else if (currentHour === checkHour && currentMin >= checkMin) {
+      return true;
+    }
+    return false;
+  };
+
+  const isWeekend = (date) => {
+    const day = date.getDay();
+    return day === 0 || day === 6;
+  };
+
+  const currentOpeningHours = isWeekend(selectedDate)
+    ? openingHours.weekend
+    : openingHours.weekday;
+
   const currentHours = isMorningSelected
-    ? generateTime(openingHours.weekday.start, "12:00")
-    : generateTime("12:00", openingHours.weekday.end);
+    ? generateTime(currentOpeningHours.start, "12:00")
+    : generateTime("12:00", currentOpeningHours.end);
 
   return (
     <div className="flex flex-wrap gap-2">
@@ -96,10 +117,19 @@ const TimePicker = ({
           <button
             key={time}
             onClick={() => handleTimeClick(time)}
-            disabled={isScheduled(time)}
+            disabled={
+              isScheduled(time) ||
+              (selectedDate.toDateString() === new Date().toDateString() &&
+                isPastTime(time))
+            }
             className={`w-16 h-12 border rounded-md ${
               selectedTime === time ? "bg-primary text-white" : "bg-white"
-            } ${isScheduled(time) && "opacity-50 cursor-not-allowed"}`}
+            } ${
+              (isScheduled(time) ||
+                (selectedDate.toDateString() === new Date().toDateString() &&
+                  isPastTime(time))) &&
+              "opacity-50 cursor-not-allowed"
+            }`}
           >
             {time}
           </button>

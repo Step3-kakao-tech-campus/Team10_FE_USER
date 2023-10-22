@@ -9,6 +9,7 @@ import SchedulePage from "./pages/SchedulePage";
 import ReservationHistoryPage from "./pages/ReservationHistoryPage";
 import PaymentResultPage from "./pages/PaymentResultPage";
 import ReviewPostPage from "./pages/ReviewPostPage";
+import PaymentPage from "./pages/PaymentPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/carwashdetail" element={<CarwashDetailPage />}></Route>
         <Route path="/bayselection" element={<BaySelectionPage />}></Route>
         <Route path="/schedule" element={<SchedulePage />}></Route>
+        <Route path="/payment" element={<PaymentPage />}></Route>
         <Route path="/paymentresult" element={<PaymentResultPage />}></Route>
         <Route path="/reviewpost" element={<ReviewPostPage />}></Route>
       </Routes>

@@ -19,9 +19,7 @@ const DatePicker = ({ handleButtonClick }) => {
     return dates;
   };
 
-  const isWeekend = (date) => {
-    return date.getDay() === 0 || date.getDay() === 6;
-  };
+  const isWeekend = (date) => [0, 6].includes(date.getDay());
 
   const weekDates = generateWeekDates();
 
@@ -37,22 +35,18 @@ const DatePicker = ({ handleButtonClick }) => {
               handleClick(date);
             }}
           >
-            {/* 즉시실행함수(IIFE)로 토요일, 일요일 색상 구분 */}
-            {(() => {
-              if (isWeekend(date)) {
-                if (date.getDay() === 0) {
-                  return <div className="text-red-500">일</div>;
-                } else {
-                  return <div className="text-blue-500">토</div>;
-                }
-              } else {
-                return (
-                  <div>
-                    {date.toLocaleDateString("ko-KR", { weekday: "short" })}
-                  </div>
-                );
-              }
-            })()}
+            {isWeekend(date) ? (
+              date.getDay() === 0 ? (
+                <div className="text-red-500">일</div>
+              ) : (
+                <div className="text-blue-500">토</div>
+              )
+            ) : (
+              <div>
+                {date.toLocaleDateString("ko-KR", { weekday: "short" })}
+              </div>
+            )}
+
             <div
               className={`${
                 selectedDate.toDateString() === date.toDateString()

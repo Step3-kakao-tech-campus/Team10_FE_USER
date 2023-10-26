@@ -79,11 +79,11 @@ export const handlers = [
     }
 
     const token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869LZ1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg";
+      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869LZ1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg";
     localStorage.setItem("token", token);
 
     return res(
-      ctx.set("authorization", `Bearer ${token}`),
+      ctx.set("Authorization", token),
       ctx.status(200),
       ctx.json({
         success: true,
@@ -345,7 +345,7 @@ export const handlers = [
 
   // 리뷰 등록 - 키워드 불러오기
   rest.get("/reviews", (req, res, ctx) => {
-    const token = req.headers.get("authorization");
+    const token = req.headers.get("Authorization");
 
     if (!token) {
       return res(
@@ -378,7 +378,7 @@ export const handlers = [
 
   // 리뷰 등록
   rest.post("/reviews", (req, res, ctx) => {
-    const token = req.headers.get("authorization");
+    const token = req.headers.get("Authorization");
 
     if (!token) {
       return res(
@@ -402,7 +402,7 @@ export const handlers = [
   // 세차장별 예약 내역 조회 (베이 선택 페이지)
   rest.get("/carwashes/:carwash_id/bays", (req, res, ctx) => {
     const { carwash_id } = req.params;
-    const token = req.headers.get("authorization");
+    const token = req.headers.get("Authorization");
 
     if (token) {
       return res(
@@ -459,7 +459,7 @@ export const handlers = [
     (req, res, ctx) => {
       const { carwash_id, bay_id } = req.params;
       const { startTime, endTime } = req.body;
-      const token = req.headers.get("authorization");
+      const token = req.headers.get("Authorization");
 
       if (token) {
         return res(
@@ -483,7 +483,7 @@ export const handlers = [
   // 결제가 완료된 다음에 보여주는 페이지에서 호출
   // 결제가 확실히 success 되어야 보여줘야 함
   rest.get("/reservations", (req, res, ctx) => {
-    const token = req.headers.get("authorization");
+    const token = req.headers.get("Authorization");
 
     if (token) {
       return res(
@@ -521,7 +521,7 @@ export const handlers = [
   // 현재 시간 기준 예약 내역 조회
   // 하단 예약내역 메뉴를 클릭했을 때 호출
   rest.get("/reservations/current-status", (req, res, ctx) => {
-    const token = req.headers.get("authorization");
+    const token = req.headers.get("Authorization");
 
     if (!token) {
       return res(
@@ -621,7 +621,7 @@ export const handlers = [
   // 최근 이용내역 가져오기
   // 유저의 최근 세차장 이용 내역을 가까운 날짜 순으로 5개 가져온다.
   rest.get("/reservations/recent", (req, res, ctx) => {
-    const token = req.headers.get("authorization");
+    const token = req.headers.get("Authorization");
 
     if (!token) {
       return res(
@@ -667,7 +667,7 @@ export const handlers = [
   // 예약 취소
   rest.delete("/reservations/:reservation_id", (req, res, ctx) => {
     const { reservation_id } = req.params;
-    const token = req.headers.get("authorization");
+    const token = req.headers.get("Authorization");
 
     if (!token) {
       return res(
@@ -691,7 +691,7 @@ export const handlers = [
     const { reservation_id } = req.params;
     const { startTime, endTime } = req.body;
 
-    const token = req.headers.get("authorization");
+    const token = req.headers.get("Authorization");
 
     if (!token) {
       return res(
@@ -712,7 +712,7 @@ export const handlers = [
 
   // 결제하기(PG)
   rest.post("/reservations/:reservation_id/payment", (req, res, ctx) => {
-    const token = req.headers.get("authorization");
+    const token = req.headers.get("Authorization");
     const { reservation_id } = req.params;
     const { selected_date, bay_id, start_time, end_time } = req.body;
 
@@ -735,7 +735,7 @@ export const handlers = [
 
   // 결제 완료
   rest.get("/reservations/:reservation_id/payment", (req, res, ctx) => {
-    const token = req.headers.get("authorization");
+    const token = req.headers.get("Authorization");
     const { reservation_id } = req.params;
 
     if (!token) {

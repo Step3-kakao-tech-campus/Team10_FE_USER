@@ -6,7 +6,7 @@ export const reservations = () => {
 export const reservations_currentstatus = () => {
   return instance.get("/reservations/current-status");
 };
-export const reservation_recent = () => {
+export const reservations_recent = () => {
   return instance.get("/reservations/recent");
 };
 

@@ -1,5 +1,11 @@
 import { instance } from "./instance";
 
+export const carwashes_recommended = (u_latitude, u_longitude) => {
+  return instance.get(
+    `/carwashes/recommended?u_latitude=${u_latitude}&u_longitude=${u_longitude}`
+  );
+};
+
 export const carwashes_nearby = (u_latitude, u_longitude) => {
   return instance.get(
     `/carwashes/nearby?u_latitude=${u_latitude}&u_longitude=${u_longitude}`

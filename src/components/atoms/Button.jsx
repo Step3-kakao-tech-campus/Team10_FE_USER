@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Button = ({ variant, className, ...props }) => {
+export const Button = ({ variant, className, children, ...props }) => {
   const styles = {
     long: "block w-full h-14 p-4 bg-primary text-white font-semibold rounded-none",
     small: "block w-28 h-14 bg-sky-100 text-sky-500 font-semibold rounded-xl",
@@ -12,6 +12,8 @@ export const Button = ({ variant, className, ...props }) => {
   };
 
   return (
-    <button className={`${styles[variant]} ${className}`} {...props}></button>
+    <button className={`${styles[variant]} ${className}`} {...props}>
+      {children}
+    </button>
   );
 };

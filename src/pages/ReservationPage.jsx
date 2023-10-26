@@ -1,11 +1,11 @@
 import KakaoMap from "../components/atoms/KakaoMap";
 import { Bottomsheet } from "../components/atoms/Bottomsheet";
 import StoreItem from "../components/molecules/StoreItem";
-import { Input } from "../components/atoms/Input";
 import { useEffect, useState } from "react";
 import { Button } from "../components/atoms/Button";
 import { Badge } from "../components/atoms/Badge";
 import DualBottomsheet from "../components/atoms/DualBottomsheet";
+import TextInput from "../components/atoms/TextInput";
 
 const ReservationPage = () => {
   const [washlists, setWashlists] = useState([]);
@@ -66,7 +66,7 @@ const ReservationPage = () => {
         <KakaoMap className="fixed absolute left-0 z-0 w-screen h-screen" />
         <DualBottomsheet className="fixed left-0 z-10">
           <Bottomsheet className="z-20 flex flex-col h-full gap-3 overflow-y-scroll">
-            <Input placeholder="검색"></Input>
+            <TextInput placeholder="검색"></TextInput>
             <div className="flex flex-row gap-2">
               <Badge
                 key="1"

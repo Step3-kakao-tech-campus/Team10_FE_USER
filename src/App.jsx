@@ -18,9 +18,6 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />}></Route>
-          <Route
-            path="/reservationlist"
-            element={<ReservationListPage />}></Route>
           <Route path="/reservation" element={<ReservationPage />}></Route>
           <Route path="/history" element={<ReservationHistoryPage />}></Route>
         </Route>

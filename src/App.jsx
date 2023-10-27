@@ -10,6 +10,7 @@ import ReservationHistoryPage from "./pages/ReservationHistoryPage";
 import PaymentResultPage from "./pages/PaymentResultPage";
 import ReviewPostPage from "./pages/ReviewPostPage";
 import PaymentPage from "./pages/PaymentPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -17,13 +18,10 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />}></Route>
-          <Route
-            path="/reservationlist"
-            element={<ReservationListPage />}
-          ></Route>
           <Route path="/reservation" element={<ReservationPage />}></Route>
           <Route path="/history" element={<ReservationHistoryPage />}></Route>
         </Route>
+        <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/carwashdetail" element={<CarwashDetailPage />}></Route>
         <Route path="/bayselection" element={<BaySelectionPage />}></Route>
         <Route path="/schedule" element={<SchedulePage />}></Route>

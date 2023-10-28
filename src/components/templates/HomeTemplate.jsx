@@ -4,8 +4,8 @@ import { CarwashCard } from "../molecules/CarwashCard";
 import { RecentCarwashSlider } from "../organisms/RecentCarwashSlider";
 import Reservation from "/Button/home/reservation.svg";
 import ReservationHistory from "/Button/home/reservationHistory.svg";
-import { carwashes_recommended } from "../../apis/carwashes";
-import { reservations_recent } from "../../apis/reservations";
+import { carwashesRecommended } from "../../apis/carwashes";
+import { reservationsRecent } from "../../apis/reservations";
 import { useNavigate } from "react-router-dom";
 import useGeoLocation from "../../hooks/useGeoLocation";
 
@@ -28,11 +28,11 @@ const HomeTemplate = () => {
       {
         queryKey: ["recommended"],
         queryFn: () =>
-          carwashes_recommended(location.latitude, location.longitude),
+          carwashesRecommended(location.latitude, location.longitude),
       },
       {
         queryKey: ["recent"],
-        queryFn: () => reservations_recent(),
+        queryFn: () => reservationsRecent(),
       },
     ],
   });
@@ -51,7 +51,8 @@ const HomeTemplate = () => {
           variant="home"
           onClick={() => {
             navigate("/reservation");
-          }}>
+          }}
+        >
           내 주변 세차장 예약하기
           <img
             className="absolute right-4 -bottom-4"
@@ -63,7 +64,8 @@ const HomeTemplate = () => {
           variant="home"
           onClick={() => {
             navigate("/history");
-          }}>
+          }}
+        >
           예약내역 보기
           <img
             className="absolute right-4 -bottom-4"

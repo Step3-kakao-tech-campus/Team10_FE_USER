@@ -3,10 +3,10 @@ import { instance } from "./instance";
 export const reservations = () => {
   return instance.get("/reservations");
 };
-export const reservations_currentstatus = () => {
+export const reservationsCurrentstatus = () => {
   return instance.get("/reservations/current-status");
 };
-export const reservations_recent = () => {
+export const reservationsRecent = () => {
   return instance.get("/reservations/recent");
 };
 

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { MainLayout } from "./layouts/MainLayout";
-import { ReservationListPage } from "./pages/ReservationListPage";
+
 import ReservationPage from "./pages/ReservationPage";
 import CarwashDetailPage from "./pages/CarwashDetailPage";
 import BaySelectionPage from "./pages/BaySelectionPage";

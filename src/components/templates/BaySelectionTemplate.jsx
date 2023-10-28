@@ -3,7 +3,7 @@ import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
 import BayList from "../organisms/BayList";
 import { useEffect, useState } from "react";
-import { carwashes_bays } from "../../apis/carwashes";
+import { carwashesBays } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 const BaySelectionTemplate = ({}) => {
@@ -16,7 +16,7 @@ const BaySelectionTemplate = ({}) => {
 
   const { data } = useSuspenseQuery({
     queryKey: ["baylists"],
-    queryFn: carwashes_bays,
+    queryFn: carwashesBays,
   });
   useEffect(() => {
     if (data) {

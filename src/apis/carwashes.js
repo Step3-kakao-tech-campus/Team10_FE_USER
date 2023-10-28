@@ -1,28 +1,28 @@
 import { instance } from "./instance";
 
-export const carwashes_recommended = (u_latitude, u_longitude) => {
+export const carwashesRecommended = (u_latitude, u_longitude) => {
   return instance.get(
     `/carwashes/recommended?u_latitude=${u_latitude}&u_longitude=${u_longitude}`
   );
 };
 
-export const carwashes_nearby = (u_latitude, u_longitude) => {
+export const carwashesNearby = (u_latitude, u_longitude) => {
   return instance.get(
     `/carwashes/nearby?u_latitude=${u_latitude}&u_longitude=${u_longitude}`
   );
 };
 
-export const carwashes_search = (keywordIds, u_latitude, u_longitude) => {
+export const carwashesSearch = (keywordIds, u_latitude, u_longitude) => {
   return instance.get(
     `/carwashes/search?keywordIds=${keywordIds}&u_latitude=${u_latitude}&u_longitude=${u_longitude}`
   );
 };
 
-export const carwashes_info = (carwash_id) => {
+export const carwashesInfo = (carwash_id) => {
   return instance.get(`/carwashes/${carwash_id}/info`);
 };
 
-export const carwashes_reviews = (carwash_id) => {
+export const carwashesReviews = (carwash_id) => {
   return instance.get(`/carwashes/${carwash_id}/reviews`);
 };
 
@@ -35,7 +35,7 @@ export const postReviews = (data) => {
   return instance.post("/reviews", data);
 };
 
-export const carwashes_bays = (carwash_id) => {
+export const carwashesBays = (carwash_id) => {
   return instance.get(`/carwashes/${carwash_id}/bays`);
 };
 

@@ -40,7 +40,7 @@ export const carwashesBays = (carwash_id) => {
 };
 
 export const bookCarwash = (carwash_id, bay_id, startTime, endTime) => {
-  return instance.post(`/carwashes/${carwash_id}/bays/${bay_id}/book`, {
+  return instance.post(`/carwashes/${carwash_id}/bays/${bay_id}/reservations`, {
     startTime,
     endTime,
   });

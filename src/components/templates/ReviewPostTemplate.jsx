@@ -50,7 +50,6 @@ const ReviewPostTemplate = () => {
       rate,
       comment,
     };
-    console.log(payload);
     mutation.mutate(payload);
   };
 

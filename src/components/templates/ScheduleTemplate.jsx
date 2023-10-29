@@ -1,35 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
 import DatePicker from "../molecules/DatePicker";
 import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
-
+import { useNavigate } from "react-router-dom";
+import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
+import {
+  carwashesInfo,
+  carwashesBays,
+  bookCarwash,
+} from "../../apis/carwashes";
 const ScheduleTemplate = () => {
-  const name = "포세이돈워시 용봉점";
-  const openingHours = {
-    weekday: { start: "09:00", end: "18:00" },
-    weekend: { start: "00:00", end: "24:00" },
-  };
-
-  const bayInfo = {
-    bayId: 2,
-    bayNo: 1,
-    bayBookedTime: [
-      {
-        startTime: "2023-10-21T11:00",
-        endTime: "2023-10-21T13:00",
-      },
-      {
-        startTime: "2023-10-22T16:00",
-        endTime: "2023-10-22T17:00",
-      },
-    ],
-  };
-
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
   const [duration, setDuration] = useState();
+  const [carwashId, setcarwashId] = useState(3);
+  const [bayId, setbayId] = useState(0);
+  const navigate = useNavigate();
+  const [washinfo, bayinfo] = useSuspenseQueries({
+    queries: [
+      {
+        queryKey: ["washinfo"],
+        queryFn: () => carwashesInfo(carwashId), //나중에 전역변수로 대체
+      },
+      {
+        queryKey: ["bayinfo"],
+        queryFn: () => carwashesBays(carwashId),
+      },
+    ],
+  });
+
+  const mutation = useMutation({
+    mutationFn: ({ carwashId, bayId, startTime, endTime }) => {
+      return bookCarwash(carwashId, bayId, startTime, endTime);
+    },
+    onSuccess: () => {
+      console.log("success");
+      navigate("/payment");
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
+  const handleSubmit = () => {
+    const payload = {
+      carwashId,
+      bayId,
+      formattedStartTime,
+      formattedEndTime,
+    };
+    mutation.mutate(payload);
+  };
+
+  if (washinfo == undefined) {
+    return <div>Loading...</div>;
+  }
+  const name = washinfo?.data?.data?.response?.name;
+  const openingHours = washinfo?.data?.data?.response?.optime;
+
+  // 임의로 0을 넣어놓음.
+  //나중에는 몇 번째 베이를 선택했는지 bayselection에서 넘겨줘서 0을 대체해야 할 것 같음
+  const bayInfo = bayinfo?.data?.data?.response.bayList[bayId];
+
   const handleDateChange = (date) => {
     setDate(date);
     setStartTime(null);
@@ -146,10 +180,7 @@ const ScheduleTemplate = () => {
       </div>
       <button
         type="long"
-        onClick={() => {
-          console.log("Start Time:", formattedStartTime);
-          console.log("End Time:", formattedEndTime);
-        }}
+        onClick={handleSubmit}
         className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white rounded-none h-14 bg-primary"
       >
         예약하기

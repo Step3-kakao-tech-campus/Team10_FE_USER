@@ -26,6 +26,6 @@ export const payment = (reservation_id, data) => {
   return instance.post(`/reservations/${reservation_id}}payment`, data);
 };
 
-export const payment_result = (reservation_id) => {
+export const paymentResult = (reservation_id) => {
   return instance.get(`/reservations/${reservation_id}/payment`);
 };

@@ -1,4 +1,7 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { paymentResult } from "../../apis/reservations";
 
 const PaymentTemplate = ({
   price = 20000,
@@ -7,6 +10,21 @@ const PaymentTemplate = ({
   endTime = "15:00",
   duration = 2,
 }) => {
+  const [paymentdata, setData] = useState(null);
+  const [reservationId, setReservation] = useState(3);
+
+  const { data } = useSuspenseQuery({
+    queryKey: ["getPayment", reservationId],
+    queryFn: () => paymentResult(reservationId),
+    enabled: !!reservationId,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setData(data?.data?.response);
+    }
+  }, [data]);
+
   return (
     <div>
       <div className="relative p-4">

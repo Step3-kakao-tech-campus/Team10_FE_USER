@@ -404,7 +404,7 @@ export const handlers = [
     const { carwash_id } = req.params;
     const token = req.headers.get("Authorization");
 
-    if (token) {
+    if (!token) {
       return res(
         ctx.status(401),
         ctx.json({ error: "인증되지 않았습니다. (토큰 없음)" })
@@ -461,7 +461,7 @@ export const handlers = [
       const { startTime, endTime } = req.body;
       const token = req.headers.get("Authorization");
 
-      if (token) {
+      if (!token) {
         return res(
           ctx.status(401),
           ctx.json({ error: "인증되지 않았습니다. (토큰 없음)" })

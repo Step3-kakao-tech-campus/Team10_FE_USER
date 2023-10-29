@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
 import ReservationItem from "../molecules/ReservationItem";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { reservationsCurrentstatus } from "../../apis/reservations";
 
 const ReservationHistoryTemplate = () => {
   const [currentReservations, setCurrentReservations] = useState([]);
   const [upcomingReservations, setUpcomingReservations] = useState([]);
   const [completedReservations, setCompletedReservations] = useState([]);
 
+  const { data } = useSuspenseQuery({
+    queryKey: ["getHistory"],
+    queryFn: () => reservationsCurrentstatus(),
+  });
+
   useEffect(() => {
-    fetch("/reservations/currentstaus")
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrentReservations(data.response.current);
-        setUpcomingReservations(data.response.upcoming);
-        setCompletedReservations(data.response.completed);
-      })
-      .catch((error) => {
-        console.error("Error fetching reservation history:", error);
-      });
-  }, []);
+    if (data) {
+      setCurrentReservations(data?.data?.response?.current);
+      setUpcomingReservations(data?.data?.response?.upcoming);
+      setCompletedReservations(data?.data?.response?.completed);
+      console.log(data?.data?.response);
+    }
+  }, [data]);
 
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);

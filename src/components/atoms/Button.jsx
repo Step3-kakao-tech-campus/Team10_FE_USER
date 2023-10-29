@@ -21,6 +21,9 @@ export const Button = ({
     if (type === "cancelreservation") {
       onClick();
     }
+    if (type === "home") {
+      onClick();
+    }
   };
   const getType = (type) => {
     switch (type) {
@@ -48,7 +51,7 @@ export const Button = ({
       onClick={handleButtonClick}
       {...props}
     >
-      <img src={icon} className="absolute right-0 top-8" />
+      <img src={icon} className="absolute right-4 bottom-4" />
       {label}
     </button>
   );

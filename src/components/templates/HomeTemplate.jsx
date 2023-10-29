@@ -48,30 +48,36 @@ const HomeTemplate = () => {
       {/* 메뉴 링크 */}
       <section className="flex justify-between gap-4">
         <Button
+          type="home"
           variant="home"
           onClick={() => {
             navigate("/reservation");
           }}
+          label="내 주변 세차장 예약하기"
+          icon="/Button/home/reservation.svg"
         >
           내 주변 세차장 예약하기
-          <img
+          {/* <img
             className="absolute right-4 -bottom-4"
             src={Reservation}
             alt="위치 아이콘"
-          />
+          /> */}
         </Button>
         <Button
+          type="home"
           variant="home"
           onClick={() => {
             navigate("/history");
           }}
+          label="예약내역 보기"
+          icon="/Button/home/reservationHistory.svg"
         >
           예약내역 보기
-          <img
+          {/* <img
             className="absolute right-4 -bottom-4"
             src={ReservationHistory}
             alt="예약내역 아이콘"
-          />
+          /> */}
         </Button>
       </section>
 

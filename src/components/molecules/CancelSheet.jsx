@@ -1,7 +1,24 @@
 import { Bottomsheet } from "../atoms/Bottomsheet";
 import { Button } from "../atoms/Button";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { cancelReservation } from "../../apis/reservations";
 
-const CancelSheet = ({ className, reservetime, bayname, priceinfo }) => {
+const CancelSheet = ({ className, reservetime, bayname, bayid, priceinfo }) => {
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: (data) => {
+      return cancelReservation(data);
+    },
+    onSuccess: () => {
+      console.log("success");
+      location.reload();
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
   return (
     <Bottomsheet className={className}>
       <div className="p-4 text-2xl font-bold text-black">
@@ -20,7 +37,12 @@ const CancelSheet = ({ className, reservetime, bayname, priceinfo }) => {
           <div>취소금액</div>
           <div className="ml-auto">{priceinfo}</div>
         </div>
-        <Button type="long" className="bg-red-500" label="취소하기" />
+        <Button
+          type="cancelreservation"
+          className="bg-red-500"
+          onClick={() => mutation.mutate(bayid)}
+          label="취소하기"
+        />
       </div>
     </Bottomsheet>
   );

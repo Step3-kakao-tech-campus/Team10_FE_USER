@@ -50,7 +50,8 @@ const ReservationHistoryTemplate = () => {
         {currentReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
-            imgsrc="YOUR_IMAGE_URL" // Replace this with actual image URL if available in data
+            bayid={reservation.id}
+            imgsrc={reservation.image} // Replace this with actual image URL if available in data
             reservetime={`${formatTimestamp(
               reservation.time.start
             )} ~ ${formatTime(reservation.time.end)}`}
@@ -65,7 +66,8 @@ const ReservationHistoryTemplate = () => {
         {upcomingReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
-            imgsrc="YOUR_IMAGE_URL" // Replace this with actual image URL if available in data
+            bayid={reservation.id}
+            imgsrc={reservation.image} // Replace this with actual image URL if available in data
             reservetime={`${formatTimestamp(
               reservation.time.start
             )} ~ ${formatTime(reservation.time.end)}`}
@@ -81,7 +83,8 @@ const ReservationHistoryTemplate = () => {
         {completedReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
-            imgsrc="YOUR_IMAGE_URL" // Replace this with actual image URL if available in data
+            bayid={reservation.id}
+            imgsrc={reservation.image} // Replace this with actual image URL if available in data
             reservetime={`${formatTimestamp(
               reservation.time.start
             )} ~ ${formatTime(reservation.time.end)}`}

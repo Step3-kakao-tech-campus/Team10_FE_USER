@@ -18,6 +18,9 @@ export const Button = ({
     if (type === "reviewpost") {
       onClick();
     }
+    if (type === "cancelreservation") {
+      onClick();
+    }
   };
   const getType = (type) => {
     switch (type) {
@@ -32,6 +35,8 @@ export const Button = ({
       case "review":
         return "w-12 h-20 px-2 py-5 rounded-xl items-center text-white text-xs bg-red-400 ml-auto mr-4";
       case "reviewpost":
+        return "block w-full h-14 p-4 bg-primary text-white font-semibold rounded-none";
+      case "cancelreservation":
         return "block w-full h-14 p-4 bg-primary text-white font-semibold rounded-none";
     }
   };

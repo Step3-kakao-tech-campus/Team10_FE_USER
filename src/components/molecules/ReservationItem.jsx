@@ -4,6 +4,7 @@ import CancelSheet from "./CancelSheet";
 import Image from "../atoms/Image";
 
 const ReservationItem = ({
+  bayid,
   imgsrc,
   reservetime,
   bayname,
@@ -66,6 +67,7 @@ const ReservationItem = ({
           <CancelSheet
             reservetime={reservetime}
             bayname={bayname}
+            bayid={bayid}
             priceinfo={priceinfo}
             className="h-56"
           />

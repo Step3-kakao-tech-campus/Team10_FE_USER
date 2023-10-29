@@ -11,12 +11,14 @@ const getType = (type) => {
   }
 };
 
-export const Badge = ({ id, label, onClick, ...props }) => {
+export const Badge = ({ id, label, onClick }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
-    if (onClick) onClick(id, isChecked); // Send the id and state back
+    if (onClick) {
+      onClick(id, !isChecked); // 현재 선택 상태의 반대를 전달
+    }
   };
 
   return (

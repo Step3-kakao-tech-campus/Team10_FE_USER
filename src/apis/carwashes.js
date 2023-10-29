@@ -26,8 +26,8 @@ export const carwashesReviews = (carwash_id) => {
   return instance.get(`/carwashes/${carwash_id}/reviews`);
 };
 
-export const getReviews = (reservation_id) => {
-  return instance.get("/reviews", reservation_id);
+export const getReviews = () => {
+  return instance.get("/reviews");
 };
 
 // 리뷰 포스트는 react-hook-form으로 관리할 것

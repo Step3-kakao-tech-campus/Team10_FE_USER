@@ -354,8 +354,6 @@ export const handlers = [
       );
     }
 
-    const { reservation_id } = req.body;
-
     return res(
       ctx.status(200),
       ctx.json({

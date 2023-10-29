@@ -15,6 +15,9 @@ export const Button = ({
     } else if (type === "review") {
       window.location.href = "/reviewpost"; // 이것은 reviewpost 페이지로 리다이렉트합니다.
     }
+    if (type === "reviewpost") {
+      onClick();
+    }
   };
   const getType = (type) => {
     switch (type) {
@@ -28,6 +31,8 @@ export const Button = ({
         return "w-12 h-20 px-2 py-5 rounded-xl items-center text-white text-xs bg-slate-500 ml-auto mr-4";
       case "review":
         return "w-12 h-20 px-2 py-5 rounded-xl items-center text-white text-xs bg-red-400 ml-auto mr-4";
+      case "reviewpost":
+        return "block w-full h-14 p-4 bg-primary text-white font-semibold rounded-none";
     }
   };
   return (

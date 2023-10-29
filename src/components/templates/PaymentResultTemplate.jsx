@@ -2,6 +2,8 @@ import { TextWithIcon } from "../atoms/TextWithIcon";
 import { MapWithPin } from "../atoms/MapWithPin";
 import { Button } from "../atoms/Button";
 import { useEffect, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { reservations } from "../../apis/reservations";
 
 const iconsrc = {
   calendar: "/TextWithIcon/calendar.png",
@@ -14,18 +16,21 @@ const PaymentResultTemplate = () => {
   const [paymentresult, setpaymentresult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    fetch("/reservations")
-      .then((res) => res.json())
-      .then((data) => {
-        setpaymentresult(data.response); // 바로 response에 접근
-        setLoading(false);
-      });
-  }, []);
+  const { data } = useSuspenseQuery({
+    queryKey: ["getReservations"],
+    queryFn: () => reservations(),
+  });
 
-  if (loading) return <div>Loading...</div>;
-  if (!paymentresult) return null;
+  useEffect(() => {
+    if (data) {
+      setpaymentresult(data?.data?.response);
+      console.log(paymentresult);
+    }
+  }, [data]);
+
+  if (!paymentresult) {
+    return <div>Loading...</div>;
+  }
 
   const {
     reservation: {
@@ -74,7 +79,7 @@ const PaymentResultTemplate = () => {
         <TextWithIcon text={carwashname} iconsrc={iconsrc.location} />
         <hr />
         <TextWithIcon text={`${price}원`} iconsrc={iconsrc.price} />
-        <MapWithPin lat={latitude} lng={longitude} text="용봉세차타운" />
+        <MapWithPin lat={latitude} lng={longitude} text={carwashname} />
       </section>
       <Button className="fixed bottom-0" label="홈으로" />
     </div>

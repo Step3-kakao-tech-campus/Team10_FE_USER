@@ -508,8 +508,8 @@ export const handlers = [
           carwash: {
             name: "세차장",
             location: {
-              latitude: 10.0,
-              longitude: 20.0,
+              latitude: 35.141809,
+              longitude: 126.9215,
             },
           },
         },

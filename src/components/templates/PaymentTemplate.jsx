@@ -3,13 +3,7 @@ import { useEffect, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { paymentResult } from "../../apis/reservations";
 
-const PaymentTemplate = ({
-  price = 20000,
-  reservationDate = "2023/09/08",
-  startTime = "13:00",
-  endTime = "15:00",
-  duration = 2,
-}) => {
+const PaymentTemplate = ({}) => {
   const [paymentdata, setData] = useState(null);
   const [reservationId, setReservation] = useState(3);
 
@@ -25,6 +19,10 @@ const PaymentTemplate = ({
     }
   }, [data]);
 
+  if (!paymentdata) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <div className="relative p-4">
@@ -32,12 +30,12 @@ const PaymentTemplate = ({
         <div className="p-4 bg-gray-100 rounded-lg">
           <div className="flex justify-between flex-items">
             <div>예약 일정</div>
-            <div>{reservationDate}</div>
+            <div>{paymentdata.reservation_time}</div>
           </div>
-          <div className="text-right">{`${startTime} ~ ${endTime} (${duration}시간)`}</div>
+          <div className="text-right">{paymentdata.reservation_time}</div>
           <div className="flex justify-between py-4 font-semibold text-red-500">
             <div>최종 결제 금액</div>
-            <div>{price}원</div>
+            <div>{paymentdata.total_price}원</div>
           </div>
         </div>
         <div className="py-8 text-2xl font-bold"> 결제 수단 </div>
@@ -51,7 +49,7 @@ const PaymentTemplate = ({
         </div>
       </div>
       <button className="fixed bottom-0 w-full py-4 font-semibold text-white bg-primary">
-        {price}원 결제하기
+        {paymentdata.total_price}원 결제하기
       </button>
     </div>
   );

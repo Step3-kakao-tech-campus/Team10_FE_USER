@@ -4,8 +4,8 @@ import { CarwashCard } from "../molecules/CarwashCard";
 import { RecentCarwashSlider } from "../organisms/RecentCarwashSlider";
 import Reservation from "/Button/home/reservation.svg";
 import ReservationHistory from "/Button/home/reservationHistory.svg";
-import { carwashes_recommended } from "../../apis/carwashes";
-import { reservations_recent } from "../../apis/reservations";
+import { carwashesRecommended } from "../../apis/carwashes";
+import { reservationsRecent } from "../../apis/reservations";
 import { useNavigate } from "react-router-dom";
 import useGeoLocation from "../../hooks/useGeoLocation";
 
@@ -28,11 +28,11 @@ const HomeTemplate = () => {
       {
         queryKey: ["recommended"],
         queryFn: () =>
-          carwashes_recommended(location.latitude, location.longitude),
+          carwashesRecommended(location.latitude, location.longitude),
       },
       {
         queryKey: ["recent"],
-        queryFn: () => reservations_recent(),
+        queryFn: () => reservationsRecent(),
       },
     ],
   });
@@ -48,28 +48,36 @@ const HomeTemplate = () => {
       {/* 메뉴 링크 */}
       <section className="flex justify-between gap-4">
         <Button
+          type="home"
           variant="home"
           onClick={() => {
             navigate("/reservation");
-          }}>
+          }}
+          label="내 주변 세차장 예약하기"
+          icon="/Button/home/reservation.svg"
+        >
           내 주변 세차장 예약하기
-          <img
+          {/* <img
             className="absolute right-4 -bottom-4"
             src={Reservation}
             alt="위치 아이콘"
-          />
+          /> */}
         </Button>
         <Button
+          type="home"
           variant="home"
           onClick={() => {
             navigate("/history");
-          }}>
+          }}
+          label="예약내역 보기"
+          icon="/Button/home/reservationHistory.svg"
+        >
           예약내역 보기
-          <img
+          {/* <img
             className="absolute right-4 -bottom-4"
             src={ReservationHistory}
             alt="예약내역 아이콘"
-          />
+          /> */}
         </Button>
       </section>
 

@@ -6,25 +6,31 @@ import { Tab } from "../molecules/Tab";
 import { Button } from "../atoms/Button";
 import Star from "../atoms/Star";
 import { useEffect, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { carwashesInfo } from "../../apis/carwashes";
 
 const CarwashDetailTemplate = () => {
   const [detaildata, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [carwashesid, setCarwashid] = useState(3);
+
+  const { data } = useSuspenseQuery({
+    queryKey: ["getCarwashesInfo", carwashesid], // add location to the dependency list to re-run query if location changes
+    queryFn: () => carwashesInfo(carwashesid), // Pass location to the getcarwashes_nearby function
+    enabled: !!carwashesid, // Only run the query when we have carwashid
+  });
 
   useEffect(() => {
-    setLoading(true);
-    fetch("/carwashes/introduction")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setData(data.response);
-        setLoading(false);
-      });
-  }, []);
+    if (data) {
+      setData(data?.data?.response);
+      console.log(data?.data?.response);
+    }
+  }, [data]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!detaildata) return null;
-  console.log(detaildata);
+  if (!detaildata) {
+    return <div>Loading...</div>;
+  }
+
   const images = detaildata.image.map((url) => ({
     label: "Image",
     alt: "image",

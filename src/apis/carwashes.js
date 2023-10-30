@@ -1,33 +1,33 @@
 import { instance } from "./instance";
 
-export const carwashes_recommended = (u_latitude, u_longitude) => {
+export const carwashesRecommended = (u_latitude, u_longitude) => {
   return instance.get(
     `/carwashes/recommended?u_latitude=${u_latitude}&u_longitude=${u_longitude}`
   );
 };
 
-export const carwashes_nearby = (u_latitude, u_longitude) => {
+export const carwashesNearby = (u_latitude, u_longitude) => {
   return instance.get(
     `/carwashes/nearby?u_latitude=${u_latitude}&u_longitude=${u_longitude}`
   );
 };
 
-export const carwashes_search = (keywordIds, u_latitude, u_longitude) => {
+export const carwashesSearch = (keywordIds, u_latitude, u_longitude) => {
   return instance.get(
     `/carwashes/search?keywordIds=${keywordIds}&u_latitude=${u_latitude}&u_longitude=${u_longitude}`
   );
 };
 
-export const carwashes_info = (carwash_id) => {
+export const carwashesInfo = (carwash_id) => {
   return instance.get(`/carwashes/${carwash_id}/info`);
 };
 
-export const carwashes_reviews = (carwash_id) => {
+export const carwashesReviews = (carwash_id) => {
   return instance.get(`/carwashes/${carwash_id}/reviews`);
 };
 
-export const getReviews = (reservation_id) => {
-  return instance.get("/reviews", reservation_id);
+export const getReviews = () => {
+  return instance.get("/reviews");
 };
 
 // 리뷰 포스트는 react-hook-form으로 관리할 것
@@ -35,12 +35,12 @@ export const postReviews = (data) => {
   return instance.post("/reviews", data);
 };
 
-export const carwashes_bays = (carwash_id) => {
+export const carwashesBays = (carwash_id) => {
   return instance.get(`/carwashes/${carwash_id}/bays`);
 };
 
 export const bookCarwash = (carwash_id, bay_id, startTime, endTime) => {
-  return instance.post(`/carwashes/${carwash_id}/bays/${bay_id}/book`, {
+  return instance.post(`/carwashes/${carwash_id}/bays/${bay_id}/reservations`, {
     startTime,
     endTime,
   });

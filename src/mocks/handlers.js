@@ -354,8 +354,6 @@ export const handlers = [
       );
     }
 
-    const { reservation_id } = req.body;
-
     return res(
       ctx.status(200),
       ctx.json({
@@ -404,7 +402,7 @@ export const handlers = [
     const { carwash_id } = req.params;
     const token = req.headers.get("Authorization");
 
-    if (token) {
+    if (!token) {
       return res(
         ctx.status(401),
         ctx.json({ error: "인증되지 않았습니다. (토큰 없음)" })
@@ -461,7 +459,7 @@ export const handlers = [
       const { startTime, endTime } = req.body;
       const token = req.headers.get("Authorization");
 
-      if (token) {
+      if (!token) {
         return res(
           ctx.status(401),
           ctx.json({ error: "인증되지 않았습니다. (토큰 없음)" })
@@ -485,7 +483,7 @@ export const handlers = [
   rest.get("/reservations", (req, res, ctx) => {
     const token = req.headers.get("Authorization");
 
-    if (token) {
+    if (!token) {
       return res(
         ctx.status(401),
         ctx.json({ error: "인증되지 않았습니다. (토큰 없음)" })
@@ -508,8 +506,8 @@ export const handlers = [
           carwash: {
             name: "세차장",
             location: {
-              latitude: 10.0,
-              longitude: 20.0,
+              latitude: 35.141809,
+              longitude: 126.9215,
             },
           },
         },
@@ -668,6 +666,7 @@ export const handlers = [
   rest.delete("/reservations/:reservation_id", (req, res, ctx) => {
     const { reservation_id } = req.params;
     const token = req.headers.get("Authorization");
+    console.log(token);
 
     if (!token) {
       return res(

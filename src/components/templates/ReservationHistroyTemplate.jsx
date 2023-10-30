@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
 import ReservationItem from "../molecules/ReservationItem";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { reservationsCurrentstatus } from "../../apis/reservations";
 
 const ReservationHistoryTemplate = () => {
   const [currentReservations, setCurrentReservations] = useState([]);
   const [upcomingReservations, setUpcomingReservations] = useState([]);
   const [completedReservations, setCompletedReservations] = useState([]);
 
+  const { data } = useSuspenseQuery({
+    queryKey: ["getHistory"],
+    queryFn: () => reservationsCurrentstatus(),
+  });
+
   useEffect(() => {
-    fetch("/reservations/currentstaus")
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrentReservations(data.response.current);
-        setUpcomingReservations(data.response.upcoming);
-        setCompletedReservations(data.response.completed);
-      })
-      .catch((error) => {
-        console.error("Error fetching reservation history:", error);
-      });
-  }, []);
+    if (data) {
+      setCurrentReservations(data?.data?.response?.current);
+      setUpcomingReservations(data?.data?.response?.upcoming);
+      setCompletedReservations(data?.data?.response?.completed);
+      console.log(data?.data?.response);
+    }
+  }, [data]);
 
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
@@ -47,7 +50,8 @@ const ReservationHistoryTemplate = () => {
         {currentReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
-            imgsrc="YOUR_IMAGE_URL" // Replace this with actual image URL if available in data
+            bayid={reservation.id}
+            imgsrc={reservation.image} // Replace this with actual image URL if available in data
             reservetime={`${formatTimestamp(
               reservation.time.start
             )} ~ ${formatTime(reservation.time.end)}`}
@@ -62,7 +66,8 @@ const ReservationHistoryTemplate = () => {
         {upcomingReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
-            imgsrc="YOUR_IMAGE_URL" // Replace this with actual image URL if available in data
+            bayid={reservation.id}
+            imgsrc={reservation.image} // Replace this with actual image URL if available in data
             reservetime={`${formatTimestamp(
               reservation.time.start
             )} ~ ${formatTime(reservation.time.end)}`}
@@ -78,7 +83,8 @@ const ReservationHistoryTemplate = () => {
         {completedReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
-            imgsrc="YOUR_IMAGE_URL" // Replace this with actual image URL if available in data
+            bayid={reservation.id}
+            imgsrc={reservation.image} // Replace this with actual image URL if available in data
             reservetime={`${formatTimestamp(
               reservation.time.start
             )} ~ ${formatTime(reservation.time.end)}`}

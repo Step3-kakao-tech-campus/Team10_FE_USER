@@ -5,6 +5,7 @@ import BayList from "../organisms/BayList";
 import { useEffect, useState } from "react";
 import { carwashesBays } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
 
 const BaySelectionTemplate = ({}) => {
   const name = "포세이돈워시 용봉점";
@@ -24,6 +25,12 @@ const BaySelectionTemplate = ({}) => {
     }
   }, []);
   // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
+
+  const dispatch = useDispatch();
+
+  const handleBayClick = (bayId) => {
+    dispatch({ type: "SET_BAY_ID", payload: bayId });
+  };
 
   return (
     <div className="relative p-4">
@@ -45,6 +52,8 @@ const BaySelectionTemplate = ({}) => {
           bays={bayList}
           openingHours={openingHours}
           selectedDate={new Date()}
+          onClick={handleBayClick}
+          // 여기서 해당 /schdule 링크로 이동해야함 (id값)
         />
       </div>
     </div>

@@ -13,6 +13,7 @@ const CarwashDetailTemplate = () => {
   const [detaildata, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [carwashesid, setCarwashid] = useState(3);
+  // 이름 통일 필요
 
   const { data } = useSuspenseQuery({
     queryKey: ["getCarwashesInfo", carwashesid], // add location to the dependency list to re-run query if location changes

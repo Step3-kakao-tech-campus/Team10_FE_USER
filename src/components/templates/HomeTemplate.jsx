@@ -40,8 +40,6 @@ const HomeTemplate = () => {
   const recommendedData = recommended?.data?.data?.response;
   const recentList = recent?.data?.data?.response?.recent;
 
-  const navigate = useNavigate();
-
   return (
     <main className="grid gap-6">
       <h1 className="text-2xl font-semibold">노주영님 안녕하세요!</h1>

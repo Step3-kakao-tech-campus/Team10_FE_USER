@@ -11,6 +11,10 @@ import {
   carwashesBays,
   bookCarwash,
 } from "../../apis/carwashes";
+
+import { useDispatch } from "react-redux";
+import { saveReservation } from "../../store/action";
+
 const ScheduleTemplate = () => {
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
@@ -18,6 +22,7 @@ const ScheduleTemplate = () => {
   const [carwashId, setcarwashId] = useState(3);
   const [bayId, setbayId] = useState(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [washinfo, bayinfo] = useSuspenseQueries({
     queries: [
       {
@@ -51,6 +56,7 @@ const ScheduleTemplate = () => {
       formattedStartTime,
       formattedEndTime,
     };
+    dispatch(saveReservation(formattedStartTime, formattedEndTime));
     mutation.mutate(payload);
   };
 

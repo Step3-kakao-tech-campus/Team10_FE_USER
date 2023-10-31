@@ -6,18 +6,20 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { reservations } from "../../apis/reservations";
 import { useDispatch } from "react-redux";
 import { resetStore } from "../../store/action";
+import { useNavigate } from "react-router-dom";
 
 const iconsrc = {
   calendar: "/TextWithIcon/calendar.png",
-  clock: "TextWithIcon/clock.png",
-  location: "TextWithIcon/location.png",
-  price: "TextWithIcon/price.png",
+  clock: "/TextWithIcon/clock.png",
+  location: "/TextWithIcon/location.png",
+  price: "/TextWithIcon/price.png",
 };
 
 const PaymentResultTemplate = ({ reservationId }) => {
   const [paymentresult, setpaymentresult] = useState(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { data } = useSuspenseQuery({
     // 나중에 reservation api에 reservationId 추가 되면 이거로 코드 바꾸기
@@ -79,25 +81,27 @@ const PaymentResultTemplate = ({ reservationId }) => {
   };
 
   return (
-    <div className="relative grid gap-8">
-      <section className="grid gap-4">
-        <div className="text-2xl font-bold ">결제가 완료되었습니다!</div>
-        <div className="text-sm text-left">득광하세요!</div>
-      </section>
-      <section className="grid gap-4">
-        <TextWithIcon text={extractDay(start)} iconsrc={iconsrc.calendar} />
-        <hr />
-        <TextWithIcon
-          text={`${extractTime(start)}~${extractTime(end)}`}
-          iconsrc={iconsrc.clock}
-        />
-        <hr />
-        <TextWithIcon text={carwashname} iconsrc={iconsrc.location} />
-        <hr />
-        <TextWithIcon text={`${price}원`} iconsrc={iconsrc.price} />
-        <MapWithPin lat={latitude} lng={longitude} text={carwashname} />
-      </section>
-      <Button className="fixed bottom-0" label="홈으로" />
+    <div>
+      <div className="relative p-4">
+        <div className="py-8 text-2xl font-bold"> 결제가 완료되었습니다!</div>
+        <div className="flex flex-col gap-4 py-4 rounded-lg bg-gray-50">
+          <TextWithIcon text={extractDay(start)} iconsrc={iconsrc.calendar} />
+          <TextWithIcon
+            text={`${extractTime(start)}~${extractTime(end)}`}
+            iconsrc={iconsrc.clock}
+          />
+          <TextWithIcon text={carwashname} iconsrc={iconsrc.location} />
+          <TextWithIcon text={`${price}원`} iconsrc={iconsrc.price} />
+          <MapWithPin lat={latitude} lng={longitude} text={carwashname} />
+        </div>
+      </div>
+      <Button
+        variant="long"
+        className="fixed bottom-0"
+        onClick={() => navigate("/")}
+      >
+        홈으로
+      </Button>
     </div>
   );
 };

@@ -3,15 +3,16 @@ import { useEffect, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { paymentResult } from "../../apis/reservations";
 
-const PaymentTemplate = ({}) => {
+const PaymentTemplate = ({ reservationId }) => {
   const [paymentdata, setData] = useState(null);
-  const [reservationId, setReservation] = useState(3);
 
   const { data } = useSuspenseQuery({
     queryKey: ["getPayment", reservationId],
     queryFn: () => paymentResult(reservationId),
     enabled: !!reservationId,
   });
+  // 이 윗 부분 나중에는 삭제하기 어차피 전역변수로 SchedulePage에서 필요한 것들 다 가지고 올 것임
+  // 대신 결제 금액 계산 api 추가되면 거기에 해당하는 api 새로 가져오기
 
   useEffect(() => {
     if (data) {

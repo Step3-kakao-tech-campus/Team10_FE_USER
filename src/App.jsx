@@ -22,11 +22,23 @@ function App() {
           <Route path="/history" element={<ReservationHistoryPage />}></Route>
         </Route>
         <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/carwashdetail" element={<CarwashDetailPage />}></Route>
-        <Route path="/bayselection" element={<BaySelectionPage />}></Route>
-        <Route path="/schedule" element={<SchedulePage />}></Route>
-        <Route path="/payment" element={<PaymentPage />}></Route>
-        <Route path="/paymentresult" element={<PaymentResultPage />}></Route>
+        <Route
+          path="/carwashdetail/:carwashId"
+          element={<CarwashDetailPage />}
+        ></Route>
+        <Route
+          path="/bayselection/:carwashId"
+          element={<BaySelectionPage />}
+        ></Route>
+        <Route
+          path="/schedule/:carwashId/:bayId"
+          element={<SchedulePage />}
+        ></Route>
+        <Route path="/payment/:reservationId" element={<PaymentPage />}></Route>
+        <Route
+          path="/paymentresult/:reservationId"
+          element={<PaymentResultPage />}
+        ></Route>
         <Route path="/reviewpost" element={<ReviewPostPage />}></Route>
       </Routes>
     </BrowserRouter>

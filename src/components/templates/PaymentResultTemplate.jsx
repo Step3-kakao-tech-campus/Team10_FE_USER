@@ -12,11 +12,14 @@ const iconsrc = {
   price: "TextWithIcon/price.png",
 };
 
-const PaymentResultTemplate = () => {
+const PaymentResultTemplate = ({ reservationId }) => {
   const [paymentresult, setpaymentresult] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const { data } = useSuspenseQuery({
+    // 나중에 reservation api에 reservationId 추가 되면 이거로 코드 바꾸기
+    // queryKey: ["getReservations", reservationId],
+    // queryFn: () => reservations(reservationId),
     queryKey: ["getReservations"],
     queryFn: () => reservations(),
   });

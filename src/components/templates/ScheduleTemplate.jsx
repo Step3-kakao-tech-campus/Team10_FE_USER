@@ -11,18 +11,16 @@ import {
   carwashesBays,
   bookCarwash,
 } from "../../apis/carwashes";
-const ScheduleTemplate = () => {
+const ScheduleTemplate = ({ carwashId, bayId }) => {
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
   const [duration, setDuration] = useState();
-  const [carwashId, setcarwashId] = useState(3);
-  const [bayId, setbayId] = useState(0);
   const navigate = useNavigate();
   const [washinfo, bayinfo] = useSuspenseQueries({
     queries: [
       {
         queryKey: ["washinfo"],
-        queryFn: () => carwashesInfo(carwashId), //나중에 전역변수로 대체
+        queryFn: () => carwashesInfo(carwashId),
       },
       {
         queryKey: ["bayinfo"],
@@ -60,8 +58,6 @@ const ScheduleTemplate = () => {
   const name = washinfo?.data?.data?.response?.name;
   const openingHours = washinfo?.data?.data?.response?.optime;
 
-  // 임의로 0을 넣어놓음.
-  //나중에는 몇 번째 베이를 선택했는지 bayselection에서 넘겨줘서 0을 대체해야 할 것 같음
   const bayInfo = bayinfo?.data?.data?.response.bayList[bayId];
 
   const handleDateChange = (date) => {

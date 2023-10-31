@@ -3,6 +3,10 @@ import { instance } from "./instance";
 export const reservations = () => {
   return instance.get("/reservations");
 };
+// 나중에 api 수정되면 이거로 바꾸기
+// export const reservations = (reservationId) => {
+//   return instance.get(`/reservations/${reservationId}`);
+// };
 export const reservationsCurrentstatus = () => {
   return instance.get("/reservations/current-status");
 };

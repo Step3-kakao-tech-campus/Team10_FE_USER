@@ -1,24 +1,20 @@
-import React from "react";
 import ImageCarousel from "../atoms/ImageCarousel";
 import StoreInfo from "../atoms/StoreInfo";
 import KeyPointInfo from "../atoms/KeyPointInfo";
-import { Tab } from "../molecules/Tab";
 import { Button } from "../atoms/Button";
 import Star from "../atoms/Star";
+import { Tab } from "../molecules/Tab";
+
 import { useEffect, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { carwashesInfo } from "../../apis/carwashes";
 
-const CarwashDetailTemplate = () => {
+const CarwashDetailTemplate = ({ carwashId }) => {
   const [detaildata, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [carwashesid, setCarwashid] = useState(3);
-  // 이름 통일 필요
-
   const { data } = useSuspenseQuery({
-    queryKey: ["getCarwashesInfo", carwashesid], // add location to the dependency list to re-run query if location changes
-    queryFn: () => carwashesInfo(carwashesid), // Pass location to the getcarwashes_nearby function
-    enabled: !!carwashesid, // Only run the query when we have carwashid
+    queryKey: ["getCarwashesInfo", carwashId], // add location to the dependency list to re-run query if location changes
+    queryFn: () => carwashesInfo(carwashId), // Pass location to the getcarwashes_nearby function
+    enabled: !!carwashId, // Only run the query when we have carwashid
   });
 
   useEffect(() => {

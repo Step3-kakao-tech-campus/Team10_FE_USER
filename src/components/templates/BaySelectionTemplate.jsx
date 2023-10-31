@@ -7,18 +7,19 @@ import { carwashesBays } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 
-const BaySelectionTemplate = ({}) => {
+const BaySelectionTemplate = ({ carwashId }) => {
   const name = "포세이돈워시 용봉점";
   const openingHours = {
     weekday: { start: "00:00", end: "24:00" },
     weekend: { start: "00:00", end: "24:00" },
   };
   const [bayList, setBayList] = useState([]);
-
   const { data } = useSuspenseQuery({
-    queryKey: ["baylists"],
-    queryFn: carwashesBays,
+    queryKey: ["baylists", carwashId],
+    queryFn: () => carwashesBays(carwashId),
+    enabled: !!carwashId,
   });
+  console.log(data);
   useEffect(() => {
     if (data) {
       setBayList(data.data.response.bayList);

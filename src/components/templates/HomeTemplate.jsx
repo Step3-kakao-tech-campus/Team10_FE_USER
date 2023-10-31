@@ -20,9 +20,7 @@ const HomeTemplate = () => {
     timeout: 1000,
     maximumAge: 1000,
   };
-
   const { location, error } = useGeoLocation(geolocationOptions);
-
   const [recommended, recent] = useSuspenseQueries({
     queries: [
       {
@@ -36,9 +34,9 @@ const HomeTemplate = () => {
       },
     ],
   });
-
   const recommendedData = recommended?.data?.data?.response;
   const recentList = recent?.data?.data?.response?.recent;
+  const navigate = useNavigate();
 
   return (
     <main className="grid gap-6">
@@ -46,39 +44,32 @@ const HomeTemplate = () => {
       {/* 메뉴 링크 */}
       <section className="flex justify-between gap-4">
         <Button
-          type="home"
           variant="home"
           onClick={() => {
             navigate("/reservation");
           }}
-          label="내 주변 세차장 예약하기"
-          icon="/Button/home/reservation.svg"
         >
           내 주변 세차장 예약하기
-          {/* <img
+          <img
             className="absolute right-4 -bottom-4"
             src={Reservation}
             alt="위치 아이콘"
-          /> */}
+          />
         </Button>
         <Button
-          type="home"
           variant="home"
           onClick={() => {
             navigate("/history");
           }}
-          label="예약내역 보기"
-          icon="/Button/home/reservationHistory.svg"
         >
           예약내역 보기
-          {/* <img
+          <img
             className="absolute right-4 -bottom-4"
             src={ReservationHistory}
             alt="예약내역 아이콘"
-          /> */}
+          />
         </Button>
       </section>
-
       {/* 이런 세차장 어때요? */}
       <section className="grid gap-4">
         <h2 className="text-xl font-semibold">이런 세차장 어때요?</h2>
@@ -91,7 +82,6 @@ const HomeTemplate = () => {
           distance={recommendedData.distance}
         />
       </section>
-
       {/* 최근 이용 내역 */}
       <section className="grid gap-4">
         <h2 className="text-xl font-semibold">최근 이용 내역</h2>
@@ -100,5 +90,4 @@ const HomeTemplate = () => {
     </main>
   );
 };
-
 export default HomeTemplate;

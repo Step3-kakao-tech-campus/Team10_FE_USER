@@ -481,6 +481,9 @@ export const handlers = [
   // 결제가 완료된 다음에 보여주는 페이지에서 호출
   // 결제가 확실히 success 되어야 보여줘야 함
   rest.get("/reservations", (req, res, ctx) => {
+    // 나중에 api 수정 되면 이거로 바꾸기
+    // rest.get("/reservations/:reservationId", (req, res, ctx) => {
+    // const { reservationId } = req.params;
     const token = req.headers.get("Authorization");
 
     if (!token) {

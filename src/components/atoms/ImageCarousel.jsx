@@ -11,7 +11,7 @@ const ImageCarousel = ({ images }) => {
 
   const renderSlides = images.map((image, index) => (
     <div key={index}>
-      <img src={image.url} alt={image.alt} />
+      <img src={image.url} alt={image.alt} className="h-56" />
     </div>
   ));
 
@@ -26,7 +26,6 @@ const ImageCarousel = ({ images }) => {
         showThumbs={false}
         selectedItem={images[currentIndex]}
         onChange={handleChange}
-        className="w-full mb-2 h-4/5"
       >
         {renderSlides}
       </Carousel>

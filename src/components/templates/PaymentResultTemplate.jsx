@@ -84,15 +84,17 @@ const PaymentResultTemplate = ({ reservationId }) => {
     <div>
       <div className="relative p-4">
         <div className="py-8 text-2xl font-bold"> 결제가 완료되었습니다!</div>
-        <div className="flex flex-col gap-4 py-4 rounded-lg bg-gray-50">
-          <TextWithIcon text={extractDay(start)} iconsrc={iconsrc.calendar} />
-          <TextWithIcon
-            text={`${extractTime(start)}~${extractTime(end)}`}
-            iconsrc={iconsrc.clock}
-          />
-          <TextWithIcon text={carwashname} iconsrc={iconsrc.location} />
-          <TextWithIcon text={`${price}원`} iconsrc={iconsrc.price} />
-          <MapWithPin lat={latitude} lng={longitude} text={carwashname} />
+        <div className="py-4 bg-gray-100 rounded-lg ">
+          <div className="flex flex-col gap-4 p-4">
+            <TextWithIcon text={extractDay(start)} iconsrc={iconsrc.calendar} />
+            <TextWithIcon
+              text={`${extractTime(start)}~${extractTime(end)}`}
+              iconsrc={iconsrc.clock}
+            />
+            <TextWithIcon text={carwashname} iconsrc={iconsrc.location} />
+            <TextWithIcon text={`${price}원`} iconsrc={iconsrc.price} />
+            <MapWithPin lat={latitude} lng={longitude} text={carwashname} />
+          </div>
         </div>
       </div>
       <Button

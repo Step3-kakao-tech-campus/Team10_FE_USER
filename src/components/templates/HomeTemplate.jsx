@@ -74,6 +74,7 @@ const HomeTemplate = () => {
       <section className="grid gap-4">
         <h2 className="text-xl font-semibold">이런 세차장 어때요?</h2>
         <CarwashCard
+          id={recommendedData.id}
           image={recommendedData.image}
           name={recommendedData.name}
           address={recommendedData.location.address}

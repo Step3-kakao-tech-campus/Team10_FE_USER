@@ -1,9 +1,12 @@
 import React from "react";
-import Image from "/RecentCarwashItem/image.png";
 import Star from "../atoms/Star";
 import DistanceFromHere from "../atoms/DistanceFromHere";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCarwashId } from "../../store/action";
 
 export const CarwashCard = ({
+  id,
   image,
   name,
   address,
@@ -11,8 +14,19 @@ export const CarwashCard = ({
   reviewCount,
   distance,
 }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(setCarwashId(id));
+    navigate(`/carwashdetail/${id}`);
+  };
+
   return (
-    <div className="relative w-auto overflow-hidden shadow-xl h-72 rounded-xl">
+    <div
+      className="relative w-auto overflow-hidden shadow-xl h-72 rounded-xl"
+      onClick={handleClick}
+    >
       <img src={image} alt={name} className="absolute top-0 object-cover" />
       <div className="absolute bottom-0 z-50 justify-between w-full h-24 p-4 bg-white">
         <div className="relative">

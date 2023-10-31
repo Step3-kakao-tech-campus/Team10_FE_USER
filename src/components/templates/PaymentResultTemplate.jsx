@@ -4,6 +4,8 @@ import { Button } from "../atoms/Button";
 import { useEffect, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { reservations } from "../../apis/reservations";
+import { useDispatch } from "react-redux";
+import { resetStore } from "../../store/action";
 
 const iconsrc = {
   calendar: "/TextWithIcon/calendar.png",
@@ -15,6 +17,7 @@ const iconsrc = {
 const PaymentResultTemplate = () => {
   const [paymentresult, setpaymentresult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const { data } = useSuspenseQuery({
     queryKey: ["getReservations"],
@@ -27,6 +30,16 @@ const PaymentResultTemplate = () => {
       console.log(paymentresult);
     }
   }, [data]);
+
+  useEffect(() => {
+    // 페이지 로드 시 스토어를 초기 상태로 리셋
+    dispatch(resetStore());
+
+    if (data) {
+      setpaymentresult(data?.data?.response);
+      console.log(paymentresult);
+    }
+  }, [data, dispatch]);
 
   if (!paymentresult) {
     return <div>Loading...</div>;

@@ -47,48 +47,50 @@ const ReservationTemplate = () => {
   };
   console.log(location);
   return (
-    <div>
-      <div className="flex items-end w-screen h-screen gap-0 bg-white">
-        <KakaoMap className="fixed absolute left-0 z-0 w-screen h-screen" />
-        <DualBottomsheet className="fixed left-0 z-10">
-          <Bottomsheet className="z-20 flex flex-col h-full gap-3 overflow-y-scroll">
-            <div className="flex flex-row gap-2">
-              <Badge
-                key="1"
-                label="하부세차"
-                onClick={() => {
-                  handleBadgeClick(1);
-                }}
-              />
-              <Badge
-                key="2"
-                label="폼건세차"
-                onClick={() => {
-                  handleBadgeClick(2);
-                }}
-              />
-              <Badge
-                key="3"
-                label="온수세차"
-                onClick={() => {
-                  handleBadgeClick(3);
-                }}
-              />
-            </div>
-            {washlists?.data?.response &&
-              washlists?.data?.response.map((item, index) => (
-                <StoreItem
-                  key={index}
-                  imgsrc={item.image}
-                  storename={item.name}
-                  starcount={item.star}
-                  reviewcount="0"
-                  priceinfo="15000/60분"
-                  distance={item.distance}
+    <div className="overflow-y-auto">
+      <div>
+        <div className="flex items-end w-screen h-screen gap-0 bg-white">
+          <KakaoMap className="fixed left-0 z-0 w-screen h-screen" />
+          <DualBottomsheet className="fixed left-0 z-10">
+            <Bottomsheet className="z-20 flex flex-col h-full gap-3 overflow-y-scroll">
+              <div className="flex flex-row gap-2">
+                <Badge
+                  key="1"
+                  label="하부세차"
+                  onClick={() => {
+                    handleBadgeClick(1);
+                  }}
                 />
-              ))}
-          </Bottomsheet>
-        </DualBottomsheet>
+                <Badge
+                  key="2"
+                  label="폼건세차"
+                  onClick={() => {
+                    handleBadgeClick(2);
+                  }}
+                />
+                <Badge
+                  key="3"
+                  label="온수세차"
+                  onClick={() => {
+                    handleBadgeClick(3);
+                  }}
+                />
+              </div>
+              {washlists?.data?.response &&
+                washlists?.data?.response.map((item, index) => (
+                  <StoreItem
+                    key={index}
+                    imgsrc={item.image}
+                    storename={item.name}
+                    starcount={item.star}
+                    reviewcount="0"
+                    priceinfo="15000/60분"
+                    distance={item.distance}
+                  />
+                ))}
+            </Bottomsheet>
+          </DualBottomsheet>
+        </div>
       </div>
     </div>
   );

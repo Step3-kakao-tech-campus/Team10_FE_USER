@@ -4,17 +4,21 @@ import KeyPointInfo from "../atoms/KeyPointInfo";
 import { Button } from "../atoms/Button";
 import Star from "../atoms/Star";
 import { Tab } from "../molecules/Tab";
-
 import { useEffect, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { carwashesInfo } from "../../apis/carwashes";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CarwashDetailTemplate = ({ carwashId }) => {
   const [detaildata, setData] = useState(null);
+  const navigate = useNavigate();
+  const selectedCarwashId = useSelector((state) => state.selectedCarwashId);
+
   const { data } = useSuspenseQuery({
-    queryKey: ["getCarwashesInfo", carwashId], // add location to the dependency list to re-run query if location changes
-    queryFn: () => carwashesInfo(carwashId), // Pass location to the getcarwashes_nearby function
-    enabled: !!carwashId, // Only run the query when we have carwashid
+    queryKey: ["getCarwashesInfo", selectedCarwashId],
+    queryFn: () => carwashesInfo(selectedCarwashId),
+    enabled: !!selectedCarwashId,
   });
 
   useEffect(() => {
@@ -27,6 +31,10 @@ const CarwashDetailTemplate = ({ carwashId }) => {
   if (!detaildata) {
     return <div>Loading...</div>;
   }
+
+  const handleReservationClick = () => {
+    navigate(`/bayselection/${selectedCarwashId}`);
+  };
 
   const images = detaildata.image.map((url) => ({
     label: "Image",
@@ -74,7 +82,13 @@ const CarwashDetailTemplate = ({ carwashId }) => {
           </div>
         </div>
       </div>
-      <Button type="long" label="예약하기" className="fixed bottom-0" />
+      <Button
+        variant="long"
+        className="fixed bottom-0"
+        onClick={handleReservationClick}
+      >
+        예약하기
+      </Button>
     </div>
   );
 };

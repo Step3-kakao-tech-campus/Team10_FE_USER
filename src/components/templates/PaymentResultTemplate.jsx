@@ -7,6 +7,7 @@ import { reservations } from "../../apis/reservations";
 import { useDispatch } from "react-redux";
 import { resetStore } from "../../store/action";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 const iconsrc = {
   calendar: "/TextWithIcon/calendar.png",
@@ -37,9 +38,7 @@ const PaymentResultTemplate = ({ reservationId }) => {
   }, [data]);
 
   useEffect(() => {
-    // 페이지 로드 시 스토어를 초기 상태로 리셋
     dispatch(resetStore());
-
     if (data) {
       setpaymentresult(data?.data?.response);
       console.log(paymentresult);
@@ -61,23 +60,12 @@ const PaymentResultTemplate = ({ reservationId }) => {
     },
   } = paymentresult;
 
-  const extractTime = (dateTime) => {
-    const date = new Date(dateTime);
-    return (
-      date.getHours().toString().padStart(2, "0") +
-      ":" +
-      date.getMinutes().toString().padStart(2, "0")
-    );
+  const formatTime = (dateTime) => {
+    return dayjs(dateTime).format("HH시 mm분");
   };
 
-  const extractDay = (dateTime) => {
-    const date = new Date(dateTime);
-    return (
-      date.getMonth().toString().padStart(2, "0") +
-      "월 " +
-      date.getDay().toString().padStart(2, "0") +
-      "일"
-    );
+  const formatDate = (dateTime) => {
+    return dayjs(dateTime).format("YYYY년 MM월 DD일");
   };
 
   return (
@@ -86,9 +74,9 @@ const PaymentResultTemplate = ({ reservationId }) => {
         <div className="py-8 text-2xl font-bold"> 결제가 완료되었습니다!</div>
         <div className="py-4 bg-gray-100 rounded-lg ">
           <div className="flex flex-col gap-4 p-4">
-            <TextWithIcon text={extractDay(start)} iconsrc={iconsrc.calendar} />
+            <TextWithIcon text={formatDate(start)} iconsrc={iconsrc.calendar} />
             <TextWithIcon
-              text={`${extractTime(start)}~${extractTime(end)}`}
+              text={`${formatTime(start)} - ${formatTime(end)}`}
               iconsrc={iconsrc.clock}
             />
             <TextWithIcon text={carwashname} iconsrc={iconsrc.location} />

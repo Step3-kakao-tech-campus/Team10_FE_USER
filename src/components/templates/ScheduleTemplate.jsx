@@ -5,18 +5,22 @@ import DatePicker from "../molecules/DatePicker";
 import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
-
+import { saveReservation } from "../../store/action";
 import {
   carwashesInfo,
   carwashesBays,
   bookCarwash,
 } from "../../apis/carwashes";
+
 const ScheduleTemplate = ({ carwashId, bayId }) => {
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
   const [duration, setDuration] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [washinfo, bayinfo] = useSuspenseQueries({
     queries: [
       {
@@ -50,6 +54,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
       formattedStartTime,
       formattedEndTime,
     };
+    dispatch(saveReservation(formattedStartTime, formattedEndTime));
     mutation.mutate(payload);
   };
 
@@ -182,7 +187,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
         onClick={handleSubmit}
         className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white rounded-none h-14 bg-primary"
       >
-        예약하기
+        결제하러 가기
       </button>
     </div>
   );

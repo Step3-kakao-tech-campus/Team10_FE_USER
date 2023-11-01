@@ -3,8 +3,8 @@ import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
 import BayList from "../organisms/BayList";
 import { useEffect, useState } from "react";
-import { carwashesBays } from "../../apis/carwashes";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { carwashesBays, carwashesInfo } from "../../apis/carwashes";
+import { useSuspenseQueries } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -14,22 +14,28 @@ const BaySelectionTemplate = ({ carwashId }) => {
     weekday: { start: "00:00", end: "24:00" },
     weekend: { start: "00:00", end: "24:00" },
   };
-  const [bayList, setBayList] = useState([]);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedCarwashId = useSelector((state) => state.selectedCarwashId);
 
-  const { data } = useSuspenseQuery({
-    queryKey: ["baylists", selectedCarwashId],
-    queryFn: () => carwashesBays(selectedCarwashId),
-    enabled: !!selectedCarwashId,
+  const [carwashInfo, baybookInfo] = useSuspenseQueries({
+    queries: [
+      {
+        queryKey: ["getCarwashesInfo", selectedCarwashId],
+        queryFn: () => carwashesInfo(selectedCarwashId),
+        enabled: !!carwashId,
+      },
+      {
+        queryKey: ["baylists", selectedCarwashId],
+        queryFn: () => carwashesBays(selectedCarwashId),
+        enabled: !!selectedCarwashId,
+      },
+    ],
   });
-  console.log(data);
-  useEffect(() => {
-    if (data) {
-      setBayList(data.data.response.bayList);
-    }
-  }, []);
+  const detailData = carwashInfo.data.data.response.optime;
+  const bayList = baybookInfo.data.data.response.bayList;
+
   // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
 
   const handleBayClick = (bayId) => {
@@ -45,17 +51,17 @@ const BaySelectionTemplate = ({ carwashId }) => {
         <Image src={TimeImage} alt="영업시간" className="py-1" />
         <div>
           <div>
-            평일 {openingHours.weekday.start} ~ {openingHours.weekday.end}
+            평일 {detailData.weekday.start} ~ {detailData.weekday.end}
           </div>
           <div>
-            주말 {openingHours.weekend.start} ~ {openingHours.weekend.end}
+            주말 {detailData.weekend.start} ~ {detailData.weekend.end}
           </div>
         </div>
       </div>
       <div>
         <BayList
           bays={bayList}
-          openingHours={openingHours}
+          openingHours={detailData}
           selectedDate={new Date()}
           onClick={handleBayClick}
           // 여기서 해당 /schdule 링크로 이동해야함 (id값)

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const PaymentTemplate = ({ reservationId }) => {
   const [paymentdata, setData] = useState(null);
   const reservations = useSelector((state) => state.reservations);
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   const { data } = useSuspenseQuery({
     queryKey: ["getPayment", reservationId],
@@ -79,12 +79,14 @@ const PaymentTemplate = ({ reservationId }) => {
           </button>
         </div>
       </div>
-
-      <Button variant="long" className="fixed bottom-0">
+      <Button
+        variant="long"
+        className="fixed bottom-0"
+        //onClick={() => navigate(`paymentresult/${reservationId}`)}
+      >
         {paymentdata.total_price}원 결제하기
       </Button>
     </div>
-    // 결제하기 mutate 성공 시 paymentresult/{reservationId}로 이동
   );
 };
 

@@ -6,12 +6,13 @@ import KeywordReview from "./KeywordReview";
 import UserStar from "./UserStar";
 
 const TabReview = ({ carwashId }) => {
-  const averageStar = 4.5; // 이 값은 예시일 수 있으며 실제 평균 별점 계산 로직이 필요할 수 있습니다.
 
   const { data: reviewsData } = useSuspenseQuery({
     queryKey: ["carwashesReviews", carwashId],
     queryFn: () => carwashesReviews(carwashId),
   });
+
+  const averageStar = reviewsData?.data?.response?.overview?.rate || 0;
 
   const carwashreviews = reviewsData?.data?.response?.reviews?.map(
     (review) => ({

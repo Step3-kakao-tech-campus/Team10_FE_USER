@@ -57,8 +57,8 @@ const CarwashDetailTemplate = ({ carwashId }) => {
               <div className="text-xl font-bold">{detaildata?.name}</div>
               {/* 별점 */}
               <Star
-                starcount={parseFloat(detaildata?.rate)}
-                reviewcount={parseInt(detaildata?.review_cnt, 10)}
+                starCount={parseFloat(detaildata?.rate)}
+                reviewCount={parseFloat(detaildata?.reviewCnt)}
               />
             </div>
             {/* 예약 베이 수 */}
@@ -70,7 +70,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
             </div>
           </div>
           {/* 영업 정보 및 탭 메뉴 */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 py-4">
             <StoreInfo
               weekhour={weekhour}
               weekendhour={weekendhour}

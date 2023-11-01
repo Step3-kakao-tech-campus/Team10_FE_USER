@@ -251,12 +251,12 @@ export const handlers = [
           bayCnt: 4,
           optime: {
             weekday: {
-              start: "09:00:00",
-              end: "17:00:00",
+              start: "09:00",
+              end: "17:00",
             },
             weekend: {
-              start: "10:00:00",
-              end: "16:00:00",
+              start: "10:00",
+              end: "16:00",
             },
           },
           image: [
@@ -536,12 +536,12 @@ export const handlers = [
       response: {
         current: [
           {
-            id: 10,
+            id: 2,
             time: {
               start: "2023-10-14T14:28:31.054667",
               end: "2023-10-14T15:28:31.054678",
             },
-            carwashName: "세차장",
+            carwashName: "용봉세차장",
             bayNum: 8,
             price: 5000,
             image:

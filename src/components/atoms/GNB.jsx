@@ -35,7 +35,7 @@ export const GNB = () => {
     },
     {
       name: "예약내역",
-      path: "/reservationlist",
+      path: "/history",
       icon: ReservationList,
       iconActive: ReservationListActive,
     },
@@ -58,7 +58,8 @@ export const GNB = () => {
                     currentPage === menu.path
                       ? "text-sky-500 text-xs"
                       : "text-xs"
-                  }>
+                  }
+                >
                   {menu.name}
                 </div>
               </div>

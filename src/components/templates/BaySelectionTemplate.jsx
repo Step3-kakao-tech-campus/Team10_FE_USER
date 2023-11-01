@@ -5,6 +5,8 @@ import BayList from "../organisms/BayList";
 import { useEffect, useState } from "react";
 import { carwashesBays } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const BaySelectionTemplate = ({ carwashId }) => {
   const name = "포세이돈워시 용봉점";
@@ -13,10 +15,14 @@ const BaySelectionTemplate = ({ carwashId }) => {
     weekend: { start: "00:00", end: "24:00" },
   };
   const [bayList, setBayList] = useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const selectedCarwashId = useSelector((state) => state.selectedCarwashId);
+
   const { data } = useSuspenseQuery({
-    queryKey: ["baylists", carwashId],
-    queryFn: () => carwashesBays(carwashId),
-    enabled: !!carwashId,
+    queryKey: ["baylists", selectedCarwashId],
+    queryFn: () => carwashesBays(selectedCarwashId),
+    enabled: !!selectedCarwashId,
   });
   console.log(data);
   useEffect(() => {
@@ -25,6 +31,11 @@ const BaySelectionTemplate = ({ carwashId }) => {
     }
   }, []);
   // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
+
+  const handleBayClick = (bayId) => {
+    dispatch({ type: "SET_BAY_ID", payload: bayId });
+    navigate(`/schedule/${selectedCarwashId}/${bayId}`);
+  };
 
   return (
     <div className="relative p-4">
@@ -46,6 +57,8 @@ const BaySelectionTemplate = ({ carwashId }) => {
           bays={bayList}
           openingHours={openingHours}
           selectedDate={new Date()}
+          onClick={handleBayClick}
+          // 여기서 해당 /schdule 링크로 이동해야함 (id값)
         />
       </div>
     </div>

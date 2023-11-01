@@ -37,6 +37,7 @@ const HomeTemplate = () => {
   const recommendedData = recommended?.data?.data?.response;
   const recentList = recent?.data?.data?.response?.recent;
   const navigate = useNavigate();
+
   return (
     <main className="grid gap-6">
       <h1 className="text-2xl font-semibold">노주영님 안녕하세요!</h1>
@@ -73,6 +74,7 @@ const HomeTemplate = () => {
       <section className="grid gap-4">
         <h2 className="text-xl font-semibold">이런 세차장 어때요?</h2>
         <CarwashCard
+          id={recommendedData.id}
           image={recommendedData.image}
           name={recommendedData.name}
           address={recommendedData.location.address}

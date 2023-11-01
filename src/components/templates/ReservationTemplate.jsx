@@ -5,15 +5,17 @@ import { useEffect, useState } from "react";
 import { Button } from "../atoms/Button";
 import { Badge } from "../atoms/Badge";
 import DualBottomsheet from "../atoms/DualBottomsheet";
-import { carwashesNearby } from "../../apis/carwashes";
+import { carwashesNearby, carwashesSearch } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { MapWithPins } from "../atoms/MapWithPins";
 
 const ReservationTemplate = () => {
+  const initialKeypoints = [1, 2, 3];
+  const [keypoints, setKeypoints] = useState(initialKeypoints);
+  const [firstClick, setFirstClick] = useState(true);
   const [washlists, setWashlists] = useState([]);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState({ latitude: null, longitude: null });
-  const [keypoints, setKeypoints] = useState([]);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -27,25 +29,35 @@ const ReservationTemplate = () => {
   }, []);
 
   const { data } = useSuspenseQuery({
-    queryKey: ["getcarwashes", location], // add location to the dependency list to re-run query if location changes
-    queryFn: () => carwashesNearby(location), // Pass location to the getcarwashes_nearby function
-    enabled: !!location.latitude && !!location.longitude, // Only run the query when we have both latitude and longitude
+    queryKey: [
+      "getcarwashes",
+      location.latitude,
+      location.longitude,
+      keypoints,
+    ],
+    queryFn: () =>
+      carwashesSearch(keypoints, location.latitude, location.longitude),
+    enabled: location.latitude != null && location.longitude != null,
   });
-
   useEffect(() => {
     if (data) {
       setWashlists(data);
     }
   }, [data]);
+
   const handleBadgeClick = (value) => {
-    console.log(keypoints);
-    setKeypoints((prevKeypoints) =>
-      prevKeypoints.includes(value)
-        ? prevKeypoints.filter((point) => point !== value)
-        : [...prevKeypoints, value]
-    );
+    if (firstClick) {
+      setKeypoints([value]);
+      setFirstClick(false);
+    } else {
+      setKeypoints((prevKeypoints) =>
+        prevKeypoints.includes(value)
+          ? prevKeypoints.filter((point) => point !== value)
+          : [...prevKeypoints, value]
+      );
+    }
   };
-  console.log(location);
+  console.log(keypoints);
 
   return (
     <div className="overflow-y-auto">

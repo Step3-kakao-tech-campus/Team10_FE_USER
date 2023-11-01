@@ -6,6 +6,7 @@ import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
+
 import {
   carwashesInfo,
   carwashesBays,
@@ -58,7 +59,9 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
   const name = washinfo?.data?.data?.response?.name;
   const openingHours = washinfo?.data?.data?.response?.optime;
 
-  const bayInfo = bayinfo?.data?.data?.response.bayList[bayId];
+  const bayInfo = bayinfo?.data?.data?.response.bayList.find(
+    (bay) => bay.bayId === parseInt(bayId)
+  );
 
   const handleDateChange = (date) => {
     setDate(date);

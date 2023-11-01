@@ -12,6 +12,7 @@ import {
   carwashesBays,
   bookCarwash,
 } from "../../apis/carwashes";
+import { Button } from "../atoms/Button";
 const ScheduleTemplate = ({ carwashId, bayId }) => {
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
@@ -40,15 +41,6 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
     },
     onError: (error) => {
       console.error(error);
-      if (error.response && error.response.status === 401) {
-        alert("로그인 정보가 없습니다. 로그인 페이지로 이동합니다.");
-        navigate("/login");
-      } else if (error.response && error.response.status === 404) {
-        alert("페이지를 찾을 수 없습니다. 404 페이지로 이동합니다.");
-        navigate("/*");
-      } else {
-        alert("주문에 실패했습니다. 다시 시도해주세요.");
-      }
     },
   });
 
@@ -185,13 +177,14 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
           </div>
         </div>
       </div>
-      <button
-        type="long"
+
+      <Button
+        variant="long"
         onClick={handleSubmit}
-        className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white rounded-none h-14 bg-primary"
+        className="fixed left-0 bottom-14"
       >
-        예약하기
-      </button>
+        예약하러가기
+      </Button>
     </div>
   );
 };

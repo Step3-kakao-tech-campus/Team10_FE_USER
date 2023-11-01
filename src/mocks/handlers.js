@@ -541,7 +541,7 @@ export const handlers = [
               start: "2023-10-14T14:28:31.054667",
               end: "2023-10-14T15:28:31.054678",
             },
-            carwashName: "세차장",
+            carwashName: "용봉세차장",
             bayNum: 8,
             price: 5000,
             image:

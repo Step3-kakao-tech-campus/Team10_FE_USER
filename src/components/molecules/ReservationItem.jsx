@@ -36,31 +36,21 @@ const ReservationItem = ({
   }, [showCancelSheet]);
 
   return (
-    <div className="w-auto h-24 relative bg-white rounded-xl border border-gray-200 flex items-center gap-3.5 ">
-      {/* 세차장 사진 부분 */}
-      <Image
-        src={imgsrc}
-        className="flex  w-[74px] h-[74px] rounded-xl ml-3"
-        alt="세차장 이미지"
-      />
-
-      <div className="flex flex-col w-56 h-16 gap-1">
-        <div className="text-sm text-gray-400">{reservetime}</div>
-        <div className="font-semibold ">{bayname}</div>
-        <div className="left-0 top-[53px] text-primary text-sm  ">
-          {priceinfo}
-        </div>
+    <div className="flex justify-between py-4 overflow-x-auto border border-gray-300 rounded-xl">
+      <Image src={imgsrc} className="w-24 h-16 m-2 " alt="세차장 이미지" />
+      <div className="flex flex-col gap-2">
+        <div className="text-sm text-gray-500">{reservetime}</div>
+        <div>{bayname}</div>
+        <div className="text-right text-primary">{priceinfo}</div>
       </div>
-
-      {buttontype === "cancel" && (
-        <Button
-          type="cancel"
-          onClick={() => setShowCancelSheet(true)}
-          label="예약취소"
-        />
-      )}
-
-      {buttontype === "review" && <Button type="review" label="리뷰 작성" />}
+      <div>
+        {buttontype === "cancel" && (
+          <Button variant="cancel" onClick={() => setShowCancelSheet(true)}>
+            예약 취소
+          </Button>
+        )}
+      </div>
+      {buttontype === "review" && <Button variant="review"> 리뷰 작성 </Button>}
 
       {showCancelSheet && (
         <div ref={cancelSheetRef} className="fixed left-0 bottom-[60px] z-10">

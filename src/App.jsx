@@ -34,7 +34,7 @@ function App() {
           path="/schedule/:carwashId/:bayId"
           element={<SchedulePage />}
         ></Route>
-        <Route path="/payment/:reservationId" element={<PaymentPage />}></Route>
+        <Route path="/payment" element={<PaymentPage />}></Route>
         <Route
           path="/paymentresult/:reservationId"
           element={<PaymentResultPage />}

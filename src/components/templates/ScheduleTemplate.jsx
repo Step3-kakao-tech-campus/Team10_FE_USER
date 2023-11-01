@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
 import DatePicker from "../molecules/DatePicker";
@@ -6,17 +6,21 @@ import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { saveReservation } from "../../store/action";
 
 import {
   carwashesInfo,
   carwashesBays,
   bookCarwash,
 } from "../../apis/carwashes";
+
 const ScheduleTemplate = ({ carwashId, bayId }) => {
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
   const [duration, setDuration] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [washinfo, bayinfo] = useSuspenseQueries({
     queries: [
       {
@@ -50,6 +54,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
       formattedStartTime,
       formattedEndTime,
     };
+    dispatch(saveReservation(formattedStartTime, formattedEndTime));
     mutation.mutate(payload);
   };
 
@@ -116,7 +121,6 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
   return (
     <div className="relative p-4">
       <div className="flex-grow pb-12 overflow-y-auto">
-        <div className="mb-4 font-bold">{"<"}</div>
         <div className="mb-4 text-xl font-bold">
           {name}: 베이 {bayInfo.bayNo}
         </div>
@@ -177,12 +181,12 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
           </div>
         </div>
       </div>
+
       <button
-        type="long"
         onClick={handleSubmit}
-        className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white rounded-none h-14 bg-primary"
+        className="fixed left-0 block w-full p-4 font-semibold text-white bottom-14 h-14 bg-primary"
       >
-        예약하기
+        예약하러가기
       </button>
     </div>
   );

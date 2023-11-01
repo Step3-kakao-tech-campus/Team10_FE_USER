@@ -4,14 +4,19 @@ import { carwashesReviews } from "../../apis/carwashes";
 import ReviewList from "../molecules/ReviewList";
 import KeywordReview from "./KeywordReview";
 import UserStar from "./UserStar";
+import { useSelector } from "react-redux";
 
-const TabReview = ({ carwashId }) => {
-  const averageStar = 4.5; // 이 값은 예시일 수 있으며 실제 평균 별점 계산 로직이 필요할 수 있습니다.
+const TabReview = ({}) => {
+  const selectedCarwashId = useSelector((state) => state.selectedCarwashId);
 
   const { data: reviewsData } = useSuspenseQuery({
-    queryKey: ["carwashesReviews", carwashId],
-    queryFn: () => carwashesReviews(carwashId),
+    queryKey: ["carwashesReviews", selectedCarwashId],
+    queryFn: () => carwashesReviews(selectedCarwashId),
   });
+
+  const averageStar = reviewsData?.data?.response?.overview?.rate || 0;
+  const totalReviews = reviewsData?.data?.response?.overview?.totalCnt || 0;
+  const keywords = reviewsData?.data?.response?.overview?.reviewKeyword || [];
 
   const carwashreviews = reviewsData?.data?.response?.reviews?.map(
     (review) => ({
@@ -22,24 +27,42 @@ const TabReview = ({ carwashId }) => {
     })
   );
 
-  // KeywordReview와 관련된 데이터 처리 로직
-  // ...
+  const getKeywordText = (id) => {
+    const keywordMapping = {
+      1: "사장님이 친절해요",
+      2: "간단한 용품을 팔아요",
+      3: "휴게공간이 있어요",
+      4: "가격이 합리적이에요",
+      5: "타이어 공기를 넣을 수 있어요",
+      6: "매장이 깨끗해요",
+      7: "여름엔 시원하고 겨울엔 깨끗해요",
+    };
+
+    return keywordMapping[id] || "존재하지 않음";
+  };
 
   return (
     <Suspense fallback={<div>Loading reviews...</div>}>
       <div>
-        <div className="grid gap-2">
+        <div className="grid gap-2 py-4">
           <div className="font-semibold">평균별점</div>
           <div>
             <UserStar averageStar={averageStar} />
           </div>
           <hr />
-          <div className="font-semibold">키워드 리뷰</div>
+          <div className="py-2 font-semibold">키워드 리뷰</div>
           <div className="grid gap-2">
-            {/* KeywordReview 컴포넌트 렌더링 */}
+            {keywords.map((keywordData) => (
+              <KeywordReview
+                key={keywordData.id}
+                keyword={getKeywordText(keywordData.id)} // Replace with actual keyword text if available
+                reviewCount={keywordData.count}
+                totalReviews={totalReviews}
+              />
+            ))}
           </div>
           <hr />
-          <div className="font-semibold">
+          <div className="py-2 font-semibold">
             리뷰 {carwashreviews?.length || 0}건
           </div>
           <ReviewList reviews={carwashreviews} />

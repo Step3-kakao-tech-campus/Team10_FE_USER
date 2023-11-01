@@ -5,22 +5,18 @@ import DatePicker from "../molecules/DatePicker";
 import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
-import { saveReservation } from "../../store/action";
+
 import {
   carwashesInfo,
   carwashesBays,
   bookCarwash,
 } from "../../apis/carwashes";
-
 const ScheduleTemplate = ({ carwashId, bayId }) => {
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
   const [duration, setDuration] = useState();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const [washinfo, bayinfo] = useSuspenseQueries({
     queries: [
       {
@@ -44,6 +40,15 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
     },
     onError: (error) => {
       console.error(error);
+      if (error.response && error.response.status === 401) {
+        alert("로그인 정보가 없습니다. 로그인 페이지로 이동합니다.");
+        navigate("/login");
+      } else if (error.response && error.response.status === 404) {
+        alert("페이지를 찾을 수 없습니다. 404 페이지로 이동합니다.");
+        navigate("/*");
+      } else {
+        alert("주문에 실패했습니다. 다시 시도해주세요.");
+      }
     },
   });
 
@@ -54,7 +59,6 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
       formattedStartTime,
       formattedEndTime,
     };
-    dispatch(saveReservation(formattedStartTime, formattedEndTime));
     mutation.mutate(payload);
   };
 
@@ -121,7 +125,6 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
   return (
     <div className="relative p-4">
       <div className="flex-grow pb-12 overflow-y-auto">
-        <div className="mb-4 font-bold">{"<"}</div>
         <div className="mb-4 text-xl font-bold">
           {name}: 베이 {bayInfo.bayNo}
         </div>
@@ -187,7 +190,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
         onClick={handleSubmit}
         className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white rounded-none h-14 bg-primary"
       >
-        결제하러 가기
+        예약하기
       </button>
     </div>
   );

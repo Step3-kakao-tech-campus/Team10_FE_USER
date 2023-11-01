@@ -84,7 +84,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
       </div>
       <Button
         variant="long"
-        className="fixed bottom-0"
+        className="fixed left-0 bottom-14"
         onClick={handleReservationClick}
       >
         예약하기

@@ -8,6 +8,7 @@ import { carwashesRecommended } from "../../apis/carwashes";
 import { reservationsRecent } from "../../apis/reservations";
 import { useNavigate } from "react-router-dom";
 import useGeoLocation from "../../hooks/useGeoLocation";
+import { useEffect } from "react";
 
 /**
  * HomeTemplate
@@ -21,6 +22,7 @@ const HomeTemplate = () => {
     maximumAge: 1000,
   };
   const { location, error } = useGeoLocation(geolocationOptions);
+  const token = localStorage.getItem("token");
   const [recommended, recent] = useSuspenseQueries({
     queries: [
       {
@@ -30,17 +32,19 @@ const HomeTemplate = () => {
       },
       {
         queryKey: ["recent"],
-        queryFn: () => reservationsRecent(),
+        queryFn: () => (token ? reservationsRecent() : Promise.resolve(null)),
+        enabled: !!token,
       },
     ],
   });
   const recommendedData = recommended?.data?.data?.response;
-  const recentList = recent?.data?.data?.response?.recent;
+  const recentList = recent?.data?.data?.response?.recent || [];
   const navigate = useNavigate();
 
   return (
-    <main className="grid gap-6">
-      <h1 className="text-2xl font-semibold">노주영님 안녕하세요!</h1>
+    <main className="grid gap-6 py-12">
+      {/*사용자 이름 데이터 있을 때 처리
+       <h1 className="text-2xl font-semibold">노주영님 안녕하세요!</h1>*/}
       {/* 메뉴 링크 */}
       <section className="flex justify-between gap-4">
         <Button
@@ -84,10 +88,12 @@ const HomeTemplate = () => {
         />
       </section>
       {/* 최근 이용 내역 */}
-      <section className="grid gap-4">
-        <h2 className="text-xl font-semibold">최근 이용 내역</h2>
-        <RecentCarwashSlider recentList={recentList} />
-      </section>
+      {token && (
+        <section className="grid gap-4">
+          <h2 className="text-xl font-semibold">최근 이용 내역</h2>
+          <RecentCarwashSlider recentList={recentList} />
+        </section>
+      )}
     </main>
   );
 };

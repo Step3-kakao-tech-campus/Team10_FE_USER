@@ -82,13 +82,12 @@ const CarwashDetailTemplate = ({ carwashId }) => {
           </div>
         </div>
       </div>
-      <Button
-        variant="long"
-        className="fixed left-0 bottom-14"
+      <button
+        className="fixed left-0 block w-full p-4 font-semibold text-white bottom-14 h-14 bg-primary"
         onClick={handleReservationClick}
       >
-        예약하기
-      </Button>
+        예약하러 가기
+      </button>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
 import DatePicker from "../molecules/DatePicker";
@@ -6,18 +6,21 @@ import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { saveReservation } from "../../store/action";
 
 import {
   carwashesInfo,
   carwashesBays,
   bookCarwash,
 } from "../../apis/carwashes";
-import { Button } from "../atoms/Button";
+
 const ScheduleTemplate = ({ carwashId, bayId }) => {
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
   const [duration, setDuration] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [washinfo, bayinfo] = useSuspenseQueries({
     queries: [
       {
@@ -51,6 +54,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
       formattedStartTime,
       formattedEndTime,
     };
+    dispatch(saveReservation(formattedStartTime, formattedEndTime));
     mutation.mutate(payload);
   };
 
@@ -178,13 +182,12 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
         </div>
       </div>
 
-      <Button
-        variant="long"
+      <button
         onClick={handleSubmit}
-        className="fixed left-0 bottom-14"
+        className="fixed left-0 block w-full p-4 font-semibold text-white bottom-14 h-14 bg-primary"
       >
         예약하러가기
-      </Button>
+      </button>
     </div>
   );
 };

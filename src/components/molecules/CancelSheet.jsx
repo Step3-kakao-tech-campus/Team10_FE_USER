@@ -38,10 +38,10 @@ const CancelSheet = ({ className, reservetime, bayname, bayid, priceinfo }) => {
           <div className="ml-auto">{priceinfo}</div>
         </div>
         <Button
-          type="cancelreservation"
+          variant="long"
           className="bg-red-500"
           onClick={() => mutation.mutate(bayid)}
-          label="취소하기"
+          children="취소하기"
         />
       </div>
     </Bottomsheet>

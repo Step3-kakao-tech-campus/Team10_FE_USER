@@ -142,8 +142,8 @@ export const handlers = [
               id: 18,
               place: "새로운 이름",
               address: "새로운 주소",
-              latitude: 1.234,
-              longitude: 2.345,
+              latitude: 35.1759,
+              longitude: 126.9,
             },
             distance: 2513,
             rate: 5.0,
@@ -158,8 +158,8 @@ export const handlers = [
               id: 18,
               place: "새로운 이름",
               address: "새로운 주소",
-              latitude: 1.234,
-              longitude: 2.345,
+              latitude: 35.1759,
+              longitude: 126.93,
             },
             distance: 4189,
             rate: 5.0,
@@ -173,20 +173,7 @@ export const handlers = [
 
   // 키워드 기반 세차장 리스트 조회
   rest.get("/carwashes/search", (req, res, ctx) => {
-    const { u_latitude, u_longitude } = req.params;
-    const queryString = req.url.split("?")[1];
-
-    const queryParams = queryString.split("&");
-
-    let keywordIds = [];
-
-    queryParams.forEach((param) => {
-      const [key, value] = param.split("=");
-
-      if (key === "keywordIds") {
-        keywordIds = value.split(",").map(Number);
-      }
-    });
+    const { keywordIds, u_latitude, u_longitude } = req.params;
 
     return res(
       ctx.status(200),
@@ -202,8 +189,8 @@ export const handlers = [
               id: 18,
               place: "새로운 이름",
               address: "새로운 주소",
-              latitude: 1.234,
-              longitude: 2.345,
+              latitude: 35.1759,
+              longitude: 126.9,
             },
             distance: 2513,
             rate: 5.0,
@@ -218,8 +205,8 @@ export const handlers = [
               id: 18,
               place: "새로운 이름",
               address: "새로운 주소",
-              latitude: 1.234,
-              longitude: 2.345,
+              latitude: 35.1759,
+              longitude: 126.93,
             },
             distance: 4189,
             rate: 5.0,

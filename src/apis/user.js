@@ -1,6 +1,6 @@
 import { instance } from "./instance";
 
-export const join = (data) => {
+export const signup = (data) => {
   const { username, email, password, tel } = data;
   return instance.post("/join/user", { username, email, password, tel });
 };

@@ -11,6 +11,7 @@ import PaymentResultPage from "./pages/PaymentResultPage";
 import ReviewPostPage from "./pages/ReviewPostPage";
 import PaymentPage from "./pages/PaymentPage";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/history" element={<ReservationHistoryPage />}></Route>
         </Route>
         <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/signup" element={<SignupPage />}></Route>
         <Route
           path="/carwashdetail/:carwashId"
           element={<CarwashDetailPage />}

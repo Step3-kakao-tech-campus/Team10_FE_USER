@@ -50,7 +50,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
       <div className="flex-grow pb-20 overflow-y-auto">
         {/* 캐러셀 */}
         <ImageCarousel images={images} />
-        <div className="p-4">
+        <div className="py-4">
           <div className="flex justify-between">
             <div className="flex flex-col">
               {/* 매장명 */}

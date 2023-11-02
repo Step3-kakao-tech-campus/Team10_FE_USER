@@ -1,7 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "../atoms/Button";
-import CancelSheet from "./CancelSheet";
 import Image from "../atoms/Image";
+import CustomModal from "../atoms/CustomModal";
+import { useMutation } from "@tanstack/react-query";
+import { cancelReservation } from "../../apis/reservations";
 
 const ReservationItem = ({
   bayid,
@@ -11,58 +13,70 @@ const ReservationItem = ({
   priceinfo,
   buttontype,
 }) => {
-  const [showCancelSheet, setShowCancelSheet] = useState(false);
-  const cancelSheetRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // CancelSheet가 열려 있고 클릭이 CancelSheet 외부에서 발생한 경우
-      if (
-        showCancelSheet &&
-        cancelSheetRef.current &&
-        !cancelSheetRef.current.contains(event.target)
-      ) {
-        setShowCancelSheet(false);
-      }
-    };
+  const mutation = useMutation({
+    mutationFn: (bayid) => cancelReservation(bayid),
+    onSuccess: () => {
+      console.log("예약 취소 성공");
+      location.reload();
+    },
+    onError: (error) => {
+      console.error("예약 취소 실패 ", error);
+    },
+  });
 
-    // 이벤트 리스너 추가하기
-    document.addEventListener("mousedown", handleClickOutside);
+  const handleConfirm = () => {
+    mutation.mutate(bayid);
+    setIsModalOpen(false);
+  };
 
-    return () => {
-      // 정리 - 컴포넌트가 언마운트될 때 이벤트 리스너 제거하기
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showCancelSheet]);
+  const modalContent = (
+    <div class="flex flex-col gap-2">
+      <div> {bayname}</div>
+      <div>예약일정:</div>
+      <div>{reservetime}</div>
+      <div>취소 금액: {priceinfo}</div>
+    </div>
+  );
 
   return (
-    <div className="flex justify-between py-4 overflow-x-auto border border-gray-300 rounded-xl">
-      <Image src={imgsrc} className="w-24 h-16 m-2 " alt="세차장 이미지" />
-      <div className="flex flex-col gap-2">
-        <div className="text-sm text-gray-500">{reservetime}</div>
-        <div>{bayname}</div>
-        <div className="text-right text-primary">{priceinfo}</div>
-      </div>
-      <div>
-        {buttontype === "cancel" && (
-          <Button variant="cancel" onClick={() => setShowCancelSheet(true)}>
-            예약 취소
-          </Button>
-        )}
-      </div>
-      {buttontype === "review" && <Button variant="review"> 리뷰 작성 </Button>}
-
-      {showCancelSheet && (
-        <div ref={cancelSheetRef} className="fixed left-0 bottom-[60px] z-10">
-          <CancelSheet
-            reservetime={reservetime}
-            bayname={bayname}
-            bayid={bayid}
-            priceinfo={priceinfo}
-            className="h-56"
-          />
+    <div className="pt-2 mb-4 border border-gray-300 rounded-md">
+      <div className="flex items-center justify-between p-4">
+        <Image
+          src={imgsrc}
+          className="w-20 h-20 mr-8 rounded-md"
+          alt="세차장 이미지"
+        />
+        <div className="flex flex-col flex-grow gap-2">
+          <div className="mt-2 text-sm">{reservetime}</div>
+          <div className="font-semibold">{bayname}</div>
+          <div className="font-bold text-right text-primary">{priceinfo}</div>
         </div>
+      </div>
+      {buttontype === "cancel" && (
+        <Button
+          variant="long"
+          onClick={() => setIsModalOpen(true)}
+          className="bg-gray-500 rounded-md"
+        >
+          예약 취소
+        </Button>
       )}
+      {buttontype === "review" && (
+        <Button variant="long" className="rounded-md">
+          리뷰 작성
+        </Button>
+      )}
+      <CustomModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirm}
+        title="예약 취소 확인"
+        content={modalContent}
+        confirmText="취소하기"
+        cancelText="닫기"
+      />
     </div>
   );
 };

@@ -14,12 +14,12 @@ const CustomModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className="px-8 py-4 mx-4 my-24 bg-white border-2 border-primary rounded-xl"
+      className="px-8 py-4 mx-4 my-40 bg-white border-2 border-primary rounded-xl"
       overlayClassName="fixed inset-0 bg-black bg-opacity-30"
       contentLabel="Custom Modal"
     >
       <div className="text-lg font-semibold text-primary">{title}</div>
-      <p className="my-6">{content}</p>
+      <div className="my-6">{content}</div>
       <div className="flex justify-end">
         <button
           onClick={onConfirm}

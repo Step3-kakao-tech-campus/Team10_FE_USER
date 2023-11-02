@@ -273,7 +273,7 @@ export const handlers = [
         success: true,
         response: {
           overview: {
-            rate: 5.0, // 세차장 평균 별점
+            rate: 4.5, // 세차장 평균 별점
             totalCnt: 5, // 전체 리뷰 갯수
             reviewKeyword: [
               // 세차장 리뷰관련 키워드 갯수(통계)

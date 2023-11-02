@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { paymentResult } from "../../apis/reservations";
+import dayjs from "dayjs";
+import { Button } from "../atoms/Button";
+import { useNavigate } from "react-router-dom";
 
 const PaymentTemplate = ({ reservationId }) => {
   const [paymentdata, setData] = useState(null);
+  const reservations = useSelector((state) => state.reservations);
+  const navigate = useNavigate();
 
   const { data } = useSuspenseQuery({
     queryKey: ["getPayment", reservationId],
     queryFn: () => paymentResult(reservationId),
     enabled: !!reservationId,
   });
-  // 이 윗 부분 나중에는 삭제하기 어차피 전역변수로 SchedulePage에서 필요한 것들 다 가지고 올 것임
-  // 대신 결제 금액 계산 api 추가되면 거기에 해당하는 api 새로 가져오기
 
   useEffect(() => {
     if (data) {
@@ -24,17 +27,44 @@ const PaymentTemplate = ({ reservationId }) => {
     return <div>Loading...</div>;
   }
 
+  const formatDateStart = (dateString) => {
+    const datePart = dayjs(dateString).format("YYYY년 MM월 DD일");
+    const timePart = dayjs(dateString).format("HH시 mm분");
+    return { datePart, timePart };
+  };
+
+  const formatDateEnd = (dateString) => {
+    return dayjs(dateString).format("HH시 mm분");
+  };
+
+  const calculateDuration = (start, end) => {
+    const duration = dayjs(end).diff(dayjs(start), "minute");
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+    return `${hours}시간` + (minutes > 0 ? ` ${minutes}분` : "");
+  };
+
+  const { datePart, timePart } = formatDateStart(reservations.startTime);
+  const endTimeFormatted = formatDateEnd(reservations.endTime);
+
+  const duration = calculateDuration(
+    reservations.startTime,
+    reservations.endTime
+  );
+
   return (
     <div>
       <div className="relative p-4">
         <div className="py-8 text-2xl font-bold"> 결제하기</div>
         <div className="p-4 bg-gray-100 rounded-lg">
-          <div className="flex justify-between flex-items">
-            <div>예약 일정</div>
-            <div>{paymentdata.reservation_time}</div>
+          <div className="text-lg font-semibold">예약 일정</div>
+          <div className="text-right">
+            <div>{datePart}</div>
+            <div>
+              {timePart} - {endTimeFormatted} ({duration})
+            </div>
           </div>
-          <div className="text-right">{paymentdata.reservation_time}</div>
-          <div className="flex justify-between py-4 font-semibold text-red-500">
+          <div className="flex justify-between py-4 text-lg font-semibold text-red-500">
             <div>최종 결제 금액</div>
             <div>{paymentdata.total_price}원</div>
           </div>
@@ -49,9 +79,13 @@ const PaymentTemplate = ({ reservationId }) => {
           </button>
         </div>
       </div>
-      <button className="fixed bottom-0 w-full py-4 font-semibold text-white bg-primary">
+      <Button
+        variant="long"
+        className="fixed bottom-0"
+        //onClick={() => navigate(`paymentresult/${reservationId}`)}
+      >
         {paymentdata.total_price}원 결제하기
-      </button>
+      </Button>
     </div>
   );
 };

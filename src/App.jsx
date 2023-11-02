@@ -21,27 +21,27 @@ function App() {
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/reservation" element={<ReservationPage />}></Route>
           <Route path="/history" element={<ReservationHistoryPage />}></Route>
+          <Route
+            path="/carwashdetail/:carwashId"
+            element={<CarwashDetailPage />}
+          ></Route>
+          <Route
+            path="/bayselection/:carwashId"
+            element={<BaySelectionPage />}
+          ></Route>
+          <Route
+            path="/schedule/:carwashId/:bayId"
+            element={<SchedulePage />}
+          ></Route>
+          <Route path="/payment" element={<PaymentPage />}></Route>
+          <Route
+            path="/paymentresult/:reservationId"
+            element={<PaymentResultPage />}
+          ></Route>
+          <Route path="/reviewpost" element={<ReviewPostPage />}></Route>
         </Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/signup" element={<SignupPage />}></Route>
-        <Route
-          path="/carwashdetail/:carwashId"
-          element={<CarwashDetailPage />}
-        ></Route>
-        <Route
-          path="/bayselection/:carwashId"
-          element={<BaySelectionPage />}
-        ></Route>
-        <Route
-          path="/schedule/:carwashId/:bayId"
-          element={<SchedulePage />}
-        ></Route>
-        <Route path="/payment/:reservationId" element={<PaymentPage />}></Route>
-        <Route
-          path="/paymentresult/:reservationId"
-          element={<PaymentResultPage />}
-        ></Route>
-        <Route path="/reviewpost" element={<ReviewPostPage />}></Route>
       </Routes>
     </BrowserRouter>
   );

@@ -57,8 +57,8 @@ const CarwashDetailTemplate = ({ carwashId }) => {
               <div className="text-xl font-bold">{detaildata?.name}</div>
               {/* 별점 */}
               <Star
-                starcount={parseFloat(detaildata?.rate)}
-                reviewcount={parseInt(detaildata?.review_cnt, 10)}
+                starCount={parseFloat(detaildata?.rate)}
+                reviewCount={parseFloat(detaildata?.reviewCnt)}
               />
             </div>
             {/* 예약 베이 수 */}
@@ -70,7 +70,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
             </div>
           </div>
           {/* 영업 정보 및 탭 메뉴 */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 py-4">
             <StoreInfo
               weekhour={weekhour}
               weekendhour={weekendhour}
@@ -82,13 +82,12 @@ const CarwashDetailTemplate = ({ carwashId }) => {
           </div>
         </div>
       </div>
-      <Button
-        variant="long"
-        className="fixed bottom-0"
+      <button
+        className="fixed left-0 block w-full p-4 font-semibold text-white bottom-14 h-14 bg-primary"
         onClick={handleReservationClick}
       >
-        예약하기
-      </Button>
+        예약하러 가기
+      </button>
     </div>
   );
 };

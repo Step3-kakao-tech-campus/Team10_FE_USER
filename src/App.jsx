@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { MainLayout } from "./layouts/MainLayout";
-
+import Modal from "react-modal";
 import ReservationPage from "./pages/ReservationPage";
 import CarwashDetailPage from "./pages/CarwashDetailPage";
 import BaySelectionPage from "./pages/BaySelectionPage";
@@ -11,7 +11,7 @@ import PaymentResultPage from "./pages/PaymentResultPage";
 import ReviewPostPage from "./pages/ReviewPostPage";
 import PaymentPage from "./pages/PaymentPage";
 import LoginPage from "./pages/LoginPage";
-
+Modal.setAppElement("#root");
 function App() {
   return (
     <BrowserRouter>

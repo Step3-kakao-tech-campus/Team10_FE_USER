@@ -81,7 +81,7 @@ const PaymentTemplate = ({ reservationId }) => {
       </div>
       <Button
         variant="long"
-        className="fixed bottom-0"
+        className="fixed bottom-0 left-0"
         //onClick={() => navigate(`paymentresult/${reservationId}`)}
       >
         {paymentdata.total_price}원 결제하기

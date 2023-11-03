@@ -35,7 +35,7 @@ const StatusBar = () => {
   const isMainPage = location.pathname === "/";
 
   return (
-    <header className="w-full border-b-2 border-gray-300 h-14">
+    <header className="fixed top-0 w-full border-b-2 border-gray-300 h-14">
       <div className="flex items-center p-4">
         {!isMainPage && (
           <img src={BackImg} alt="Back" onClick={() => navigate(-1)} />

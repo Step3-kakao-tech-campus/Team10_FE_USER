@@ -120,7 +120,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
 
   return (
     <div className="relative p-4">
-      <div className="flex-grow pb-12 overflow-y-auto">
+      <div className="flex-grow pb-16 overflow-y-auto">
         <div className="mb-4 text-xl font-bold">
           {name}: 베이 {bayInfo.bayNo}
         </div>
@@ -184,7 +184,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
 
       <button
         onClick={handleSubmit}
-        className="fixed left-0 block w-full p-4 font-semibold text-white bottom-14 h-14 bg-primary"
+        className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white h-14 bg-primary"
       >
         예약하러가기
       </button>

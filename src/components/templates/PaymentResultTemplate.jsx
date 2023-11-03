@@ -87,7 +87,7 @@ const PaymentResultTemplate = ({ reservationId }) => {
       </div>
       <Button
         variant="long"
-        className="fixed bottom-0"
+        className="fixed bottom-0 left-0"
         onClick={() => navigate("/")}
       >
         홈으로

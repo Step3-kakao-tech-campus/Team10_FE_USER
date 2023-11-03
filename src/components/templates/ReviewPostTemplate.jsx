@@ -11,10 +11,8 @@ const ReviewPostTemplate = () => {
   const [selectedKeywords, setSelectedKeywords] = useState([]);
   const [rate, setRate] = useState(0);
   const [comment, setComment] = useState("");
-
   const navigate = useNavigate();
 
-  // 임의의 carwashId와 reservationId 설정
   const carwashId = useSelector((state) => state.selectedCarwashId);
   const reservationId = useSelector((state) => state.selectedReservationId);
 
@@ -34,8 +32,8 @@ const ReviewPostTemplate = () => {
       return postReviews(data);
     },
     onSuccess: () => {
-      console.log("success");
-      navigate("/");
+      console.log("리뷰 등록 성공");
+      navigate("/history");
     },
     onError: (error) => {
       console.error(error);
@@ -54,18 +52,24 @@ const ReviewPostTemplate = () => {
   };
 
   return (
-    <div className="relative grid gap-6">
-      <h1 className="text-2xl font-bold">예약한 세차장이 어땠나요?</h1>
+    <div className="relative grid gap-6 m-4">
+      <div className="mt-8 text-2xl font-bold text-center">
+        예약한 세차장이 어땠나요?
+      </div>
       <StarPicker onRate={setRate} />
       <BadgeSet keywords={keywords} onSelectKeyword={setSelectedKeywords} />
       <textarea
-        className="items-center h-40 p-4 rounded-lg resize-none bg-slate-100"
+        className="items-center h-40 p-4 bg-gray-100 border border-gray-300 rounded-lg resize-none"
         placeholder="후기를 입력해주세요."
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
-      <Button variant="long" onClick={handleSubmit} className="fixed bottom-0">
-        리뷰 등록하기{" "}
+      <Button
+        variant="long"
+        onClick={handleSubmit}
+        className="fixed bottom-0 left-0"
+      >
+        리뷰 등록하기
       </Button>
     </div>
   );

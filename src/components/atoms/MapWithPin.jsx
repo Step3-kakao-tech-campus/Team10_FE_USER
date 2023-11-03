@@ -13,6 +13,7 @@ export const MapWithPin = ({ lat, lng, text, className }) => {
 
     const iwContent = `
       <div style="
+        position: relative;
         padding: 5px 10px;
         background: #0098FF;
         border-radius: 4px;
@@ -22,6 +23,17 @@ export const MapWithPin = ({ lat, lng, text, className }) => {
         text-align: center;
       ">
         ${text}
+        <div style="
+          position: absolute;
+          left: 50%;
+          bottom: -8px; /* Half the height of the arrow */
+          margin-left: -8px; /* Half the width of the arrow */
+          width: 0;
+          height: 0;
+          border-left: 8px solid transparent;
+          border-right: 8px solid transparent;
+          border-top: 8px solid #0098FF;
+        "></div>
       </div>
     `;
 

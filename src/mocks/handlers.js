@@ -146,7 +146,7 @@ export const handlers = [
               longitude: 126.9,
             },
             distance: 2513,
-            rate: 5.0,
+            rate: 3.0,
             price: 2000,
           },
           {
@@ -162,7 +162,7 @@ export const handlers = [
               longitude: 126.93,
             },
             distance: 4189,
-            rate: 5.0,
+            rate: 3.0,
             price: 2000,
           },
         ],
@@ -193,8 +193,8 @@ export const handlers = [
               longitude: 126.9,
             },
             distance: 2513,
-            rate: 5.0,
-            price: 2000,
+            rate: 3.0,
+            price: 3000,
           },
           {
             id: 3,

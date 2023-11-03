@@ -28,7 +28,7 @@ export const CarwashCard = ({
       onClick={handleClick}
     >
       <img src={image} alt={name} className="absolute top-0 object-cover" />
-      <div className="absolute bottom-0 z-50 justify-between w-full h-24 p-4 bg-white">
+      <div className="absolute bottom-0 justify-between w-full h-24 p-4 bg-white">
         <div className="relative">
           <Star starcount={rate} reviewCount={reviewCount} />
           <div>{name}</div>

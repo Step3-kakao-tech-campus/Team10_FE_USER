@@ -19,7 +19,7 @@ export const BadgeSet = ({ keywords, onSelectKeyword }) => {
   }, [selectedIds, onSelectKeyword]);
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2">
+    <div className="flex flex-wrap justify-center gap-2">
       {keywords.map((keyword) => (
         <Badge
           key={keyword.id}

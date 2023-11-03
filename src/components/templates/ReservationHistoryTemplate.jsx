@@ -43,7 +43,8 @@ const ReservationHistoryTemplate = () => {
         {currentReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
-            bayid={reservation.id}
+            rsvid={reservation.id}
+            carwashid={reservation.carwashId}
             imgsrc={reservation.image}
             reservetime={
               <>
@@ -62,7 +63,8 @@ const ReservationHistoryTemplate = () => {
         {upcomingReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
-            bayid={reservation.id}
+            carwashid={reservation.carwashId}
+            rsvid={reservation.id}
             imgsrc={reservation.image}
             reservetime={
               <>
@@ -82,7 +84,8 @@ const ReservationHistoryTemplate = () => {
         {completedReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
-            bayid={reservation.id}
+            carwashid={reservation.carwashId}
+            rsvid={reservation.id}
             imgsrc={reservation.image}
             reservetime={
               <>

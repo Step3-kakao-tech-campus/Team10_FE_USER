@@ -1,22 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../atoms/Button";
 import Image from "../atoms/Image";
 import CustomModal from "../atoms/CustomModal";
 import { useMutation } from "@tanstack/react-query";
 import { cancelReservation } from "../../apis/reservations";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ReservationItem = ({
-  bayid,
+  rsvid,
+  carwashid,
   imgsrc,
   reservetime,
   bayname,
   priceinfo,
   buttontype,
 }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  console.log(carwashid);
+  const handleBayClick = (rsvid, carwashid) => {
+    dispatch({ type: "SET_CARWASH_ID", payload: carwashid });
+    dispatch({ type: "SET_RESERVATION_ID", payload: rsvid });
+    navigate(`/reviewpost`);
+  };
+
   const mutation = useMutation({
-    mutationFn: (bayid) => cancelReservation(bayid),
+    mutationFn: (rsvid) => cancelReservation(rsvid),
     onSuccess: () => {
       console.log("예약 취소 성공");
       location.reload();
@@ -27,7 +39,7 @@ const ReservationItem = ({
   });
 
   const handleConfirm = () => {
-    mutation.mutate(bayid);
+    mutation.mutate(rsvid);
     setIsModalOpen(false);
   };
 
@@ -58,15 +70,20 @@ const ReservationItem = ({
         <Button
           variant="long"
           onClick={() => setIsModalOpen(true)}
-          className="bg-gray-500 rounded-md"
+          className=" bg-red-500 rounded-md"
         >
           예약 취소
         </Button>
       )}
       {buttontype === "review" && (
-        <Button variant="long" className="rounded-md">
+        <Button
+          variant="long"
+          className="rounded-md"
+          onClick={() => handleBayClick(rsvid, carwashid)}
+        >
           리뷰 작성
         </Button>
+        //<button onClick={handleBayClick(rsvid, carwashid)}>리뷰 작성 </button>
       )}
       <CustomModal
         isOpen={isModalOpen}

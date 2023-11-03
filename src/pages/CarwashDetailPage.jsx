@@ -1,8 +1,12 @@
-import React from "react";
+import { Suspense } from "react";
+import { useParams } from "react-router-dom";
 import CarwashDetailTemplate from "../components/templates/CarwashDetailTemplate";
 const CarwashDetailPage = () => {
+  const { carwashId } = useParams();
   return (
-      <CarwashDetailTemplate />
+    <Suspense fallback={<div>Loading...</div>}>
+      <CarwashDetailTemplate carwashId={carwashId} />
+    </Suspense>
   );
 };
 

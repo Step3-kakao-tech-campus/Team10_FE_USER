@@ -2,7 +2,14 @@ import React from "react";
 import dayjs from "dayjs";
 import TimeSlot from "../atoms/TimeSlot";
 
-const BayItem = ({ bayNo, bayBookedTime, openingHours, selectedDate }) => {
+const BayItem = ({
+  bayId,
+  bayNo,
+  bayBookedTime,
+  openingHours,
+  selectedDate,
+  onClick,
+}) => {
   const getCurrentHour = () =>
     Math.max(
       dayjs().hour(),
@@ -28,7 +35,10 @@ const BayItem = ({ bayNo, bayBookedTime, openingHours, selectedDate }) => {
   const closingHour = getClosingHour();
 
   return (
-    <div className="py-4 overflow-x-auto border border-gray-300 rounded-xl">
+    <div
+      className="py-4 overflow-x-auto border border-gray-300 cursor-pointer rounded-xl"
+      onClick={() => onClick(bayId)}
+    >
       <div className="p-2 font-semibold">베이 {bayNo}</div>
       <div className="flex justify-center px-4">
         <TimeSlot

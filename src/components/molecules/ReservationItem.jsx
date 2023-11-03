@@ -1,76 +1,99 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../atoms/Button";
-import CancelSheet from "./CancelSheet";
 import Image from "../atoms/Image";
+import CustomModal from "../atoms/CustomModal";
+import { useMutation } from "@tanstack/react-query";
+import { cancelReservation } from "../../apis/reservations";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ReservationItem = ({
+  rsvid,
+  carwashid,
   imgsrc,
   reservetime,
   bayname,
   priceinfo,
   buttontype,
 }) => {
-  const [showCancelSheet, setShowCancelSheet] = useState(false);
-  const cancelSheetRef = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // CancelSheet가 열려 있고 클릭이 CancelSheet 외부에서 발생한 경우
-      if (
-        showCancelSheet &&
-        cancelSheetRef.current &&
-        !cancelSheetRef.current.contains(event.target)
-      ) {
-        setShowCancelSheet(false);
-      }
-    };
+  console.log(carwashid);
+  const handleBayClick = (rsvid, carwashid) => {
+    dispatch({ type: "SET_CARWASH_ID", payload: carwashid });
+    dispatch({ type: "SET_RESERVATION_ID", payload: rsvid });
+    navigate(`/reviewpost`);
+  };
 
-    // 이벤트 리스너 추가하기
-    document.addEventListener("mousedown", handleClickOutside);
+  const mutation = useMutation({
+    mutationFn: (rsvid) => cancelReservation(rsvid),
+    onSuccess: () => {
+      console.log("예약 취소 성공");
+      location.reload();
+    },
+    onError: (error) => {
+      console.error("예약 취소 실패 ", error);
+    },
+  });
 
-    return () => {
-      // 정리 - 컴포넌트가 언마운트될 때 이벤트 리스너 제거하기
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showCancelSheet]);
+  const handleConfirm = () => {
+    mutation.mutate(rsvid);
+    setIsModalOpen(false);
+  };
+
+  const modalContent = (
+    <div class="flex flex-col gap-2">
+      <div> {bayname}</div>
+      <div>예약일정:</div>
+      <div>{reservetime}</div>
+      <div>취소 금액: {priceinfo}</div>
+    </div>
+  );
 
   return (
-    <div className="w-auto h-24 relative bg-white rounded-xl border border-gray-200 flex items-center gap-3.5 ">
-      {/* 세차장 사진 부분 */}
-      <Image
-        src={imgsrc}
-        className="flex  w-[74px] h-[74px] rounded-xl ml-3"
-        alt="세차장 이미지"
-      />
-
-      <div className="flex flex-col w-56 h-16 gap-1">
-        <div className="text-sm text-gray-400">{reservetime}</div>
-        <div className="font-semibold ">{bayname}</div>
-        <div className="left-0 top-[53px] text-primary text-sm  ">
-          {priceinfo}
+    <div className="pt-2 mb-4 border border-gray-300 rounded-md">
+      <div className="flex items-center justify-between p-4">
+        <Image
+          src={imgsrc}
+          className="w-20 h-20 mr-8 rounded-md"
+          alt="세차장 이미지"
+        />
+        <div className="flex flex-col flex-grow gap-2">
+          <div className="mt-2 text-sm">{reservetime}</div>
+          <div className="font-semibold">{bayname}</div>
+          <div className="font-bold text-right text-primary">{priceinfo}</div>
         </div>
       </div>
-
       {buttontype === "cancel" && (
         <Button
-          type="cancel"
-          onClick={() => setShowCancelSheet(true)}
-          label="예약취소"
-        />
+          variant="long"
+          onClick={() => setIsModalOpen(true)}
+          className=" bg-red-500 rounded-md"
+        >
+          예약 취소
+        </Button>
       )}
-
-      {buttontype === "review" && <Button type="review" label="리뷰 작성" />}
-
-      {showCancelSheet && (
-        <div ref={cancelSheetRef} className="fixed left-0 bottom-[60px] z-10">
-          <CancelSheet
-            reservetime={reservetime}
-            bayname={bayname}
-            priceinfo={priceinfo}
-            className="h-56"
-          />
-        </div>
+      {buttontype === "review" && (
+        <Button
+          variant="long"
+          className="rounded-md"
+          onClick={() => handleBayClick(rsvid, carwashid)}
+        >
+          리뷰 작성
+        </Button>
+        //<button onClick={handleBayClick(rsvid, carwashid)}>리뷰 작성 </button>
       )}
+      <CustomModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirm}
+        title="예약 취소 확인"
+        content={modalContent}
+        confirmText="취소하기"
+        cancelText="닫기"
+      />
     </div>
   );
 };

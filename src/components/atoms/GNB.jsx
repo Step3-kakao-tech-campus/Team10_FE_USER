@@ -35,14 +35,14 @@ export const GNB = () => {
     },
     {
       name: "예약내역",
-      path: "/reservationlist",
+      path: "/history",
       icon: ReservationList,
       iconActive: ReservationListActive,
     },
   ];
 
   return (
-    <nav className="fixed bottom-0 w-full px-8 bg-gray-100 border border-t-gray-200">
+    <nav className="fixed bottom-0 z-50 w-full px-8 bg-gray-100 border border-t-gray-200">
       <div className={`wrapper flex justify-between mt-2 ${paddingByType}`}>
         {menus.map((menu, index) => {
           return (
@@ -58,7 +58,8 @@ export const GNB = () => {
                     currentPage === menu.path
                       ? "text-sky-500 text-xs"
                       : "text-xs"
-                  }>
+                  }
+                >
                   {menu.name}
                 </div>
               </div>

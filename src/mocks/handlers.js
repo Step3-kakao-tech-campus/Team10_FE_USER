@@ -528,6 +528,7 @@ export const handlers = [
               start: "2023-10-14T14:28:31.054667",
               end: "2023-10-14T15:28:31.054678",
             },
+            carwashId: 3,
             carwashName: "용봉세차장",
             bayNum: 8,
             price: 5000,
@@ -540,6 +541,7 @@ export const handlers = [
               start: "2023-10-14T15:10:41.498809",
               end: "2023-10-14T15:40:41.498834",
             },
+            carwashId: 2,
             carwashName: "세차장",
             bayNum: 9,
             price: 4000,
@@ -552,6 +554,7 @@ export const handlers = [
               start: "2023-10-14T15:16:44.596950",
               end: "2023-10-14T15:46:44.596962",
             },
+            carwashId: 2,
             carwashName: "세차장",
             bayNum: 10,
             price: 4000,
@@ -566,6 +569,7 @@ export const handlers = [
               start: "2023-10-14T20:00:00",
               end: "2023-10-14T20:30:00",
             },
+            carwashId: 2,
             carwashName: "세차장",
             bayNum: 8,
             price: 4000,
@@ -576,10 +580,12 @@ export const handlers = [
         completed: [
           {
             id: 9,
+
             time: {
               start: "2023-10-14T14:28:30.958297",
               end: "2023-10-14T14:58:30.958325",
             },
+            carwashId: 2,
             carwashName: "세차장",
             bayNum: 10,
             price: 5000,
@@ -592,6 +598,7 @@ export const handlers = [
               start: "2023-10-14T06:00:00",
               end: "2023-10-14T06:30:00",
             },
+            carwashId: 2,
             carwashName: "세차장",
             bayNum: 10,
             price: 4000,

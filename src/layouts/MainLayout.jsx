@@ -45,6 +45,7 @@ export const MainLayout = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const noGNBPaths = [
+    "/reviewpost",
     "/schedule",
     "/carwashdetail",
     "/payment",

@@ -5,7 +5,7 @@ import { BadgeSet } from "../molecules/BadgeSet";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../atoms/Button";
 import { getReviews, postReviews } from "../../apis/carwashes";
-
+import { useSelector } from "react-redux";
 const ReviewPostTemplate = () => {
   const [keywords, setKeywords] = useState([]);
   const [selectedKeywords, setSelectedKeywords] = useState([]);
@@ -15,8 +15,8 @@ const ReviewPostTemplate = () => {
   const navigate = useNavigate();
 
   // 임의의 carwashId와 reservationId 설정
-  const carwashId = 1; // 실제 로직에 맞게 수정해야 합니다.
-  const reservationId = 1; // 실제 로직에 맞게 수정해야 합니다.
+  const carwashId = useSelector((state) => state.selectedCarwashId);
+  const reservationId = useSelector((state) => state.selectedReservationId);
 
   const { data } = useSuspenseQuery({
     queryKey: ["getCarwashesInfo"],
@@ -64,12 +64,9 @@ const ReviewPostTemplate = () => {
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
-      <Button
-        label="후기등록"
-        onClick={handleSubmit}
-        type="reviewpost"
-        className="fixed bottom-0"
-      />
+      <Button variant="long" onClick={handleSubmit} className="fixed bottom-0">
+        리뷰 등록하기{" "}
+      </Button>
     </div>
   );
 };

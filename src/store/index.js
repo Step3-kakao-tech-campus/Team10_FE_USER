@@ -5,6 +5,7 @@ import {
   SET_BAY_ID,
   SAVE_RESERVATION,
   SET_CARWASH_ID,
+  SET_RESERVATION_ID,
   RESET_STORE,
 } from "./action";
 
@@ -16,6 +17,7 @@ const persistConfig = {
 const initialState = {
   selectedCarwashId: null,
   selectedBayId: null,
+  selectedReservationId: null,
   reservations: [],
 };
 
@@ -25,6 +27,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, selectedCarwashId: action.payload };
     case SET_BAY_ID:
       return { ...state, selectedBayId: action.payload };
+    case SET_RESERVATION_ID:
+      return { ...state, selectedReservationId: action.payload };
     case SAVE_RESERVATION:
       return {
         ...state,

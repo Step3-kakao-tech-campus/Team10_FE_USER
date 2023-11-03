@@ -5,7 +5,7 @@
       const KAKAOMAP_API_KEY = process.env.KAKAOMAP_API_KEY;
       var kakaoScript = document.createElement("script");
       kakaoScript.type = "text/javascript";
-      kakaoScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAOMAP_API_KEY}`;
+      kakaoScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAOMAP_API_KEY}&autoload=false`;
 
       kakaoScript.onload = () => {
         kakao.maps.load(function () {});

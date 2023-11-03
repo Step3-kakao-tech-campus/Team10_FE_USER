@@ -193,7 +193,7 @@ export const handlers = [
               longitude: 126.9,
             },
             distance: 2513,
-            rate: 2.0,
+            rate: 3.0,
             price: 3000,
           },
           {

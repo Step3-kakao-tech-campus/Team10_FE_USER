@@ -68,7 +68,6 @@ const ReservationTemplate = () => {
             mapdata={washlists?.data?.response}
             className="fixed left-0 z-0 w-screen h-screen"
           />
-          {/* <MapWithPins className="fixed left-0 w-screen h-screen" /> */}
           <DualBottomsheet className="fixed left-0 z-10">
             <Bottomsheet className="z-20 flex flex-col h-full gap-3 overflow-y-scroll">
               <div className="flex flex-row gap-2">

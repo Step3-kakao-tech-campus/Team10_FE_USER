@@ -3,10 +3,12 @@
   <head>
     <script type="text/javascript">
       // Create the script element
+      const KAKAOMAP_API_KEY = process.env.KAKAOMAP_API_KEY;
       var kakaoScript = document.createElement("script");
       kakaoScript.type = "text/javascript";
       // Use the environment variable for the appkey parameter
       kakaoScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAOMAP_API_KEY}`;
+
       // Append the script tag to the head of the document
       document.head.appendChild(kakaoScript);
     </script>

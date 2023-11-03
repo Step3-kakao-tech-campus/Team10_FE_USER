@@ -16,9 +16,9 @@ const CarwashDetailTemplate = ({ carwashId }) => {
   const selectedCarwashId = useSelector((state) => state.selectedCarwashId);
 
   const { data } = useSuspenseQuery({
-    queryKey: ["getCarwashesInfo", selectedCarwashId],
-    queryFn: () => carwashesInfo(selectedCarwashId),
-    enabled: !!selectedCarwashId,
+    queryKey: ["getCarwashesInfo", carwashId],
+    queryFn: () => carwashesInfo(carwashId),
+    enabled: !!carwashId,
   });
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
   }
 
   const handleReservationClick = () => {
-    navigate(`/bayselection/${selectedCarwashId}`);
+    navigate(`/bayselection/${carwashId}`);
   };
 
   const images = detaildata.image.map((url) => ({

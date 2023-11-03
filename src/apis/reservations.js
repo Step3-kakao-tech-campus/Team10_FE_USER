@@ -8,18 +8,18 @@ export const reservations = () => {
 //   return instance.get(`/reservations/${reservationId}`);
 // };
 export const reservationsCurrentstatus = () => {
-  return instance.get("/reservations/current-status");
+  return instance.get("/api/reservations/current-status");
 };
 export const reservationsRecent = () => {
-  return instance.get("/reservations/recent");
+  return instance.get("/api/reservations/recent");
 };
 
 export const cancelReservation = (reservation_id) => {
-  return instance.delete(`/reservations/${reservation_id}`);
+  return instance.delete(`/api/reservations/${reservation_id}`);
 };
 
 export const modifyReservation = (reservation_id, startTime, endTime) => {
-  return instance.put(`/reservations/${reservation_id}`, {
+  return instance.put(`/api/reservations/${reservation_id}`, {
     startTime,
     endTime,
   });
@@ -27,9 +27,9 @@ export const modifyReservation = (reservation_id, startTime, endTime) => {
 
 export const payment = (reservation_id, data) => {
   // data = { selected_date, bay_id, start_time, end_time }
-  return instance.post(`/reservations/${reservation_id}}payment`, data);
+  return instance.post(`/api/reservations/${reservation_id}}payment`, data);
 };
 
 export const paymentResult = (reservation_id) => {
-  return instance.get(`/reservations/${reservation_id}/payment`);
+  return instance.get(`/api/reservations/${reservation_id}/payment`);
 };

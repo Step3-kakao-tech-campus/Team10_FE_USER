@@ -37,9 +37,9 @@ function App() {
             element={<PaymentResultPage />}
           />
           <Route path="reviewpost" element={<ReviewPostPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignupPage />} />
         </Route>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignupPage />} />
       </Routes>
     </BrowserRouter>
   );

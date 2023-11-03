@@ -494,7 +494,7 @@ export const handlers = [
             bayNo: 1,
           },
           carwash: {
-            name: "세차장",
+            name: "용봉세차장",
             location: {
               latitude: 35.141809,
               longitude: 126.9215,

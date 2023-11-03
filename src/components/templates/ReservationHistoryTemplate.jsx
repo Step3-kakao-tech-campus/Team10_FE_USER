@@ -35,11 +35,11 @@ const ReservationHistoryTemplate = () => {
   };
 
   return (
-    <div className="relative p-4">
-      <div className="flex-grow pb-12 overflow-y-scroll">
+    <div className="relative">
+      <div className="flex-grow pb-16 overflow-y-scroll">
         <div className="py-4 text-2xl font-bold text-primary">예약내역</div>
 
-        <div className="py-4 font-semibold">현재 진행중인 세차</div>
+        <div className="py-2 text-lg font-semibold">현재 진행중인 세차</div>
         {currentReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
@@ -53,12 +53,12 @@ const ReservationHistoryTemplate = () => {
                 {formatTime(reservation.time.end)}
               </>
             }
-            bayname={`${reservation.carwashName} 베이${reservation.bayNum}`}
+            bayname={`${reservation.carwashName}: 베이${reservation.bayNum}`}
             priceinfo={`${reservation.price}원`}
           />
         ))}
-        <hr className="mt-8" />
-        <div className="py-4 font-semibold">예정된 세차</div>
+        <hr className="mb-8" />
+        <div className="py-2 text-lg font-semibold">예정된 세차</div>
         {upcomingReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
@@ -72,13 +72,13 @@ const ReservationHistoryTemplate = () => {
                 {formatTime(reservation.time.end)}
               </>
             }
-            bayname={`${reservation.carwashName} : 베이${reservation.bayNum}`}
+            bayname={`${reservation.carwashName}: 베이${reservation.bayNum}`}
             priceinfo={`${reservation.price}원`}
             buttontype="cancel"
           />
         ))}
-        <hr className="mt-8" />
-        <div className="py-4 font-semibold">완료한 세차</div>
+        <hr className="mb-8" />
+        <div className="py-2 text-lg font-semibold">완료한 세차</div>
         {completedReservations.map((reservation) => (
           <ReservationItem
             key={reservation.id}
@@ -92,7 +92,7 @@ const ReservationHistoryTemplate = () => {
                 {formatTime(reservation.time.end)}
               </>
             }
-            bayname={`${reservation.carwashName} : 베이${reservation.bayNum}`}
+            bayname={`${reservation.carwashName}: 베이${reservation.bayNum}`}
             priceinfo={`${reservation.price}원`}
             buttontype="review"
           />

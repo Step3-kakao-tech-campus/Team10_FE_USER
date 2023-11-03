@@ -238,12 +238,12 @@ export const handlers = [
           bayCnt: 4,
           optime: {
             weekday: {
-              start: "09:00",
-              end: "17:00",
+              start: "00:00",
+              end: "24:00",
             },
             weekend: {
-              start: "10:00",
-              end: "16:00",
+              start: "00:00",
+              end: "24:00",
             },
           },
           image: [
@@ -494,7 +494,7 @@ export const handlers = [
             bayNo: 1,
           },
           carwash: {
-            name: "세차장",
+            name: "용봉세차장",
             location: {
               latitude: 35.141809,
               longitude: 126.9215,

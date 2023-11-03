@@ -50,7 +50,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
       <div className="flex-grow pb-20 overflow-y-auto">
         {/* 캐러셀 */}
         <ImageCarousel images={images} />
-        <div className="p-4">
+        <div className="py-4">
           <div className="flex justify-between">
             <div className="flex flex-col">
               {/* 매장명 */}
@@ -83,7 +83,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
         </div>
       </div>
       <button
-        className="fixed left-0 block w-full p-4 font-semibold text-white bottom-14 h-14 bg-primary"
+        className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white h-14 bg-primary"
         onClick={handleReservationClick}
       >
         예약하러 가기

@@ -5,7 +5,7 @@ export const handlers = [
   // 사용자 회원가입
   // 회원가입 성공 시 200 응답
   // 회원가입 실패 시 401 응답 (형식에 맞지 않는 경우)
-  rest.post("/join/user", (req, res, ctx) => {
+  rest.post("/api/join/user", (req, res, ctx) => {
     const { username, email, password, tel } = req.body;
 
     const regex = {
@@ -64,7 +64,7 @@ export const handlers = [
 
   // 사용자 로그인
   // 로그인 성공 시 헤더에 토큰 담아서 보내줌
-  rest.post("/login/user", (req, res, ctx) => {
+  rest.post("/api/login/user", (req, res, ctx) => {
     const { email, password } = req.body;
 
     if (email !== "user@nate.com" || password !== "user1234!") {
@@ -95,7 +95,7 @@ export const handlers = [
 
   // 유저 주변 추천 세차장 조회
   // 세차장 사진, 별점, 세차장 이름, 주소, 현위치로부터의 거리를 불러온다.
-  rest.get("/carwashes/recommended", (req, res, ctx) => {
+  rest.get("/api/carwashes/recommended", (req, res, ctx) => {
     const { u_latitude, u_longitude } = req.params;
     // const distance = calculateDistance(u_latitude, u_longitude);
 
@@ -126,7 +126,7 @@ export const handlers = [
 
   // 위치 기반 세차장 리스트 조회
   // 예약하기 탭 클릭시 바로 호출되는 API
-  rest.get("/carwashes/nearby", (req, res, ctx) => {
+  rest.get("/api/carwashes/nearby", (req, res, ctx) => {
     const { u_latitude, u_longitude } = req.params;
     return res(
       ctx.status(200),
@@ -172,7 +172,7 @@ export const handlers = [
   }),
 
   // 키워드 기반 세차장 리스트 조회
-  rest.get("/carwashes/search", (req, res, ctx) => {
+  rest.get("/api/carwashes/search", (req, res, ctx) => {
     const { keywordIds, u_latitude, u_longitude } = req.params;
 
     return res(
@@ -219,7 +219,7 @@ export const handlers = [
   }),
 
   // 세차장 상세 정보 조회 (리뷰 제외)
-  rest.get("/carwashes/:carwash_id/info", (req, res, ctx) => {
+  rest.get("/api/carwashes/:carwash_id/info", (req, res, ctx) => {
     const { carwash_id } = req.params;
 
     return res(
@@ -264,7 +264,7 @@ export const handlers = [
   }),
 
   // 세차장 상세 정보 조회 (리뷰만))
-  rest.get("/carwashes/:carwash_id/reviews", (req, res, ctx) => {
+  rest.get("/api/carwashes/:carwash_id/reviews", (req, res, ctx) => {
     const { carwash_id } = req.params;
 
     return res(
@@ -331,7 +331,7 @@ export const handlers = [
   }),
 
   // 리뷰 등록 - 키워드 불러오기
-  rest.get("/reviews", (req, res, ctx) => {
+  rest.get("/api/reviews", (req, res, ctx) => {
     const token = req.headers.get("Authorization");
 
     if (!token) {
@@ -362,7 +362,7 @@ export const handlers = [
   }),
 
   // 리뷰 등록
-  rest.post("/reviews", (req, res, ctx) => {
+  rest.post("/api/reviews", (req, res, ctx) => {
     const token = req.headers.get("Authorization");
 
     if (!token) {
@@ -385,7 +385,7 @@ export const handlers = [
   }),
 
   // 세차장별 예약 내역 조회 (베이 선택 페이지)
-  rest.get("/carwashes/:carwash_id/bays", (req, res, ctx) => {
+  rest.get("/api/carwashes/:carwash_id/bays", (req, res, ctx) => {
     const { carwash_id } = req.params;
     const token = req.headers.get("Authorization");
 
@@ -440,7 +440,7 @@ export const handlers = [
   // 세차장 예약하기
   // bay가 중복되는 것 같음. body에도 있고 params에도 있고
   rest.post(
-    "/carwashes/:carwash_id/bays/:bay_id/reservations",
+    "/api/carwashes/:carwash_id/bays/:bay_id/reservations",
     (req, res, ctx) => {
       const { carwash_id, bay_id } = req.params;
       const { startTime, endTime } = req.body;
@@ -467,7 +467,7 @@ export const handlers = [
   // 결제 후 예약내역 조회
   // 결제가 완료된 다음에 보여주는 페이지에서 호출
   // 결제가 확실히 success 되어야 보여줘야 함
-  rest.get("/reservations", (req, res, ctx) => {
+  rest.get("/api/reservations", (req, res, ctx) => {
     // 나중에 api 수정 되면 이거로 바꾸기
     // rest.get("/reservations/:reservationId", (req, res, ctx) => {
     // const { reservationId } = req.params;
@@ -508,7 +508,7 @@ export const handlers = [
 
   // 현재 시간 기준 예약 내역 조회
   // 하단 예약내역 메뉴를 클릭했을 때 호출
-  rest.get("/reservations/current-status", (req, res, ctx) => {
+  rest.get("/api/reservations/current-status", (req, res, ctx) => {
     const token = req.headers.get("Authorization");
 
     if (!token) {
@@ -615,7 +615,7 @@ export const handlers = [
 
   // 최근 이용내역 가져오기
   // 유저의 최근 세차장 이용 내역을 가까운 날짜 순으로 5개 가져온다.
-  rest.get("/reservations/recent", (req, res, ctx) => {
+  rest.get("/api/reservations/recent", (req, res, ctx) => {
     const token = req.headers.get("Authorization");
 
     if (!token) {
@@ -660,7 +660,7 @@ export const handlers = [
   }),
 
   // 예약 취소
-  rest.delete("/reservations/:reservation_id", (req, res, ctx) => {
+  rest.delete("/api/reservations/:reservation_id", (req, res, ctx) => {
     const { reservation_id } = req.params;
     const token = req.headers.get("Authorization");
     console.log(token);
@@ -683,7 +683,7 @@ export const handlers = [
   }),
 
   // 예약 수정
-  rest.put("/reservations/:reservation_id", (req, res, ctx) => {
+  rest.put("/api/reservations/:reservation_id", (req, res, ctx) => {
     const { reservation_id } = req.params;
     const { startTime, endTime } = req.body;
 
@@ -707,7 +707,7 @@ export const handlers = [
   }),
 
   // 결제하기(PG)
-  rest.post("/reservations/:reservation_id/payment", (req, res, ctx) => {
+  rest.post("/api/reservations/:reservation_id/payment", (req, res, ctx) => {
     const token = req.headers.get("Authorization");
     const { reservation_id } = req.params;
     const { selected_date, bay_id, start_time, end_time } = req.body;
@@ -730,7 +730,7 @@ export const handlers = [
   }),
 
   // 결제 완료
-  rest.get("/reservations/:reservation_id/payment", (req, res, ctx) => {
+  rest.get("/api/reservations/:reservation_id/payment", (req, res, ctx) => {
     const token = req.headers.get("Authorization");
     const { reservation_id } = req.params;
 

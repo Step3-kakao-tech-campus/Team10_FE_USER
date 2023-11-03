@@ -1,30 +1,41 @@
-import React from "react";
 import ImageCarousel from "../atoms/ImageCarousel";
 import StoreInfo from "../atoms/StoreInfo";
 import KeyPointInfo from "../atoms/KeyPointInfo";
-import { Tab } from "../molecules/Tab";
 import { Button } from "../atoms/Button";
 import Star from "../atoms/Star";
+import { Tab } from "../molecules/Tab";
 import { useEffect, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { carwashesInfo } from "../../apis/carwashes";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const CarwashDetailTemplate = () => {
+const CarwashDetailTemplate = ({ carwashId }) => {
   const [detaildata, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const selectedCarwashId = useSelector((state) => state.selectedCarwashId);
+
+  const { data } = useSuspenseQuery({
+    queryKey: ["getCarwashesInfo", selectedCarwashId],
+    queryFn: () => carwashesInfo(selectedCarwashId),
+    enabled: !!selectedCarwashId,
+  });
 
   useEffect(() => {
-    setLoading(true);
-    fetch("/carwashes/introduction")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setData(data.response);
-        setLoading(false);
-      });
-  }, []);
+    if (data) {
+      setData(data?.data?.response);
+      console.log(data?.data?.response);
+    }
+  }, [data]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!detaildata) return null;
-  console.log(detaildata);
+  if (!detaildata) {
+    return <div>Loading...</div>;
+  }
+
+  const handleReservationClick = () => {
+    navigate(`/bayselection/${selectedCarwashId}`);
+  };
+
   const images = detaildata.image.map((url) => ({
     label: "Image",
     alt: "image",
@@ -39,15 +50,15 @@ const CarwashDetailTemplate = () => {
       <div className="flex-grow pb-20 overflow-y-auto">
         {/* 캐러셀 */}
         <ImageCarousel images={images} />
-        <div className="p-4">
+        <div className="py-4">
           <div className="flex justify-between">
             <div className="flex flex-col">
               {/* 매장명 */}
               <div className="text-xl font-bold">{detaildata?.name}</div>
               {/* 별점 */}
               <Star
-                starcount={parseFloat(detaildata?.rate)}
-                reviewcount={parseInt(detaildata?.review_cnt, 10)}
+                starCount={parseFloat(detaildata?.rate)}
+                reviewCount={parseFloat(detaildata?.reviewCnt)}
               />
             </div>
             {/* 예약 베이 수 */}
@@ -59,7 +70,7 @@ const CarwashDetailTemplate = () => {
             </div>
           </div>
           {/* 영업 정보 및 탭 메뉴 */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 py-4">
             <StoreInfo
               weekhour={weekhour}
               weekendhour={weekendhour}
@@ -71,7 +82,12 @@ const CarwashDetailTemplate = () => {
           </div>
         </div>
       </div>
-      <Button type="long" label="예약하기" className="fixed bottom-0" />
+      <button
+        className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white h-14 bg-primary"
+        onClick={handleReservationClick}
+      >
+        예약하러 가기
+      </button>
     </div>
   );
 };

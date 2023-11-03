@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { MainLayout } from "./layouts/MainLayout";
-import { ReservationListPage } from "./pages/ReservationListPage";
+import Modal from "react-modal";
 import ReservationPage from "./pages/ReservationPage";
 import CarwashDetailPage from "./pages/CarwashDetailPage";
 import BaySelectionPage from "./pages/BaySelectionPage";
@@ -10,26 +10,36 @@ import ReservationHistoryPage from "./pages/ReservationHistoryPage";
 import PaymentResultPage from "./pages/PaymentResultPage";
 import ReviewPostPage from "./pages/ReviewPostPage";
 import PaymentPage from "./pages/PaymentPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
+Modal.setAppElement("#root");
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePage />}></Route>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="reservation" element={<ReservationPage />} />
+          <Route path="history" element={<ReservationHistoryPage />} />
           <Route
-            path="/reservationlist"
-            element={<ReservationListPage />}
-          ></Route>
-          <Route path="/reservation" element={<ReservationPage />}></Route>
-          <Route path="/history" element={<ReservationHistoryPage />}></Route>
+            path="carwashdetail/:carwashId"
+            element={<CarwashDetailPage />}
+          />
+          <Route
+            path="bayselection/:carwashId"
+            element={<BaySelectionPage />}
+          />
+          <Route path="schedule/:carwashId/:bayId" element={<SchedulePage />} />
+          <Route path="payment" element={<PaymentPage />} />
+          <Route
+            path="paymentresult/:reservationId"
+            element={<PaymentResultPage />}
+          />
+          <Route path="reviewpost" element={<ReviewPostPage />} />
         </Route>
-        <Route path="/carwashdetail" element={<CarwashDetailPage />}></Route>
-        <Route path="/bayselection" element={<BaySelectionPage />}></Route>
-        <Route path="/schedule" element={<SchedulePage />}></Route>
-        <Route path="/payment" element={<PaymentPage />}></Route>
-        <Route path="/paymentresult" element={<PaymentResultPage />}></Route>
-        <Route path="/reviewpost" element={<ReviewPostPage />}></Route>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignupPage />} />
       </Routes>
     </BrowserRouter>
   );

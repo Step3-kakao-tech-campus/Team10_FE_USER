@@ -15,7 +15,10 @@ import { useEffect, useState } from "react";
  * @todo geoLocation이 동작하지 않는 문제 해결 필요.
  */
 const HomeTemplate = () => {
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [location, setLocation] = useState({
+    latitude: 35.14,
+    longitude: 126.9,
+  });
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -46,10 +49,9 @@ const HomeTemplate = () => {
 
   console.log(location);
 
-  const recommendedData = recommended?.data?.data?.response;
+  const recommendedData = recommended?.data?.data?.response[0];
   const recentList = recent?.data?.data?.response?.recent || [];
   const navigate = useNavigate();
-
   return (
     <main className="grid gap-6 py-12">
       {/*사용자 이름 데이터 있을 때 처리

@@ -64,7 +64,7 @@ export const handlers = [
 
   // 사용자 로그인
   // 로그인 성공 시 헤더에 토큰 담아서 보내줌
-  rest.post("/api/login/user", (req, res, ctx) => {
+  rest.post("/api/user/login", (req, res, ctx) => {
     const { email, password } = req.body;
 
     if (email !== "user@nate.com" || password !== "user1234!") {
@@ -103,22 +103,22 @@ export const handlers = [
       ctx.status(200),
       ctx.json({
         success: true,
-        response: {
-          id: 2,
-          name: "하이세차장",
-          image:
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
-          location: {
-            id: 1,
-            place: "새로운 이름",
-            address: "새로운 주소",
-            latitude: 1.234,
-            longitude: 2.345,
+        response: [
+          {
+            id: 3,
+            name: "세차 월드",
+            location: {
+              id: 3,
+              place: "세차 월드",
+              address: "광주 남구 봉선2로 96-14",
+              latitude: 35.125349394619,
+              longitude: 126.916778560933,
+            },
+            distance: 2.2320286199268278,
+            rate: 4.2,
+            price: 8500,
           },
-          distance: 5125,
-          rate: 5.0,
-          price: 2000,
-        },
+        ],
         error: null,
       })
     );

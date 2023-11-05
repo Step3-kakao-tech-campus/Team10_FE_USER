@@ -39,7 +39,7 @@ const LoginForm = () => {
         type="email"
         placeholder="이메일"
         {...register("email", {
-          required: "이메일은 필수 입력힙니다.",
+          required: "이메일은 필수 입력입니다.",
           pattern: {
             value: /\S+@\S+\.\S+/,
             message: "이메일 형식에 맞지 않습니다.",

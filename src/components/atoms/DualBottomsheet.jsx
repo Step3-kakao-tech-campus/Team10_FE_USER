@@ -2,69 +2,58 @@ import React, { useState } from "react";
 import { useSpring, animated, config } from "react-spring";
 import { useDrag } from "react-use-gesture";
 
-const BOTTOM_THRESHOLD = 241;
+const EXPANDED_Y = 40; // Position for the expanded state
+const COLLAPSED_Y = 350; // Position for the collapsed state
 
 const DualBottomsheet = ({ className, children }) => {
-  const [active, setActive] = useState({ bottom: false });
+  const [active, setActive] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const [{ y: bottomY }, bottomSet] = useSpring(() => ({
-    y: 400,
-    config: {
-      ...config,
-    },
+
+  const [{ y }, set] = useSpring(() => ({
+    y: COLLAPSED_Y,
+    config: config.stiff,
   }));
-  const y = bottomY;
-  const set = bottomSet;
-  const onActive = (bottomActive) => setActive({ bottom: bottomActive });
-  const onProgress = (y, reset) => {
-    if (active.bottom) {
-      if (reset) {
-        if (y === 400) {
-          set.start({ y: 320, config: { duration: 250 } });
-        } else if (y === 82) {
-          set.start({ y: 60, config: { duration: 250 } });
-        }
-        return;
+
+  const onProgress = (currentY, reset) => {
+    if (reset) {
+      if (currentY === COLLAPSED_Y) {
+        set.start({ y: COLLAPSED_Y - 80, config: { duration: 250 } });
+      } else if (currentY === EXPANDED_Y) {
+        set.start({ y: EXPANDED_Y + 22, config: { duration: 250 } });
       }
-      if (y < 342) {
-        set.start({ y: y - 22, config: { duration: 60 } });
-      }
+      return;
+    }
+    if (currentY < COLLAPSED_Y - 58) {
+      set.start({ y: currentY - 22, config: { duration: 60 } });
     }
   };
 
   const bind = useDrag(
-    ({ movement: [x, y], down, tap }) => {
-      if (!down && tap) {
-        if (expanded) {
-          set({ y: 400, config: { duration: 250 } });
-          onProgress(400, true);
-        } else {
-          set({ y: 82, config: { duration: 250 } });
-          onProgress(82, true);
-        }
-        setExpanded(!expanded);
+    ({ movement: [x, currentY], down, distance, tap, first, last }) => {
+      if (tap) {
+        // If it's a tap, don't move the sheet, but handle internal component events
         return;
       }
-      if (!down) {
-        if (y >= BOTTOM_THRESHOLD) {
-          set({ y: 400, config: { duration: 250 } });
-          onProgress(400, true);
+
+      if (first) {
+        set({ y: currentY }); // Start dragging
+      } else if (last) {
+        if (currentY >= (EXPANDED_Y + COLLAPSED_Y) / 2) {
+          set({ y: COLLAPSED_Y, config: { duration: 250 } });
           setExpanded(false);
         } else {
-          set({ y: 82, config: { duration: 250 } });
-          onProgress(82, false);
+          set({ y: EXPANDED_Y, config: { duration: 250 } });
           setExpanded(true);
         }
-        onActive(false);
-      } else {
-        set({ y, config: { duration: 60 } });
-        onActive(true);
-        onProgress(y, false);
+        setActive(false);
+      } else if (down) {
+        set({ y: currentY, config: { duration: 60 } });
+        setActive(true);
       }
     },
     {
       initial: () => [0, y.get()],
-      bounds: { left: 0, right: 0, top: 82, bottom: 400 },
+      bounds: { left: 0, right: 0, top: EXPANDED_Y, bottom: COLLAPSED_Y },
       rubberband: true,
     }
   );

@@ -1,5 +1,8 @@
 import Star from "../atoms/Star";
 import DistanceFromHere from "../atoms/DistanceFromHere";
+import UserStar from "../atoms/UserStar";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 /**
  *
@@ -8,35 +11,35 @@ import DistanceFromHere from "../atoms/DistanceFromHere";
  * @returns
  */
 const StoreItem = ({
+  carwashId,
   imgsrc,
   storename,
   starcount,
-  reviewcount,
   priceinfo,
   distance,
 }) => {
-  // 나중에 클릭 시 이동하는 기능 추가
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    dispatch({ type: "SET_CARWASH_ID", payload: carwashId });
+    navigate(`/carwashdetail/${carwashId}`);
+  };
 
   return (
-    <div className="w-auto h-24 relative bg-white rounded-xl border border-gray-200 flex items-center gap-3.5 ">
-      {/* 세차장 사진 부분 */}
-      <picture className="flex w-[74px] h-[74px] rounded-xl ml-3">
-        <img
-          className="w-[74px] h-[74px] rounded-xl"
-          src={imgsrc}
-          alt="세차장이미지"
-        />
+    <div
+      className="relative flex items-center h-32 gap-4 m-4 bg-white border border-gray-300 rounded-xl"
+      onClick={handleClick}
+    >
+      <picture className="flex ml-4 rounded-xl">
+        <img className="w-56 h-24 rounded-md" src={imgsrc} alt="세차장이미지" />
       </picture>
-      {/* 별점, 세차장이름, 가격정보 부분 */}
-      <div className="flex flex-col w-56 h-16 gap-1">
-        <Star starcount={starcount} reviewcount={reviewcount} />
+      <div className="flex flex-col gap-2">
+        <UserStar averageStar={starcount} />
         <div className="font-semibold ">{storename}</div>
-        <div className="left-0 top-[53px] text-primary text-sm ">
-          {priceinfo}
-        </div>
+        <div className="text-primary">{priceinfo}</div>
       </div>
-      {/* DistanceFromHere 컴포넌트 부분 */}
-      <DistanceFromHere distance={distance} />
+      <DistanceFromHere className="m-4" distance={distance} />
     </div>
   );
 };

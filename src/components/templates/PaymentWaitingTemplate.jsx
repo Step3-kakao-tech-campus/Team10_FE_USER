@@ -21,19 +21,19 @@ const PaymentWaitingTemplate = () => {
 
   // useMutation 훅을 이용해 결제 승인 로직을 설정합니다.
   const {
-    mutate: approveMutate, // 결제 승인 요청 함수
+    mutate: approveMutate,
     isLoading: approveIsLoading,
     isError: approveIsError,
     error: approveError,
   } = useMutation({
-    mutationFn: (data) => pgapprove(carwashId, bayId, data), // 결제 승인 API 함수
+    mutationFn: (data) => pgapprove(carwashId, bayId, data),
     onSuccess: (data) => {
-      // 성공 시 작업
-      console.log("data:", data);
-      // navigate 등의 추가 작업을 여기에서 할 수 있습니다.
+      // 'data' 객체 내부의 'data' 프로퍼티를 '/reservation' 경로로 전달
+      console.log(data.data);
+      navigate("/paymentresult", { state: { reservationData: data.data } });
     },
     onError: (err) => {
-      // 오류 시 작업
+      // 오류 핸들링 로직
       console.error("error:", err);
     },
   });
@@ -44,7 +44,7 @@ const PaymentWaitingTemplate = () => {
     const approvepostData = {
       payApprovalRequestDTO: {
         cid: "TC0ONETIME",
-        tid: "T548fd612b8b1abba15f",
+        tid: "T549040851b66fd49c17", //나중에 api 수정되면 tid로 받기!
         partner_order_id: "partner_order_id",
         partner_user_id: "partner_user_id",
         pg_token: pgToken,

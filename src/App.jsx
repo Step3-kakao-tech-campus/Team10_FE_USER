@@ -33,14 +33,8 @@ function App() {
           />
           <Route path="schedule/:carwashId/:bayId" element={<SchedulePage />} />
           <Route path="payment" element={<PaymentPage />} />
-          <Route
-            path="paymentwaiting/:token"
-            element={<PaymentWaitingPage />}
-          />
-          <Route
-            path="paymentresult/:reservationId"
-            element={<PaymentResultPage />}
-          />
+          <Route path="paymentwaiting" element={<PaymentWaitingPage />} />
+          <Route path="paymentresult" element={<PaymentResultPage />} />
           <Route path="reviewpost" element={<ReviewPostPage />} />
         </Route>
         <Route path="login" element={<LoginPage />} />

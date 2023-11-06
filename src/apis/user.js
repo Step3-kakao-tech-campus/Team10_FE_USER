@@ -9,3 +9,7 @@ export const login = (data) => {
   const { email, password } = data;
   return instance.post("/api/user/login", { email, password });
 };
+
+export const UserInfo = () => {
+  return instance.get("/api/user/info");
+};

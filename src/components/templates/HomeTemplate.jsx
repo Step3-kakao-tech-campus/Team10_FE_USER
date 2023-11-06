@@ -8,6 +8,7 @@ import { carwashesRecommended } from "../../apis/carwashes";
 import { reservationsRecent } from "../../apis/reservations";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { UserInfo } from "../../apis/user";
 
 /**
  * HomeTemplate
@@ -19,6 +20,9 @@ const HomeTemplate = () => {
     latitude: 35.14,
     longitude: 126.9,
   });
+
+  // 사용자 정보 상태
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -32,7 +36,7 @@ const HomeTemplate = () => {
   }, []);
 
   const token = localStorage.getItem("token");
-  const [recommended, recent] = useSuspenseQueries({
+  const [recommended, recent, userInfo] = useSuspenseQueries({
     queries: [
       {
         queryKey: ["recommended"],
@@ -44,19 +48,28 @@ const HomeTemplate = () => {
         queryFn: () => (token ? reservationsRecent() : Promise.resolve(null)),
         enabled: !!token,
       },
+      {
+        queryKey: ["userInfo"],
+        queryFn: () => (token ? UserInfo(token) : Promise.resolve(null)),
+        enabled: !!token,
+      },
     ],
   });
 
-  console.log(location);
-
   const recommendedData = recommended?.data?.data?.response[0];
   const recentList = recent?.data?.data?.response?.recent || [];
+  useEffect(() => {
+    if (userInfo.data?.data?.response?.name) {
+      setUserName(userInfo.data.data.response.name);
+    }
+  }, [userInfo]);
   const navigate = useNavigate();
   return (
-    <main className="grid gap-6 py-12">
-      {/*사용자 이름 데이터 있을 때 처리
-       <h1 className="text-2xl font-semibold">노주영님 안녕하세요!</h1>*/}
-      {/* 메뉴 링크 */}
+    <main className="grid gap-6 py-4">
+      {userName && (
+        <div className="text-lg font-semibold ">{userName}님 안녕하세요!</div>
+      )}
+
       <section className="flex justify-between gap-4">
         <Button
           variant="home"

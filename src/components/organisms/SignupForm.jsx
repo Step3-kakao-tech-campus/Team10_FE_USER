@@ -33,13 +33,13 @@ const SignupForm = () => {
   } = useForm();
 
   const PATTERNS = {
-    nickname: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/,
+    //username: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/,
     email: /\S+@\S+\.\S+/,
     password: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,24}$/,
   };
 
   const MESSAGES = {
-    nickname: {
+    username: {
       required: "닉네임을 입력해주세요.",
       pattern: "닉네임은 2자 이상 8자 이하, 영어 또는 한글로 입력해주세요.",
     },
@@ -85,11 +85,11 @@ const SignupForm = () => {
             <TextInput
               type="text"
               placeholder="닉네임"
-              {...register("nickname", {
-                required: MESSAGES.nickname.required,
+              {...register("username", {
+                required: MESSAGES.username.required,
                 pattern: {
-                  value: PATTERNS.nickname,
-                  message: MESSAGES.nickname.pattern,
+                  value: PATTERNS.username,
+                  message: MESSAGES.username.pattern,
                 },
               })}
             />
@@ -97,9 +97,9 @@ const SignupForm = () => {
               중복체크
             </Button>
           </div>
-          {errors.nickname && (
+          {errors.username && (
             <small className="text-red-500" role="alert">
-              {errors.nickname.message}
+              {errors.username.message}
             </small>
           )}
 
@@ -107,6 +107,7 @@ const SignupForm = () => {
             <TextInput
               type="email"
               placeholder="이메일"
+              className
               {...register("email", {
                 required: MESSAGES.email.required,
                 pattern: {

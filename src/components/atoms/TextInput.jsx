@@ -3,7 +3,7 @@ import React, { forwardRef } from "react";
 const TextInput = forwardRef(({ className, ...props }, ref) => {
   return (
     <input
-      className={`w-full h-12 px-3 text-black rounded-xl border border-gray-300 bg-gray-100 outline-none ${className}`}
+      className={`h-12 w-5/6 px-4 rounded-xl border border-gray-300 bg-gray-100 outline-none ${className}`}
       ref={ref}
       {...props}
     ></input>

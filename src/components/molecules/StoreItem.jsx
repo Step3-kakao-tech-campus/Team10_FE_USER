@@ -28,18 +28,18 @@ const StoreItem = ({
 
   return (
     <div
-      className="relative flex items-center h-32 gap-4 m-4 bg-white border border-gray-300 rounded-xl"
+      className="relative flex items-center py-2 bg-white border border-gray-300 rounded-xl"
       onClick={handleClick}
     >
-      <picture className="flex ml-4 rounded-xl">
-        <img className="w-56 h-24 rounded-md" src={imgsrc} alt="세차장이미지" />
+      <picture className="ml-8 rounded-xl">
+        <img className="w-24 h-20 rounded-md" src={imgsrc} alt="세차장이미지" />
       </picture>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 ml-12">
         <UserStar averageStar={starcount} />
         <div className="font-semibold ">{storename}</div>
         <div className="text-primary">{priceinfo}</div>
       </div>
-      <DistanceFromHere className="m-4" distance={distance} />
+      <DistanceFromHere className="ml-auto mr-4" distance={distance} />
     </div>
   );
 };

@@ -4,41 +4,6 @@ import { GNB } from "../components/atoms/GNB";
 import StatusBar from "../components/atoms/StatusBar";
 import CustomModal from "../components/atoms/CustomModal";
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false, errorInfo: null };
-  }
-
-  static getDerivedStateFromError(error) {
-    // 상태를 업데이트하여 fallback UI를 표시합니다.
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    // 에러 로깅
-    console.error("Uncaught error:", error, errorInfo);
-    // 상태에 errorInfo를 저장하고, 일정 시간 후 페이지를 새로고침합니다.
-    this.setState({ errorInfo: errorInfo }, () => {
-      window.location.reload();
-    });
-  }
-
-  render() {
-    if (this.state.hasError) {
-      // 에러 발생 시 사용자에게 보여질 UI를 렌더링할 수 있습니다.
-      // 아래의 경우, 에러 발생과 동시에 페이지가 새로고침되므로 실질적으로 아래 UI는 보여지지 않을 것입니다.
-      return (
-        <div>
-          <h2>죄송합니다. 문제가 발생했습니다. 페이지를 새로고침합니다...</h2>
-        </div>
-      );
-    }
-
-    return this.props.children;
-  }
-}
-
 export const MainLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -75,7 +40,6 @@ export const MainLayout = () => {
       location.pathname.includes(path)
     );
 
-    // 인증이 필요한 경로로 가려고 하고 토큰이 없으면 모달을 표시
     const token = localStorage.getItem("token");
     if (pathRequiresAuth && !token) {
       setShowLoginModal(true);
@@ -88,9 +52,7 @@ export const MainLayout = () => {
     <div className="relative h-screen">
       <StatusBar />
       {showGNB && <GNB />}
-      <div className="px-4 pt-14">
-        <ErrorBoundary>{!showLoginModal && <Outlet />}</ErrorBoundary>
-      </div>
+      <div className="px-4 pt-14">{!showLoginModal && <Outlet />}</div>
       <CustomModal
         isOpen={showLoginModal}
         onRequestClose={handleCancelLogin}

@@ -66,44 +66,42 @@ const ReservationTemplate = () => {
             mapdata={washlists?.data?.response}
             className="fixed left-0 z-0 w-screen h-screen"
           />
-          {/* <MapWithPins className="fixed left-0 w-screen h-screen" /> */}
           <DualBottomsheet className="fixed left-0 z-10 bottom-16">
             <Bottomsheet className="z-20 flex flex-col h-full gap-3 overflow-y-scroll">
-              <div className="m-4">
-                <div className="flex flex-row gap-2 m-4">
-                  <Badge
-                    key="1"
-                    label="하부세차"
-                    onClick={() => {
-                      handleBadgeClick(1);
-                    }}
-                  />
-                  <Badge
-                    key="2"
-                    label="폼건세차"
-                    onClick={() => {
-                      handleBadgeClick(2);
-                    }}
-                  />
-                  <Badge
-                    key="3"
-                    label="온수세차"
-                    onClick={() => {
-                      handleBadgeClick(3);
-                    }}
-                  />
-                </div>
-                <hr className="mb-4" />
+              <div className="flex flex-row gap-2 mx-4 mt-10">
+                <Badge
+                  key="1"
+                  label="하부세차"
+                  onClick={() => {
+                    handleBadgeClick(1);
+                  }}
+                />
+                <Badge
+                  key="2"
+                  label="폼건세차"
+                  onClick={() => {
+                    handleBadgeClick(2);
+                  }}
+                />
+                <Badge
+                  key="3"
+                  label="온수세차"
+                  onClick={() => {
+                    handleBadgeClick(3);
+                  }}
+                />
+              </div>
+              <hr className="" />{" "}
+              <div className="flex flex-col gap-4 mx-4">
                 {washlists?.data?.response &&
-                  washlists?.data?.response.map((item, index) => (
+                  washlists.data.response.map((item, index) => (
                     <StoreItem
                       key={index}
                       carwashId={item.id}
                       imgsrc={item.image}
                       storename={item.name}
                       starcount={item.rate}
-                      reviewcount="0"
-                      priceinfo="15000/60분"
+                      priceinfo={item.price}
                       distance={item.distance}
                     />
                   ))}

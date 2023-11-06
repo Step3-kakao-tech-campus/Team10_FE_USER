@@ -63,7 +63,7 @@ const SignupForm = () => {
 
   return (
     <div>
-      <div className="flex flex-col gap-4 p-8 m-4 bg-white rounded-xl ">
+      <div className="flex flex-col gap-4 p-4 m-8 bg-white rounded-xl ">
         <h1 className="text-xl font-bold text-center">회원가입</h1>
 
         <form
@@ -81,7 +81,7 @@ const SignupForm = () => {
             });
           })}
         >
-          <div className="flex flex-col w-full gap-4 md:flex-row">
+          <div className="flex flex-col gap-4">
             <TextInput
               type="text"
               placeholder="닉네임"
@@ -174,7 +174,7 @@ const SignupForm = () => {
             </small>
           )}
 
-          <Button type="submit" disabled={isSubmitting} variant="long">
+          <Button type="submit" disabled={isSubmitting} variant="small">
             회원가입
           </Button>
         </form>

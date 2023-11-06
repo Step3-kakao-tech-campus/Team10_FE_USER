@@ -1,15 +1,21 @@
 <!doctype html>
 <html lang="kr">
   <head>
-    <script type="text/javascript">
-      // Create the script element
-      var kakaoScript = document.createElement("script");
-      kakaoScript.type = "text/javascript";
-      // Use the environment variable for the appkey parameter
-      kakaoScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAOMAP_API_KEY}`;
-      // Append the script tag to the head of the document
-      document.head.appendChild(kakaoScript);
-    </script>
+
+  <script type="text/javascript">
+    const KAKAOMAP_API_KEY = "3130c03f68d56e65941b59d55ea82d1c";
+    const kakaoScript = document.createElement("script");
+    kakaoScript.type = "text/javascript";
+    kakaoScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAOMAP_API_KEY}&autoload=false`;
+  
+    kakaoScript.onload = function () {
+      kakao.maps.load(function() {
+     
+      });
+    };
+    document.head.appendChild(kakaoScript);
+  </script>
+  
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

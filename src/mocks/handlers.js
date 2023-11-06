@@ -737,6 +737,31 @@ export const handlers = [
     );
   }),
 
+  rest.post("/api/payment/approve/:carwash_id/:bay_id", (req, res, ctx) => {
+    const token = req.headers.get("Authorization");
+    const { carwash_id, bay_id } = req.params;
+
+    if (!token) {
+      return res(
+        ctx.status(401),
+        ctx.json({ error: "인증되지 않았습니다. (토큰 없음)" })
+      );
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        response: {
+          name: "포세이돈워시 용봉점",
+          bay_no: 2,
+          total_price: 30000,
+          reservation_time: "예약시간",
+        },
+        error: null,
+      })
+    );
+  }),
+
   // 결제 완료
   rest.get("/api/reservations/:reservation_id/payment", (req, res, ctx) => {
     const token = req.headers.get("Authorization");
@@ -754,10 +779,23 @@ export const handlers = [
       ctx.json({
         success: true,
         response: {
-          name: "포세이돈워시 용봉점",
-          bay_no: 2,
-          total_price: 30000,
-          reservation_time: "예약시간",
+          reservation: {
+            reservationId: 11,
+            time: {
+              start: "2024-11-01T14:00:00",
+              end: "2024-11-01T15:00:00",
+            },
+            price: 20000,
+            bayNo: 1,
+          },
+          carwash: {
+            name: "전일 카 세차장",
+            location: {
+              latitude: 35.1806726203914,
+              longitude: 126.9707,
+            },
+            carwashImages: [],
+          },
         },
         error: null,
       })

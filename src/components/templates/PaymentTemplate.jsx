@@ -42,7 +42,7 @@ const PaymentTemplate = () => {
     mutationFn: (data) => pgpayment(carwashId, data),
     onSuccess: (data) => {
       console.log("data", data);
-      dispatch({ type: "SAVE_CID", payload: data.data.response.tid });
+      dispatch({ type: "SAVE_TID", payload: data.data.response.tid });
       // 이제 setRedirectLink를 사용하여 리다이렉트 URL을 상태로 설정합니다.
       setRedirectLink(data.data.response.next_redirect_mobile_url);
     },

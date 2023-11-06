@@ -4,7 +4,7 @@ export const SET_BAY_ID = "SET_BAY_ID";
 export const SET_RESERVATION_ID = "SET_RESERVATION_ID";
 export const SAVE_RESERVATION = "SAVE_RESERVATION";
 export const RESET_STORE = "RESET_STORE";
-export const SAVE_CID = "SAVE_CID";
+export const SAVE_TID = "SAVE_TID";
 
 // 액션 생성자 정의
 
@@ -32,7 +32,7 @@ export const resetStore = () => ({
   type: RESET_STORE,
 });
 
-export const saveCid = (Cid) => ({
-  type: SAVE_CID,
-  payload: Cid,
+export const saveTid = (Tid) => ({
+  type: SAVE_TID,
+  payload: Tid,
 });

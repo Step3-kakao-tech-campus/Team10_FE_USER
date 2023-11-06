@@ -7,6 +7,7 @@ import {
   SET_CARWASH_ID,
   SET_RESERVATION_ID,
   RESET_STORE,
+  SAVE_CID,
 } from "./action";
 
 const persistConfig = {
@@ -39,6 +40,8 @@ const reducer = (state = initialState, action) => {
       };
     case RESET_STORE:
       return initialState;
+    case SAVE_CID:
+      return { ...state, Cid: action.payload };
     default:
       return state;
   }

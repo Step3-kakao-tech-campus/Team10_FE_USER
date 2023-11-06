@@ -5,5 +5,5 @@ export const pgpayment = (carwash_id, data) => {
 };
 
 export const pgapprove = (carwash_id, bay_id) => {
-  return instance.get(`/api/payment/approve/${carwash_id}/${bay_id}`);
+  return instance.post(`/api/payment/approve/${carwash_id}/${bay_id}`);
 };

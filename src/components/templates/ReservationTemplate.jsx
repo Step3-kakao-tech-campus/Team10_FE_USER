@@ -38,7 +38,7 @@ const ReservationTemplate = () => {
     ],
     queryFn: () =>
       carwashesSearch(keypoints, location.latitude, location.longitude),
-    enabled: location.latitude != null && location.longitude != null,
+    enabled: location.latitude !== null && location.longitude !== null,
   });
   useEffect(() => {
     if (data) {
@@ -58,7 +58,6 @@ const ReservationTemplate = () => {
       );
     }
   };
-  console.log(keypoints);
 
   return (
     <div className="overflow-y-auto">

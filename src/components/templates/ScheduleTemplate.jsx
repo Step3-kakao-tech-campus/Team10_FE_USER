@@ -12,7 +12,7 @@ import { saveReservation } from "../../store/action";
 import {
   carwashesInfo,
   carwashesBays,
-  bookCarwash,
+  calculatePayment,
 } from "../../apis/carwashes";
 
 const ScheduleTemplate = ({ carwashId, bayId }) => {
@@ -21,6 +21,23 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
   const [duration, setDuration] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const mutatePayment = useMutation({
+    mutationFn: ({ startTime, endTime }) => {
+      return calculatePayment(carwashId, {
+        startTime: startTime,
+        endTime: endTime,
+      });
+    },
+    onSuccess: () => {
+      console.log("success");
+      navigate("/payment");
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
   const [washinfo, bayinfo] = useSuspenseQueries({
     queries: [
       {
@@ -34,19 +51,6 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
     ],
   });
 
-  const mutation = useMutation({
-    mutationFn: ({ carwashId, bayId, startTime, endTime }) => {
-      return bookCarwash(carwashId, bayId, startTime, endTime);
-    },
-    onSuccess: () => {
-      console.log("success");
-      navigate("/payment");
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
   const handleSubmit = () => {
     const payload = {
       carwashId,
@@ -55,7 +59,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
       formattedEndTime,
     };
     dispatch(saveReservation(formattedStartTime, formattedEndTime));
-    mutation.mutate(payload);
+    navigate("/payment");
   };
 
   if (washinfo == undefined) {

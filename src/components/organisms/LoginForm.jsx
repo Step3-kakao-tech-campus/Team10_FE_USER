@@ -26,7 +26,10 @@ const LoginForm = () => {
       className="grid gap-4 p-4"
       onSubmit={handleSubmit((data) => {
         mutation.mutate(data, {
-          onSuccess: () => {
+          onSuccess: (response) => {
+            console.log(response);
+            console.log(data);
+            localStorage.setItem("token", response.headers.authorization); // 토큰 저장
             navigate("/");
           },
           onError: (error) => {
@@ -39,7 +42,7 @@ const LoginForm = () => {
         type="email"
         placeholder="이메일"
         {...register("email", {
-          required: "이메일은 필수 입력힙니다.",
+          required: "이메일은 필수 입력입니다.",
           pattern: {
             value: /\S+@\S+\.\S+/,
             message: "이메일 형식에 맞지 않습니다.",

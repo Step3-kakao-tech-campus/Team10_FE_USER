@@ -20,11 +20,11 @@ const CarwashDetailTemplate = ({ carwashId }) => {
     queryFn: () => carwashesInfo(carwashId),
     enabled: !!carwashId,
   });
-
+  console.log(data);
   useEffect(() => {
     if (data) {
-      setData(data?.data?.response);
-      console.log(data?.data?.response);
+      setData(data?.data?.response); //빌드 시 오류 나면 이부분을 data.response로 바꿔야 할 수 있음.
+      console.log(data?.data?.response); //빌드 시 오류 나면 이부분을 data.response로 바꿔야 할 수 있음.
     }
   }, [data]);
 
@@ -36,7 +36,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
     navigate(`/bayselection/${carwashId}`);
   };
 
-  const images = detaildata.image.map((url) => ({
+  const images = detaildata.imageFiles.map((url) => ({
     label: "Image",
     alt: "image",
     url: url,
@@ -75,7 +75,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
               weekhour={weekhour}
               weekendhour={weekendhour}
               tel={detaildata?.tel}
-              address={detaildata?.location.address}
+              address={detaildata?.locationDTO.address}
             />
             <KeyPointInfo selectedPoints={detaildata?.keywordId} />
             <Tab introduction={detaildata?.description} />

@@ -1,30 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { paymentResult } from "../../apis/reservations";
+import { useSuspenseQuery, useMutation } from "@tanstack/react-query";
+import { calculatePayment } from "../../apis/carwashes";
 import dayjs from "dayjs";
 import { Button } from "../atoms/Button";
 import { useNavigate } from "react-router-dom";
 
-const PaymentTemplate = ({ reservationId }) => {
-  const [paymentdata, setData] = useState(null);
+const PaymentTemplate = () => {
+  const [paymentData, setPaymentData] = useState({ price: undefined });
   const reservations = useSelector((state) => state.reservations);
+  const carwashId = useSelector((state) => state.selectedCarwashId); // CamelCase를 사용하여 변수명을 수정했습니다.
   const navigate = useNavigate();
 
-  const { data } = useSuspenseQuery({
-    queryKey: ["getPayment", reservationId],
-    queryFn: () => paymentResult(reservationId),
-    enabled: !!reservationId,
+  const { mutate, data, isLoading, isError, error } = useMutation({
+    mutationFn: (data) => calculatePayment(carwashId, data),
+    onSuccess: (data) => {
+      // 결제 성공 후 data를 상태에 설정합니다.
+      setPaymentData({ price: data.data.response.price }); // 이렇게 해서 반환된 결제 정보를 상태에 저장할 수 있습니다.
+      console.log("Payment successful with data:", data.data.response.price);
+      // 다음의 라인은 성공적인 결제 후에 필요한 로직을 처리합니다.
+    },
+    onError: (err) => {
+      console.error("Payment error:", err);
+      // navigate('/payment-error'); // 필요하다면 에러 페이지로 리디렉트할 수 있습니다.
+    },
   });
 
   useEffect(() => {
-    if (data) {
-      setData(data?.data?.response);
+    if (reservations && carwashId) {
+      // mutate를 호출할 때 reservations 객체 전체를 data로 전달합니다.
+      mutate(reservations);
     }
-  }, [data]);
+  }, [reservations, carwashId, mutate]);
 
-  if (!paymentdata) {
+  // UI 로딩 상태 표시
+  if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  // UI 에러 상태 표시
+  if (isError) {
+    return <div>Error: {error.message}</div>;
   }
 
   const formatDateStart = (dateString) => {
@@ -51,7 +67,7 @@ const PaymentTemplate = ({ reservationId }) => {
     reservations.startTime,
     reservations.endTime
   );
-
+  const paymentAmount = paymentData?.price ? paymentData.price : "계산 중...";
   return (
     <div>
       <div className="relative p-4">
@@ -66,7 +82,7 @@ const PaymentTemplate = ({ reservationId }) => {
           </div>
           <div className="flex justify-between py-4 text-lg font-semibold text-red-500">
             <div>최종 결제 금액</div>
-            <div>{paymentdata.total_price}원</div>
+            <div>{paymentAmount}원</div>
           </div>
         </div>
         <div className="py-8 text-2xl font-bold"> 결제 수단 </div>
@@ -84,7 +100,7 @@ const PaymentTemplate = ({ reservationId }) => {
         className="fixed bottom-0 left-0"
         //onClick={() => navigate(`paymentresult/${reservationId}`)}
       >
-        {paymentdata.total_price}원 결제하기
+        {paymentAmount}원 결제하기
       </Button>
     </div>
   );

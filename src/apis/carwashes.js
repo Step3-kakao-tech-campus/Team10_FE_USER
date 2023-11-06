@@ -31,6 +31,7 @@ export const getReviews = () => {
 };
 
 export const calculatePayment = (carwash_id, data) => {
+  console.log(data);
   return instance.post(`/api/carwashes/${carwash_id}/payment`, data);
 };
 

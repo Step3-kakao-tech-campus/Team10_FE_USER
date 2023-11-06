@@ -26,7 +26,10 @@ const LoginForm = () => {
       className="grid gap-4 p-4"
       onSubmit={handleSubmit((data) => {
         mutation.mutate(data, {
-          onSuccess: () => {
+          onSuccess: (response) => {
+            console.log(response);
+            console.log(data);
+            localStorage.setItem("token", response.headers.authorization); // 토큰 저장
             navigate("/");
           },
           onError: (error) => {

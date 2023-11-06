@@ -64,7 +64,7 @@ export const handlers = [
 
   // 사용자 로그인
   // 로그인 성공 시 헤더에 토큰 담아서 보내줌
-  rest.post("/api/login/user", (req, res, ctx) => {
+  rest.post("/api/user/login", (req, res, ctx) => {
     const { email, password } = req.body;
 
     if (email !== "user@nate.com" || password !== "user1234!") {
@@ -103,22 +103,22 @@ export const handlers = [
       ctx.status(200),
       ctx.json({
         success: true,
-        response: {
-          id: 2,
-          name: "하이세차장",
-          image:
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
-          location: {
-            id: 1,
-            place: "새로운 이름",
-            address: "새로운 주소",
-            latitude: 1.234,
-            longitude: 2.345,
+        response: [
+          {
+            id: 3,
+            name: "세차 월드",
+            location: {
+              id: 3,
+              place: "세차 월드",
+              address: "광주 남구 봉선2로 96-14",
+              latitude: 35.125349394619,
+              longitude: 126.916778560933,
+            },
+            distance: 2.2320286199268278,
+            rate: 4.2,
+            price: 8500,
           },
-          distance: 5125,
-          rate: 5.0,
-          price: 2000,
-        },
+        ],
         error: null,
       })
     );
@@ -531,36 +531,31 @@ export const handlers = [
       ctx.json({
         success: true,
         response: {
-          id: parseInt(carwash_id, 10),
-          name: "포세이돈워시 용봉점",
-          rate: 5.0,
-          reviewCnt: 408,
-          location: {
-            placeName: "포세이돈워시 용봉점",
-            address: "광주 북구 용봉동 111-1",
-          },
-          bayCnt: 4,
+          id: 2,
+          name: "민들레 세차장",
+          rate: 4.0,
+          reviewCnt: 1,
+          bayCnt: 2,
           optime: {
             weekday: {
-              start: "00:00",
-              end: "24:00",
+              start: "09:30:00",
+              end: "18:30:00",
             },
             weekend: {
-              start: "00:00",
-              end: "24:00",
+              start: "10:30:00",
+              end: "16:30:00",
             },
           },
-          image: [
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/16b2ae1e-d904-48fc-b1e2-660b38c25c3f",
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/fdb8f53b-08eb-4b35-8b89-0394473c2d7b",
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/1572934c-920f-4e84-a3d3-dcb4506eea13",
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/4f3ae17e-c247-4e5d-917e-adc8dfc67c20",
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/c51a6881-3ba5-46e8-b4f5-e352dee0ac9e",
-          ],
-          keywordId: [1, 2, 3],
-          description: "포세이돈워시에 어서옵셔",
-          tel: "01012345678",
+          locationDTO: {
+            placeName: "민들레 세차장",
+            address: "광주 북구 우치로 49",
+            latitude: 0.0,
+            longitude: 0.0,
+          },
+          keywordId: [1, 5, 5],
+          description: "귀여운 세차장",
+          tel: "062-1234-5679",
+          imageFiles: [],
         },
         error: null,
       })

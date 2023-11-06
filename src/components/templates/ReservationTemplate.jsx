@@ -13,7 +13,10 @@ const ReservationTemplate = () => {
   const [firstClick, setFirstClick] = useState(true);
   const [washlists, setWashlists] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [location, setLocation] = useState({
+    latitude: 35.14,
+    longitude: 126.9,
+  });
 
   useEffect(() => {
     if (navigator.geolocation) {

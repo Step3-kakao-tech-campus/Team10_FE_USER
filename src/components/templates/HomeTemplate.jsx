@@ -7,8 +7,7 @@ import ReservationHistory from "/Button/home/reservationHistory.svg";
 import { carwashesRecommended } from "../../apis/carwashes";
 import { reservationsRecent } from "../../apis/reservations";
 import { useNavigate } from "react-router-dom";
-import useGeoLocation from "../../hooks/useGeoLocation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * HomeTemplate
@@ -16,12 +15,22 @@ import { useEffect } from "react";
  * @todo geoLocation이 동작하지 않는 문제 해결 필요.
  */
 const HomeTemplate = () => {
-  const geolocationOptions = {
-    enableHighAccuracy: true,
-    timeout: 1000,
-    maximumAge: 1000,
-  };
-  const { location, error } = useGeoLocation(geolocationOptions);
+  const [location, setLocation] = useState({
+    latitude: 35.14,
+    longitude: 126.9,
+  });
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      });
+    }
+  }, []);
+
   const token = localStorage.getItem("token");
   const [recommended, recent] = useSuspenseQueries({
     queries: [
@@ -37,10 +46,12 @@ const HomeTemplate = () => {
       },
     ],
   });
-  const recommendedData = recommended?.data?.data?.response;
+
+  console.log(location);
+
+  const recommendedData = recommended?.data?.data?.response[0];
   const recentList = recent?.data?.data?.response?.recent || [];
   const navigate = useNavigate();
-
   return (
     <main className="grid gap-6 py-12">
       {/*사용자 이름 데이터 있을 때 처리

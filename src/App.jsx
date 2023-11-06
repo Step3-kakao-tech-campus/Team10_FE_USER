@@ -10,6 +10,7 @@ import ReservationHistoryPage from "./pages/ReservationHistoryPage";
 import PaymentResultPage from "./pages/PaymentResultPage";
 import ReviewPostPage from "./pages/ReviewPostPage";
 import PaymentPage from "./pages/PaymentPage";
+import PaymentWaitingPage from "./pages/PaymentWaitingPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 
@@ -33,6 +34,10 @@ function App() {
           <Route path="schedule/:carwashId/:bayId" element={<SchedulePage />} />
           <Route path="payment" element={<PaymentPage />} />
           <Route
+            path="paymentwaiting/:token"
+            element={<PaymentWaitingPage />}
+          />
+          <Route
             path="paymentresult/:reservationId"
             element={<PaymentResultPage />}
           />
@@ -40,6 +45,7 @@ function App() {
         </Route>
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
+        kl
       </Routes>
     </BrowserRouter>
   );

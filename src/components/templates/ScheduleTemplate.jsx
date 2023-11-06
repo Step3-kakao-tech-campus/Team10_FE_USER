@@ -190,7 +190,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
         onClick={handleSubmit}
         className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white h-14 bg-primary"
       >
-        예약하러가기
+        예약하기
       </button>
     </div>
   );

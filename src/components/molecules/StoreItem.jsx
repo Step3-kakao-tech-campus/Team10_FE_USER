@@ -37,9 +37,12 @@ const StoreItem = ({
       <div className="flex flex-col gap-2 ml-12">
         <UserStar averageStar={starcount} />
         <div className="font-semibold ">{storename}</div>
-        <div className="text-primary">{priceinfo}</div>
+        <div className="text-primary">30분/{priceinfo}원</div>
       </div>
-      <DistanceFromHere className="ml-auto mr-4" distance={distance} />
+      <DistanceFromHere
+        className="ml-auto mr-4"
+        distance={distance.toFixed(1)}
+      />
     </div>
   );
 };

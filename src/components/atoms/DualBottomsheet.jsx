@@ -14,41 +14,39 @@ const DualBottomsheet = ({ className, children }) => {
     config: config.stiff,
   }));
 
-  const onProgress = (currentY, reset) => {
-    if (reset) {
-      if (currentY === COLLAPSED_Y) {
-        set.start({ y: COLLAPSED_Y - 80, config: { duration: 250 } });
-      } else if (currentY === EXPANDED_Y) {
-        set.start({ y: EXPANDED_Y + 22, config: { duration: 250 } });
-      }
-      return;
-    }
-    if (currentY < COLLAPSED_Y - 58) {
-      set.start({ y: currentY - 22, config: { duration: 60 } });
-    }
-  };
-
   const bind = useDrag(
-    ({ movement: [x, currentY], down, distance, tap, first, last }) => {
+    ({ movement: [x, my], down, distance, tap, first, last }) => {
       if (tap) {
         // If it's a tap, don't move the sheet, but handle internal component events
         return;
       }
 
       if (first) {
-        set({ y: currentY }); // Start dragging
+        set({ y: my }); // Start dragging
       } else if (last) {
-        if (currentY >= (EXPANDED_Y + COLLAPSED_Y) / 2) {
+        const closeThreshold = EXPANDED_Y;
+        const openThreshold = COLLAPSED_Y;
+
+        console.log(
+          "my, closseThreshodl, openThreshold",
+          my,
+          closeThreshold,
+          openThreshold
+        );
+        // Check against the thresholds to determine the new state
+        if (expanded == true && my >= closeThreshold) {
           set({ y: COLLAPSED_Y, config: { duration: 250 } });
           setExpanded(false);
-        } else {
+        }
+        if (expanded == false && my <= openThreshold) {
           set({ y: EXPANDED_Y, config: { duration: 250 } });
           setExpanded(true);
         }
         setActive(false);
-      } else if (down) {
-        set({ y: currentY, config: { duration: 60 } });
-        setActive(true);
+      } else {
+        // This will update y for dragging and will be "rubber-banded" within bounds
+        set({ y: my, immediate: down, config: { duration: 0 } }); // Make dragging responsive
+        setActive(down);
       }
     },
     {

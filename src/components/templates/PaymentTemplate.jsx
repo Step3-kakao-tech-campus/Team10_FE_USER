@@ -2,45 +2,96 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSuspenseQuery, useMutation } from "@tanstack/react-query";
 import { calculatePayment } from "../../apis/carwashes";
+import { pgpayment } from "../../apis/payment";
 import dayjs from "dayjs";
 import { Button } from "../atoms/Button";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const PaymentTemplate = () => {
   const [paymentData, setPaymentData] = useState({ price: undefined });
+  const [redirectLink, setRedirectLink] = useState(null);
   const reservations = useSelector((state) => state.reservations);
-  const carwashId = useSelector((state) => state.selectedCarwashId); // CamelCase를 사용하여 변수명을 수정했습니다.
+  const carwashId = useSelector((state) => state.selectedCarwashId);
+  const bayId = useSelector((state) => state.selectedBayId);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const { mutate, data, isLoading, isError, error } = useMutation({
+  const {
+    mutate: paymentCalMutate, //결제 금액 계산
+    isLoading: paymentCalIsLoading,
+    isError: paymentCalIsError,
+    error: paymentCalError,
+  } = useMutation({
     mutationFn: (data) => calculatePayment(carwashId, data),
     onSuccess: (data) => {
-      // 결제 성공 후 data를 상태에 설정합니다.
-      setPaymentData({ price: data.data.response.price }); // 이렇게 해서 반환된 결제 정보를 상태에 저장할 수 있습니다.
-      console.log("Payment successful with data:", data.data.response.price);
-      // 다음의 라인은 성공적인 결제 후에 필요한 로직을 처리합니다.
+      setPaymentData({ price: data.data.response.price });
+      console.log("결제금액 계산 성공:", data.data.response.price);
     },
     onError: (err) => {
-      console.error("Payment error:", err);
-      // navigate('/payment-error'); // 필요하다면 에러 페이지로 리디렉트할 수 있습니다.
+      console.error("결제금액 계산 error:", err);
     },
   });
 
+  const {
+    mutate: payMutate, // pg 결제 로직
+    isLoading: payIsLoading,
+    isError: payIsError,
+    error: payError,
+  } = useMutation({
+    mutationFn: (data) => pgpayment(carwashId, data),
+    onSuccess: (data) => {
+      console.log("data", data);
+      dispatch({ type: "SAVE_TID", payload: data.data.response.tid });
+      // 이제 setRedirectLink를 사용하여 리다이렉트 URL을 상태로 설정합니다.
+      setRedirectLink(data.data.response.next_redirect_mobile_url);
+    },
+    onError: (err) => {
+      console.error("Payment error:", err);
+    },
+  });
+  useEffect(() => {
+    if (redirectLink) {
+      // redirectLink가 설정되면, 네비게이트를 사용하여 리디렉션합니다.
+      window.location.href = redirectLink;
+    }
+  }, [redirectLink]);
+
+  const handlePayment = () => {
+    const paypostData = {
+      requestDto: {
+        cid: "TC0ONETIME",
+        partner_order_id: "partner_order_id",
+        partner_user_id: "partner_user_id",
+        item_name: "구름 세차장 예약",
+        quantity: 1,
+        tax_free_amount: 0,
+      },
+      saveDTO: {
+        bayId: bayId, // 전역 상태에서 bayId 가져오기
+        startTime: reservations.startTime, // 전역 상태에서 startTime 가져오기
+        endTime: reservations.endTime, // 전역 상태에서 endTime 가져오기
+      },
+    };
+    if (carwashId) {
+      payMutate(paypostData);
+    }
+  };
+
   useEffect(() => {
     if (reservations && carwashId) {
-      // mutate를 호출할 때 reservations 객체 전체를 data로 전달합니다.
-      mutate(reservations);
+      paymentCalMutate(reservations);
     }
-  }, [reservations, carwashId, mutate]);
+  }, [reservations, carwashId, paymentCalMutate]);
 
   // UI 로딩 상태 표시
-  if (isLoading) {
+  if (paymentCalIsLoading) {
     return <div>Loading...</div>;
   }
 
   // UI 에러 상태 표시
-  if (isError) {
-    return <div>Error: {error.message}</div>;
+  if (paymentCalIsLoading) {
+    return <div>Error: {paymentCalError.message}</div>;
   }
 
   const formatDateStart = (dateString) => {
@@ -98,7 +149,7 @@ const PaymentTemplate = () => {
       <Button
         variant="long"
         className="fixed bottom-0 left-0"
-        //onClick={() => navigate(`paymentresult/${reservationId}`)}
+        onClick={handlePayment}
       >
         {paymentAmount}원 결제하기
       </Button>

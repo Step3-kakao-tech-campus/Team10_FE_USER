@@ -702,10 +702,9 @@ export const handlers = [
   }),
 
   // 결제하기(PG)
-  rest.post("/api/reservations/:reservation_id/payment", (req, res, ctx) => {
+  rest.post("/api/payment/ready/:carwash_id", (req, res, ctx) => {
     const token = req.headers.get("Authorization");
-    const { reservation_id } = req.params;
-    const { selected_date, bay_id, start_time, end_time } = req.body;
+    const { carwash_id } = req.params;
 
     if (!token) {
       return res(
@@ -718,7 +717,46 @@ export const handlers = [
       ctx.status(200),
       ctx.json({
         success: true,
-        response: null,
+        response: {
+          tid: "T548bdcf2b8b1abb9fa4",
+          tms_result: false,
+          next_redirect_app_url:
+            "https://online-pay.kakao.com/mockup/v1/426e68070fe67dd6af122c4f402725475badbca9ffe20b56154e5f1f4abced40/aInfo",
+          next_redirect_mobile_url:
+            "https://online-pay.kakao.com/mockup/v1/426e68070fe67dd6af122c4f402725475badbca9ffe20b56154e5f1f4abced40/mInfo",
+          next_redirect_pc_url:
+            "https://online-pay.kakao.com/mockup/v1/426e68070fe67dd6af122c4f402725475badbca9ffe20b56154e5f1f4abced40/info",
+          android_app_scheme:
+            "kakaotalk://kakaopay/pg?url=https://online-pay.kakao.com/pay/mockup/426e68070fe67dd6af122c4f402725475badbca9ffe20b56154e5f1f4abced40",
+          ios_app_scheme:
+            "kakaotalk://kakaopay/pg?url=https://online-pay.kakao.com/pay/mockup/426e68070fe67dd6af122c4f402725475badbca9ffe20b56154e5f1f4abced40",
+          created_at: "2023-11-06T19:19:59",
+        },
+        error: null,
+      })
+    );
+  }),
+
+  rest.post("/api/payment/approve/:carwash_id/:bay_id", (req, res, ctx) => {
+    const token = req.headers.get("Authorization");
+    const { carwash_id, bay_id } = req.params;
+
+    if (!token) {
+      return res(
+        ctx.status(401),
+        ctx.json({ error: "인증되지 않았습니다. (토큰 없음)" })
+      );
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        response: {
+          name: "포세이돈워시 용봉점",
+          bay_no: 2,
+          total_price: 30000,
+          reservation_time: "예약시간",
+        },
         error: null,
       })
     );
@@ -741,10 +779,23 @@ export const handlers = [
       ctx.json({
         success: true,
         response: {
-          name: "포세이돈워시 용봉점",
-          bay_no: 2,
-          total_price: 30000,
-          reservation_time: "예약시간",
+          reservation: {
+            reservationId: 11,
+            time: {
+              start: "2024-11-01T14:00:00",
+              end: "2024-11-01T15:00:00",
+            },
+            price: 20000,
+            bayNo: 1,
+          },
+          carwash: {
+            name: "전일 카 세차장",
+            location: {
+              latitude: 35.1806726203914,
+              longitude: 126.9707,
+            },
+            carwashImages: [],
+          },
         },
         error: null,
       })

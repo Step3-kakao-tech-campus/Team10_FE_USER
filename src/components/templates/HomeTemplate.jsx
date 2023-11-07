@@ -10,18 +10,12 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserInfo } from "../../apis/user";
 
-/**
- * HomeTemplate
- *
- * @todo geoLocation이 동작하지 않는 문제 해결 필요.
- */
 const HomeTemplate = () => {
   const [location, setLocation] = useState({
     latitude: 35.14,
     longitude: 126.9,
   });
 
-  // 사용자 정보 상태
   const [userName, setUserName] = useState("");
 
   useEffect(() => {

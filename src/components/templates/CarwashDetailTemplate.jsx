@@ -1,30 +1,45 @@
 import ImageCarousel from "../atoms/ImageCarousel";
 import StoreInfo from "../atoms/StoreInfo";
 import KeyPointInfo from "../atoms/KeyPointInfo";
-import { Button } from "../atoms/Button";
 import Star from "../atoms/Star";
 import { Tab } from "../molecules/Tab";
 import { useEffect, useState } from "react";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { carwashesInfo } from "../../apis/carwashes";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import CustomModal from "../atoms/CustomModal";
 
 const CarwashDetailTemplate = ({ carwashId }) => {
   const [detaildata, setData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  const selectedCarwashId = useSelector((state) => state.selectedCarwashId);
 
-  const { data } = useSuspenseQuery({
+  const { data } = useQuery({
     queryKey: ["getCarwashesInfo", carwashId],
     queryFn: () => carwashesInfo(carwashId),
+    suspense: true,
     enabled: !!carwashId,
+    onError: (err) => {
+      if (err.response?.status === 404) {
+        navigate("/notfound");
+      } else if (err.response?.status === 500) {
+        setModalContent("서버 오류가 발생했습니다. 홈으로 돌아갑니다.");
+        setIsModalOpen(true);
+      } else {
+        setModalContent("알 수 없는 오류가 발생했습니다.");
+        setIsModalOpen(true);
+      }
+    },
   });
-  console.log(data);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    navigate("/");
+  };
+
   useEffect(() => {
     if (data) {
-      setData(data?.data?.response); //빌드 시 오류 나면 이부분을 data.response로 바꿔야 할 수 있음.
-      console.log(data?.data?.response); //빌드 시 오류 나면 이부분을 data.response로 바꿔야 할 수 있음.
+      setData(data?.data?.response);
     }
   }, [data]);
 
@@ -36,11 +51,20 @@ const CarwashDetailTemplate = ({ carwashId }) => {
     navigate(`/bayselection/${carwashId}`);
   };
 
-  const images = detaildata.imageFiles.map((url) => ({
-    label: "Image",
-    alt: "image",
-    url: url,
-  }));
+  const images =
+    detaildata.imageFiles.length > 0
+      ? detaildata.imageFiles.map((url) => ({
+          label: "Image",
+          alt: "image",
+          url: url,
+        }))
+      : [
+          {
+            label: "Image Not Found",
+            alt: "세차장 등록된 이미지가 없습니다",
+            url: "/CarwashDetail/CarwashImgNotFound.png",
+          },
+        ];
 
   const weekhour = `평일 ${detaildata?.optime?.weekday.start} ~ ${detaildata?.optime?.weekday.end}`;
   const weekendhour = `주말 ${detaildata?.optime?.weekend.start} ~ ${detaildata?.optime?.weekend.end}`;
@@ -48,20 +72,16 @@ const CarwashDetailTemplate = ({ carwashId }) => {
   return (
     <div className="relative">
       <div className="flex-grow pb-20 overflow-y-auto">
-        {/* 캐러셀 */}
         <ImageCarousel images={images} />
         <div className="py-4">
           <div className="flex justify-between">
             <div className="flex flex-col">
-              {/* 매장명 */}
               <div className="text-xl font-bold">{detaildata?.name}</div>
-              {/* 별점 */}
               <Star
                 starCount={parseFloat(detaildata?.rate)}
                 reviewCount={parseFloat(detaildata?.reviewCnt)}
               />
             </div>
-            {/* 예약 베이 수 */}
             <div className="flex flex-col">
               <div className="text-3xl font-bold text-center text-sky-500">
                 {detaildata?.bayCnt}
@@ -88,6 +108,13 @@ const CarwashDetailTemplate = ({ carwashId }) => {
       >
         예약하러 가기
       </button>
+      <CustomModal
+        isOpen={isModalOpen}
+        onConfirm={closeModal}
+        title="오류 발생"
+        content="오류가 발생했습니다"
+        confirmText="확인"
+      />
     </div>
   );
 };

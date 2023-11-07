@@ -3,14 +3,15 @@ import { Button } from "../atoms/Button";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { signup, checkEmail } from "../../apis/user";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const SignupForm = () => {
   const [emailValid, setEmailValid] = useState(false); // Changed default to false
   const [emailError, setEmailError] = useState("");
   const [checkingEmail, setCheckingEmail] = useState(false);
-  const [signupSuccess, setSignupSuccess] = useState(false); // To track signup success
+  const [signupError, setSignupError] = useState("");
+
   const mutation = useMutation({
     mutationFn: (data) => {
       signup(data);
@@ -25,9 +26,10 @@ const SignupForm = () => {
     getValues,
     setError,
     clearErrors,
-    watch,
-    formState: { isSubmitting, errors, isValid },
-  } = useForm({ mode: "all" });
+    formState: { errors, isSubmitting, touchedFields, dirtyFields },
+  } = useForm({
+    mode: "onChange",
+  });
 
   const PATTERNS = {
     username: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,20}$/,
@@ -84,32 +86,36 @@ const SignupForm = () => {
     }
   };
 
-  useEffect(() => {
-    if (emailValid && isValid) {
-      setSignupSuccess(true);
-    } else {
-      setSignupSuccess(false);
+  const onSubmit = async (data) => {
+    if (!emailValid) {
+      setError("email", {
+        type: "manual",
+        message: "이메일 중복확인을 해주세요.",
+      });
+      return;
     }
-  }, [emailValid, isValid]);
+    setSignupError(""); // Clear previous errors
+
+    try {
+      await signup(data);
+      navigate("/login");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data.error.message ||
+        "회원가입 중 에러가 발생했습니다.";
+      setSignupError(errorMessage); // Set the new error message
+    }
+  };
 
   return (
-    <div className="flex flex-col max-w-lg gap-6 p-10 mx-auto bg-white shadow-md rounded-2xl ">
-      <h1 className="text-2xl font-bold text-center text-gray-800">회원가입</h1>
-
+    <div className="flex flex-col gap-6 p-10 my-20 bg-white border border-gray-300 rounded-lg shadow-md ">
+      <div className="text-2xl font-bold text-center text-primary">
+        회원가입
+      </div>
       <form
         noValidate
-        className="flex flex-col gap-6"
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            await signup(data);
-            navigate("/login");
-          } catch (error) {
-            const errorMessage =
-              error.response?.data.error.message ||
-              "회원가입 중 에러가 발생했습니다.";
-            console.log(errorMessage);
-          }
-        })}
+        className="flex flex-col gap-4 "
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col gap-4">
           <TextInput
@@ -130,28 +136,29 @@ const SignupForm = () => {
           </small>
         )}
 
-        <div className="flex gap-4 w-96">
-          <TextInput
-            type="email"
-            placeholder="이메일"
-            className
-            {...register("email", {
-              required: MESSAGES.email.required,
-              pattern: {
-                value: PATTERNS.email,
-                message: MESSAGES.email.pattern,
-              },
-            })}
-          />
-          <Button
-            type="button"
-            variant="small"
-            onClick={onEmailCheck}
-            className="self-end px-4 py-2 text-sm text-white rounded shrink-0 hover:bg-blue-600 disabled:opacity-50"
-            disabled={checkingEmail}
-          >
-            {checkingEmail ? "확인 중..." : "중복체크"}
-          </Button>
+        <div className="flex gap-4">
+          <div className="flex justify-between gap-2">
+            <TextInput
+              type="email"
+              placeholder="이메일"
+              className="w-auto"
+              {...register("email", {
+                required: MESSAGES.email.required,
+                pattern: {
+                  value: PATTERNS.email,
+                  message: MESSAGES.email.pattern,
+                },
+              })}
+            />
+            <Button
+              type="button"
+              variant="checkemail"
+              onClick={onEmailCheck}
+              disabled={checkingEmail}
+            >
+              {checkingEmail ? "확인 중..." : "중복체크"}
+            </Button>
+          </div>
         </div>
         {emailError && (
           <small className="text-red-500" role="alert">
@@ -209,12 +216,24 @@ const SignupForm = () => {
 
         <Button
           type="submit"
-          disabled={!signupSuccess || isSubmitting}
+          disabled={
+            !emailValid ||
+            Object.keys(errors).length > 0 ||
+            isSubmitting ||
+            Object.keys(touchedFields).length === 0 ||
+            Object.keys(dirtyFields).length < Object.keys(register).length
+          }
           variant="long"
-          className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+          className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md"
         >
           회원가입
         </Button>
+        {signupError && (
+          <div className="text-red-500" role="alert">
+            {signupError}
+          </div>
+        )}
+        <Link to="/login">로그인</Link>
       </form>
     </div>
   );

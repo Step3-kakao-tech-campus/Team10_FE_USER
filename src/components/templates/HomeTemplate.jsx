@@ -44,7 +44,7 @@ const HomeTemplate = () => {
       },
       {
         queryKey: ["userInfo"],
-        queryFn: () => (token ? UserInfo(token) : Promise.resolve(null)),
+        queryFn: () => (token ? UserInfo() : Promise.resolve(null)),
         enabled: !!token,
       },
     ],
@@ -57,12 +57,17 @@ const HomeTemplate = () => {
       setUserName(userInfo.data.data.response.name);
     }
   }, [userInfo]);
+
   const navigate = useNavigate();
   return (
     <main className="grid gap-6 py-4">
-      {userName && (
-        <div className="text-lg font-semibold ">{userName}님 안녕하세요!</div>
-      )}
+      {
+        <div className="text-lg font-semibold text-primary ">
+          {userName
+            ? `${userName}님 안녕하세요!`
+            : "여유롭게 즐기는 세차, 뽀득뽀득"}
+        </div>
+      }
 
       <section className="flex justify-between gap-4">
         <Button

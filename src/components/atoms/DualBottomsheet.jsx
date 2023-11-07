@@ -24,8 +24,8 @@ const DualBottomsheet = ({ className, children }) => {
       if (first) {
         set({ y: my }); // Start dragging
       } else if (last) {
-        const closeThreshold = EXPANDED_Y;
-        const openThreshold = COLLAPSED_Y;
+        const closeThreshold = EXPANDED_Y + 5;
+        const openThreshold = COLLAPSED_Y - 5;
 
         console.log(
           "my, closseThreshodl, openThreshold",
@@ -34,11 +34,11 @@ const DualBottomsheet = ({ className, children }) => {
           openThreshold
         );
         // Check against the thresholds to determine the new state
-        if (expanded == true && my >= closeThreshold) {
+        if (expanded == true && my > closeThreshold) {
           set({ y: COLLAPSED_Y, config: { duration: 250 } });
           setExpanded(false);
         }
-        if (expanded == false && my <= openThreshold) {
+        if (expanded == false && my < openThreshold) {
           set({ y: EXPANDED_Y, config: { duration: 250 } });
           setExpanded(true);
         }

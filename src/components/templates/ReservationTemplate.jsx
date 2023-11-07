@@ -17,6 +17,7 @@ const ReservationTemplate = () => {
     latitude: 35.14,
     longitude: 126.9,
   });
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -59,6 +60,16 @@ const ReservationTemplate = () => {
     }
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredWashlists = searchTerm
+    ? washlists?.data?.response.filter((item) =>
+        item?.name.includes(searchTerm)
+      )
+    : washlists?.data?.response;
+
   return (
     <div className="overflow-y-auto">
       <div>
@@ -70,7 +81,15 @@ const ReservationTemplate = () => {
           />
           <DualBottomsheet className="fixed left-0 z-10 bottom-16">
             <Bottomsheet className="z-20 flex flex-col h-full gap-3 overflow-y-scroll">
-              <div className="flex flex-row gap-2 mx-4 mt-10">
+              <input
+                type="text"
+                id="search-bar"
+                className="w-full px-4 py-2 mt-6 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm form-input focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                placeholder="세차장 이름을 검색하세요!"
+                onChange={handleSearchChange}
+                value={searchTerm}
+              />
+              <div className="flex flex-row gap-2 mx-4 ">
                 <Badge
                   key="1"
                   label="하부세차"
@@ -95,8 +114,8 @@ const ReservationTemplate = () => {
               </div>
               <hr className="" />{" "}
               <div className="flex flex-col gap-4 mx-4">
-                {washlists?.data?.response &&
-                  washlists.data.response.map((item, index) => (
+                {filteredWashlists?.length > 0 ? (
+                  filteredWashlists.map((item, index) => (
                     <StoreItem
                       key={index}
                       carwashId={item.id}
@@ -106,7 +125,10 @@ const ReservationTemplate = () => {
                       priceinfo={item.price}
                       distance={item.distance}
                     />
-                  ))}
+                  ))
+                ) : (
+                  <p className="text-gray-600">검색된 세차장이 없습니다.</p>
+                )}
               </div>
             </Bottomsheet>
           </DualBottomsheet>

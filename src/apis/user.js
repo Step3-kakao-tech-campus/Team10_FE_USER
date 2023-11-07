@@ -13,3 +13,7 @@ export const login = (data) => {
 export const UserInfo = () => {
   return instance.get("/api/user/info");
 };
+
+export const checkEmail = (email) => {
+  return instance.post("/api/user/check", { email });
+};

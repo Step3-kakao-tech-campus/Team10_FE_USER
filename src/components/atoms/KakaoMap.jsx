@@ -17,17 +17,6 @@ const KakaoMap = ({ currentloc = [], mapdata = [], className }) => {
         el.location.longitude
       );
 
-      // 사진 넣고 싶으면 주석 부분 해제하면 됨
-      // var marker = new kakao.maps.Marker({
-      //   map: map,
-      //   position: new kakao.maps.LatLng(
-      //     el.location.latitude,
-      //     el.location.longitude
-      //   ),
-      //   title: el.title,
-      //   image: markerImage,
-      // });
-
       const iwContent = `
       <div style="
         position: relative;
@@ -36,7 +25,7 @@ const KakaoMap = ({ currentloc = [], mapdata = [], className }) => {
         padding: 5px 10px;
         background: #0098FF;
         border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
         font-size: 12px;
         color: #FFFFFF;
         text-align: center;

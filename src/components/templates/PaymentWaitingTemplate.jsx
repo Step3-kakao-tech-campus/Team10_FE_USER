@@ -44,7 +44,7 @@ const PaymentWaitingTemplate = () => {
     const approvepostData = {
       payApprovalRequestDTO: {
         cid: "TC0ONETIME",
-        tid: "T549040851b66fd49c17", //나중에 api 수정되면 tid로 받기!
+        tid: "T54b3e192b8b1abbbb0b", //나중에 api 수정되면 tid로 받기!
         partner_order_id: "partner_order_id",
         partner_user_id: "partner_user_id",
         pg_token: pgToken,

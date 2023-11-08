@@ -6,7 +6,6 @@ import { carwashesBays, carwashesInfo } from "../../apis/carwashes";
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import CustomModal from "../atoms/CustomModal";
 
 const BaySelectionTemplate = ({ carwashId }) => {
   const navigate = useNavigate();

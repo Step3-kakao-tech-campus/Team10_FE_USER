@@ -8,14 +8,15 @@ import { carwashesRecommended } from "../../apis/carwashes";
 import { reservationsRecent } from "../../apis/reservations";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { UserInfo } from "../../apis/user";
 
-/**
- * HomeTemplate
- *
- * @todo geoLocation이 동작하지 않는 문제 해결 필요.
- */
 const HomeTemplate = () => {
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [location, setLocation] = useState({
+    latitude: 35.14,
+    longitude: 126.9,
+  });
+
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -29,7 +30,7 @@ const HomeTemplate = () => {
   }, []);
 
   const token = localStorage.getItem("token");
-  const [recommended, recent] = useSuspenseQueries({
+  const [recommended, recent, userInfo] = useSuspenseQueries({
     queries: [
       {
         queryKey: ["recommended"],
@@ -41,20 +42,33 @@ const HomeTemplate = () => {
         queryFn: () => (token ? reservationsRecent() : Promise.resolve(null)),
         enabled: !!token,
       },
+      {
+        queryKey: ["userInfo"],
+        queryFn: () => (token ? UserInfo() : Promise.resolve(null)),
+        enabled: !!token,
+      },
     ],
   });
 
-  console.log(location);
-
-  const recommendedData = recommended?.data?.data?.response;
+  const recommendedData = recommended?.data?.data?.response[0];
   const recentList = recent?.data?.data?.response?.recent || [];
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (userInfo.data?.data?.response?.name) {
+      setUserName(userInfo.data.data.response.name);
+    }
+  }, [userInfo]);
 
+  const navigate = useNavigate();
   return (
-    <main className="grid gap-6 py-12">
-      {/*사용자 이름 데이터 있을 때 처리
-       <h1 className="text-2xl font-semibold">노주영님 안녕하세요!</h1>*/}
-      {/* 메뉴 링크 */}
+    <main className="grid gap-6 py-4">
+      {
+        <div className="text-lg font-semibold text-primary ">
+          {userName
+            ? `${userName}님 안녕하세요!`
+            : "여유롭게 즐기는 세차, 뽀득뽀득"}
+        </div>
+      }
+
       <section className="flex justify-between gap-4">
         <Button
           variant="home"

@@ -6,7 +6,8 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { reservations } from "../../apis/reservations";
 import { useDispatch } from "react-redux";
 import { resetStore } from "../../store/action";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import dayjs from "dayjs";
 
 const iconsrc = {
@@ -16,36 +17,47 @@ const iconsrc = {
   price: "/TextWithIcon/price.png",
 };
 
-const PaymentResultTemplate = ({ reservationId }) => {
+const PaymentResultTemplate = () => {
   const [paymentresult, setpaymentresult] = useState(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { data } = useSuspenseQuery({
-    // 나중에 reservation api에 reservationId 추가 되면 이거로 코드 바꾸기
-    // queryKey: ["getReservations", reservationId],
-    // queryFn: () => reservations(reservationId),
-    queryKey: ["getReservations"],
-    queryFn: () => reservations(),
-  });
-
-  useEffect(() => {
-    if (data) {
-      setpaymentresult(data?.data?.response);
-      console.log(paymentresult);
-    }
-  }, [data]);
+  const location = useLocation();
+  const { reservationData } = location.state || {};
+  // const reservationData = {
+  //   reservation: {
+  //     reservationId: 1,
+  //     time: {
+  //       start: "2023-11-01T12:00:00",
+  //       end: "2023-11-01T13:00:00",
+  //     },
+  //     price: 6000,
+  //     bayNo: 1,
+  //   },
+  //   carwash: {
+  //     name: "구름 세차장",
+  //     location: {
+  //       latitude: 35.1502,
+  //       longitude: 126.9167,
+  //     },
+  //     carwashImages: [
+  //       {
+  //         id: 1,
+  //         name: "image1.jpg",
+  //         url: "http://example.com/image1.jpg",
+  //         path: "/images/image1.jpg",
+  //         uploadedAt: "2023-10-24T10:00:00",
+  //       },
+  //     ],
+  //   },
+  // };
+  console.log(reservationData);
 
   useEffect(() => {
     dispatch(resetStore());
-    if (data) {
-      setpaymentresult(data?.data?.response);
-      console.log(paymentresult);
-    }
-  }, [data, dispatch]);
+  }, [dispatch]);
 
-  if (!paymentresult) {
+  if (!reservationData) {
     return <div>Loading...</div>;
   }
 
@@ -53,12 +65,15 @@ const PaymentResultTemplate = ({ reservationId }) => {
     reservation: {
       time: { start, end },
       price,
+      reservationId,
+      bayNo,
     },
     carwash: {
       name: carwashname,
       location: { latitude, longitude },
     },
-  } = paymentresult;
+  } = reservationData;
+  console.log(latitude);
 
   const formatTime = (dateTime) => {
     return dayjs(dateTime).format("HH시 mm분");

@@ -64,7 +64,7 @@ export const handlers = [
 
   // 사용자 로그인
   // 로그인 성공 시 헤더에 토큰 담아서 보내줌
-  rest.post("/api/login/user", (req, res, ctx) => {
+  rest.post("/api/user/login", (req, res, ctx) => {
     const { email, password } = req.body;
 
     if (email !== "user@nate.com" || password !== "user1234!") {
@@ -103,22 +103,22 @@ export const handlers = [
       ctx.status(200),
       ctx.json({
         success: true,
-        response: {
-          id: 2,
-          name: "하이세차장",
-          image:
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
-          location: {
-            id: 1,
-            place: "새로운 이름",
-            address: "새로운 주소",
-            latitude: 1.234,
-            longitude: 2.345,
+        response: [
+          {
+            id: 3,
+            name: "세차 월드",
+            location: {
+              id: 3,
+              place: "세차 월드",
+              address: "광주 남구 봉선2로 96-14",
+              latitude: 35.125349394619,
+              longitude: 126.916778560933,
+            },
+            distance: 2.2320286199268278,
+            rate: 4.2,
+            price: 8500,
           },
-          distance: 5125,
-          rate: 5.0,
-          price: 2000,
-        },
+        ],
         error: null,
       })
     );
@@ -193,7 +193,7 @@ export const handlers = [
               longitude: 126.9,
             },
             distance: 2513,
-            rate: 3.0,
+            rate: 4.0,
             price: 3000,
           },
           {
@@ -209,8 +209,312 @@ export const handlers = [
               longitude: 126.93,
             },
             distance: 4189,
-            rate: 5.0,
-            price: 2000,
+            rate: 1.0,
+            price: 6000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
+          },
+          {
+            id: 2,
+            name: "하이세차장",
+            image:
+              "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
+            location: {
+              id: 18,
+              place: "새로운 이름",
+              address: "새로운 주소",
+              latitude: 35.1759,
+              longitude: 126.9,
+            },
+            distance: 2513,
+            rate: 4.0,
+            price: 3000,
           },
         ],
         error: null,
@@ -227,36 +531,31 @@ export const handlers = [
       ctx.json({
         success: true,
         response: {
-          id: parseInt(carwash_id, 10),
-          name: "포세이돈워시 용봉점",
-          rate: 5.0,
-          reviewCnt: 408,
-          location: {
-            placeName: "포세이돈워시 용봉점",
-            address: "광주 북구 용봉동 111-1",
-          },
-          bayCnt: 4,
+          id: 2,
+          name: "민들레 세차장",
+          rate: 4.0,
+          reviewCnt: 1,
+          bayCnt: 2,
           optime: {
             weekday: {
-              start: "00:00",
-              end: "24:00",
+              start: "09:30:00",
+              end: "18:30:00",
             },
             weekend: {
-              start: "00:00",
-              end: "24:00",
+              start: "10:30:00",
+              end: "16:30:00",
             },
           },
-          image: [
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/b214edfd-a3b7-4eb0-aaef-9dd4705ca24e",
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/16b2ae1e-d904-48fc-b1e2-660b38c25c3f",
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/fdb8f53b-08eb-4b35-8b89-0394473c2d7b",
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/1572934c-920f-4e84-a3d3-dcb4506eea13",
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/4f3ae17e-c247-4e5d-917e-adc8dfc67c20",
-            "https://github.com/Step3-kakao-tech-campus/Team10_FE_OWNER/assets/104883910/c51a6881-3ba5-46e8-b4f5-e352dee0ac9e",
-          ],
-          keywordId: [1, 2, 3],
-          description: "포세이돈워시에 어서옵셔",
-          tel: "01012345678",
+          locationDTO: {
+            placeName: "민들레 세차장",
+            address: "광주 북구 우치로 49",
+            latitude: 0.0,
+            longitude: 0.0,
+          },
+          keywordId: [1, 5, 5],
+          description: "귀여운 세차장",
+          tel: "062-1234-5679",
+          imageFiles: [],
         },
         error: null,
       })
@@ -707,10 +1006,9 @@ export const handlers = [
   }),
 
   // 결제하기(PG)
-  rest.post("/api/reservations/:reservation_id/payment", (req, res, ctx) => {
+  rest.post("/api/payment/ready/:carwash_id", (req, res, ctx) => {
     const token = req.headers.get("Authorization");
-    const { reservation_id } = req.params;
-    const { selected_date, bay_id, start_time, end_time } = req.body;
+    const { carwash_id } = req.params;
 
     if (!token) {
       return res(
@@ -723,7 +1021,46 @@ export const handlers = [
       ctx.status(200),
       ctx.json({
         success: true,
-        response: null,
+        response: {
+          tid: "T548bdcf2b8b1abb9fa4",
+          tms_result: false,
+          next_redirect_app_url:
+            "https://online-pay.kakao.com/mockup/v1/426e68070fe67dd6af122c4f402725475badbca9ffe20b56154e5f1f4abced40/aInfo",
+          next_redirect_mobile_url:
+            "https://online-pay.kakao.com/mockup/v1/426e68070fe67dd6af122c4f402725475badbca9ffe20b56154e5f1f4abced40/mInfo",
+          next_redirect_pc_url:
+            "https://online-pay.kakao.com/mockup/v1/426e68070fe67dd6af122c4f402725475badbca9ffe20b56154e5f1f4abced40/info",
+          android_app_scheme:
+            "kakaotalk://kakaopay/pg?url=https://online-pay.kakao.com/pay/mockup/426e68070fe67dd6af122c4f402725475badbca9ffe20b56154e5f1f4abced40",
+          ios_app_scheme:
+            "kakaotalk://kakaopay/pg?url=https://online-pay.kakao.com/pay/mockup/426e68070fe67dd6af122c4f402725475badbca9ffe20b56154e5f1f4abced40",
+          created_at: "2023-11-06T19:19:59",
+        },
+        error: null,
+      })
+    );
+  }),
+
+  rest.post("/api/payment/approve/:carwash_id/:bay_id", (req, res, ctx) => {
+    const token = req.headers.get("Authorization");
+    const { carwash_id, bay_id } = req.params;
+
+    if (!token) {
+      return res(
+        ctx.status(401),
+        ctx.json({ error: "인증되지 않았습니다. (토큰 없음)" })
+      );
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        response: {
+          name: "포세이돈워시 용봉점",
+          bay_no: 2,
+          total_price: 30000,
+          reservation_time: "예약시간",
+        },
         error: null,
       })
     );
@@ -746,10 +1083,23 @@ export const handlers = [
       ctx.json({
         success: true,
         response: {
-          name: "포세이돈워시 용봉점",
-          bay_no: 2,
-          total_price: 30000,
-          reservation_time: "예약시간",
+          reservation: {
+            reservationId: 11,
+            time: {
+              start: "2024-11-01T14:00:00",
+              end: "2024-11-01T15:00:00",
+            },
+            price: 20000,
+            bayNo: 1,
+          },
+          carwash: {
+            name: "전일 카 세차장",
+            location: {
+              latitude: 35.1806726203914,
+              longitude: 126.9707,
+            },
+            carwashImages: [],
+          },
         },
         error: null,
       })

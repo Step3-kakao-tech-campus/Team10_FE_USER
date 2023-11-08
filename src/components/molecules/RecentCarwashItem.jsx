@@ -8,7 +8,7 @@ export const RecentCarwashItem = ({
   carwashName,
 }) => {
   return (
-    <Link to={`/carwashDetail/${carwashId}`}>
+    <Link to={`/carwashdetail/${carwashId}`}>
       <div className="w-24">
         <div className="relative w-24 h-24 overflow-hidden rounded-xl bg-slate-600">
           <img

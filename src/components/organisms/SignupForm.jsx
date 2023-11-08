@@ -2,21 +2,16 @@ import TextInput from "../atoms/TextInput";
 import { Button } from "../atoms/Button";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { signup } from "../../apis/user";
-import { useNavigate } from "react-router-dom";
+import { signup, checkEmail } from "../../apis/user";
+import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-/**
- * SignupForm 회원가입 폼
- *
- * 닉네임, 이메일, 비밀번호, 비밀번호 확인, 전화번호 입력창, 회원가입 버튼을 담고 있는 박스입니다.
- *
- * @todo 닉네임, 이메일 중복체크 API 추가 (백엔드와 협의)
- * @todo 회원가입에 실패했을 때 에러처리 (form onSubmit 부분)
- * @todo 닉네임 -> 이름으로 수정
- * @todo 회원가입 시 즉시 로그인되어 메인 페이지로 이동하는데, 이 부분에서 localStorage에 토큰을 저장하는 로직 필요
- * @todo isSubmitting 상태에 따라 회원가입 버튼 스타일 변경 필요
- */
 const SignupForm = () => {
+  const [emailValid, setEmailValid] = useState(false); // Changed default to false
+  const [emailError, setEmailError] = useState("");
+  const [checkingEmail, setCheckingEmail] = useState(false);
+  const [signupError, setSignupError] = useState("");
+
   const mutation = useMutation({
     mutationFn: (data) => {
       signup(data);
@@ -29,19 +24,25 @@ const SignupForm = () => {
     register,
     handleSubmit,
     getValues,
-    formState: { isSubmitting, errors },
-  } = useForm();
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    mode: "onChange",
+    criteriaMode: "all",
+  });
 
   const PATTERNS = {
-    nickname: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/,
+    username: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,20}$/,
     email: /\S+@\S+\.\S+/,
     password: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,24}$/,
+    tel: /^[0-9]{10,11}$/,
   };
 
   const MESSAGES = {
-    nickname: {
+    username: {
       required: "닉네임을 입력해주세요.",
-      pattern: "닉네임은 2자 이상 8자 이하, 영어 또는 한글로 입력해주세요.",
+      pattern: "닉네임은 2자 이상 20자 이하, 영어 또는 한글로 입력해주세요.",
     },
     email: {
       required: "이메일을 입력해주세요.",
@@ -58,55 +59,98 @@ const SignupForm = () => {
     },
     tel: {
       required: "전화번호를 입력해주세요.",
+      pattern: "전화번호는 10자리 또는 11자리 숫자여야 합니다",
     },
   };
 
+  const onEmailCheck = async () => {
+    const email = getValues("email");
+    if (!email) {
+      setEmailError("이메일을 입력해주세요.");
+      return;
+    }
+
+    setCheckingEmail(true);
+    setEmailError("");
+    clearErrors("email");
+
+    try {
+      const response = await checkEmail(email);
+      setEmailValid(true);
+      setEmailError("사용 가능한 이메일입니다.");
+    } catch (error) {
+      setEmailValid(false);
+      const errorMessage =
+        error.response?.data.error.message || "에러가 발생했습니다.";
+      setEmailError(errorMessage);
+      setError("email", { type: "manual", message: errorMessage });
+    } finally {
+      setCheckingEmail(false);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    if (!data.email) {
+      setError("email", {
+        type: "manual",
+        message: MESSAGES.email.required,
+      });
+      return;
+    }
+    if (!emailValid) {
+      setError("email", {
+        type: "manual",
+        message: "이메일 중복확인을 해주세요.",
+      });
+      return;
+    }
+    setSignupError("");
+
+    try {
+      await signup(data);
+      navigate("/login");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data.error.message ||
+        "회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요";
+      setSignupError(errorMessage);
+    }
+  };
+
   return (
-    <div>
-      <div className="flex flex-col gap-4 p-8 m-4 bg-white rounded-xl ">
-        <h1 className="text-xl font-bold text-center">회원가입</h1>
-
-        <form
-          noValidate
-          className="grid gap-4"
-          onSubmit={handleSubmit(async (data) => {
-            mutation.mutate(data, {
-              onSuccess: () => {
-                navigate("/");
+    <div className="flex flex-col gap-6 p-10 my-20 bg-white border border-gray-300 rounded-lg shadow-md ">
+      <div className="text-2xl font-bold text-center text-primary">
+        회원가입
+      </div>
+      <form
+        noValidate
+        className="flex flex-col gap-4 "
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="flex flex-col gap-4">
+          <TextInput
+            type="text"
+            placeholder="닉네임"
+            {...register("username", {
+              required: MESSAGES.username.required,
+              pattern: {
+                value: PATTERNS.username,
+                message: MESSAGES.username.pattern,
               },
-              onError: (error) => {
-                // TODO: 회원가입에 실패했을 때 에러 처리
-                console.log(error);
-              },
-            });
-          })}
-        >
-          <div className="flex flex-col w-full gap-4 md:flex-row">
-            <TextInput
-              type="text"
-              placeholder="닉네임"
-              {...register("nickname", {
-                required: MESSAGES.nickname.required,
-                pattern: {
-                  value: PATTERNS.nickname,
-                  message: MESSAGES.nickname.pattern,
-                },
-              })}
-            />
-            <Button className="shrink-0" variant="small">
-              중복체크
-            </Button>
-          </div>
-          {errors.nickname && (
-            <small className="text-red-500" role="alert">
-              {errors.nickname.message}
-            </small>
-          )}
-
-          <div className="flex gap-4 w-96">
+            })}
+          />
+        </div>
+        {errors.username && (
+          <small className="text-red-500" role="alert">
+            {errors.username.message}
+          </small>
+        )}
+        <div className="flex gap-4">
+          <div className="flex justify-between gap-2">
             <TextInput
               type="email"
               placeholder="이메일"
+              className="w-auto"
               {...register("email", {
                 required: MESSAGES.email.required,
                 pattern: {
@@ -115,70 +159,92 @@ const SignupForm = () => {
                 },
               })}
             />
-            <Button className="shrink-0" variant="small">
-              중복체크
+
+            <Button
+              type="button"
+              variant="checkemail"
+              onClick={onEmailCheck}
+              disabled={checkingEmail}
+            >
+              {checkingEmail ? "확인 중..." : "중복체크"}
             </Button>
           </div>
-          {errors.email && (
-            <small className="text-red-500" role="alert">
-              {errors.email.message}
-            </small>
-          )}
-
-          <TextInput
-            type="password"
-            placeholder="비밀번호"
-            {...register("password", {
-              required: MESSAGES.password.required,
-              pattern: {
-                value: PATTERNS.password,
-                message: MESSAGES.password.pattern,
+        </div>
+        {errors.email && (
+          <small className="text-red-500" role="alert">
+            {errors.email.message}
+          </small>
+        )}
+        {emailError && (
+          <small className="text-red-500" role="alert">
+            {emailError}
+          </small>
+        )}
+        <TextInput
+          type="password"
+          placeholder="비밀번호"
+          {...register("password", {
+            required: MESSAGES.password.required,
+            pattern: {
+              value: PATTERNS.password,
+              message: MESSAGES.password.pattern,
+            },
+          })}
+        />
+        {errors.password && (
+          <small className="text-red-500" role="alert">
+            {errors.password.message}
+          </small>
+        )}
+        <TextInput
+          type="password"
+          placeholder="비밀번호 확인"
+          {...register("passwordConfirm", {
+            required: MESSAGES.passwordConfirm.required,
+            validate: {
+              check: (value) => {
+                if (getValues("password") !== value) {
+                  return MESSAGES.passwordConfirm.mismatch;
+                }
               },
-            })}
-          />
-          {errors.password && (
-            <small className="text-red-500" role="alert">
-              {errors.password.message}
-            </small>
-          )}
-          <TextInput
-            type="password"
-            placeholder="비밀번호 확인"
-            {...register("passwordConfirm", {
-              required: MESSAGES.passwordConfirm.required,
-              validate: {
-                check: (value) => {
-                  if (getValues("password") !== value) {
-                    return MESSAGES.passwordConfirm.mismatch;
-                  }
-                },
-              },
-            })}
-          />
-          {errors.passwordConfirm && (
-            <small className="text-red-500" role="alert">
-              {errors.passwordConfirm.message}
-            </small>
-          )}
+            },
+          })}
+        />
+        {errors.passwordConfirm && (
+          <small className="text-red-500" role="alert">
+            {errors.passwordConfirm.message}
+          </small>
+        )}
+        <TextInput
+          type="tel"
+          placeholder="전화번호"
+          {...register("tel", {
+            required: MESSAGES.tel.required,
+            pattern: {
+              value: PATTERNS.tel,
+              message: MESSAGES.tel.pattern,
+            },
+          })}
+        />
+        {errors.tel && (
+          <small className="text-red-500" role="alert">
+            {errors.tel.message}
+          </small>
+        )}
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          variant="long"
+          className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md"
+        >
+          회원가입
+        </Button>
+        {signupError && (
+          <p className="mt-4 text-sm text-center text-red-600">{signupError}</p>
+        )}
 
-          <TextInput
-            type="tel"
-            placeholder="전화번호"
-            {...register("tel", {
-              required: MESSAGES.tel.required,
-            })}
-          />
-          {errors.tel && (
-            <small className="text-red-500" role="alert">
-              {errors.tel.message}
-            </small>
-          )}
-
-          <Button type="submit" disabled={isSubmitting} variant="long">
-            회원가입
-          </Button>
-        </form>
-      </div>
+        <Link to="/login">로그인</Link>
+      </form>
     </div>
   );
 };

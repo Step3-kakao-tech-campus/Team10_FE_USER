@@ -10,8 +10,11 @@ import ReservationHistoryPage from "./pages/ReservationHistoryPage";
 import PaymentResultPage from "./pages/PaymentResultPage";
 import ReviewPostPage from "./pages/ReviewPostPage";
 import PaymentPage from "./pages/PaymentPage";
+import PaymentWaitingPage from "./pages/PaymentWaitingPage";
+import PaymentFailPage from "./pages/PaymentFailPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 Modal.setAppElement("#root");
 function App() {
@@ -20,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route path="reservation" element={<ReservationPage />} />
           <Route path="history" element={<ReservationHistoryPage />} />
           <Route
@@ -32,10 +36,9 @@ function App() {
           />
           <Route path="schedule/:carwashId/:bayId" element={<SchedulePage />} />
           <Route path="payment" element={<PaymentPage />} />
-          <Route
-            path="paymentresult/:reservationId"
-            element={<PaymentResultPage />}
-          />
+          <Route path="paymentwaiting" element={<PaymentWaitingPage />} />
+          <Route path="paymentfail" element={<PaymentFailPage />} />
+          <Route path="paymentresult" element={<PaymentResultPage />} />
           <Route path="reviewpost" element={<ReviewPostPage />} />
         </Route>
         <Route path="login" element={<LoginPage />} />

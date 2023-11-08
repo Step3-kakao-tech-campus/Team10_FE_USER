@@ -17,7 +17,6 @@ const BaySelectionTemplate = ({ carwashId }) => {
     queryFn: () => carwashesInfo(carwashId),
     suspense: true,
     enabled: !!carwashId,
-    onError: handleError,
   });
 
   const { data: bayListData } = useQuery({

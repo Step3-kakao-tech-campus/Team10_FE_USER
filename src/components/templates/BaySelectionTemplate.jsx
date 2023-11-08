@@ -1,46 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
 import BayList from "../organisms/BayList";
-import { useEffect, useState } from "react";
 import { carwashesBays, carwashesInfo } from "../../apis/carwashes";
-import { useSuspenseQueries } from "@tanstack/react-query";
-import { useDispatch, useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import CustomModal from "../atoms/CustomModal";
 
 const BaySelectionTemplate = ({ carwashId }) => {
-  const name = "포세이돈워시 용봉점";
-  const openingHours = {
-    weekday: { start: "00:00", end: "24:00" },
-    weekend: { start: "00:00", end: "24:00" },
-  };
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const selectedCarwashId = useSelector((state) => state.selectedCarwashId);
 
-  const [carwashInfo, baybookInfo] = useSuspenseQueries({
-    queries: [
-      {
-        queryKey: ["getCarwashesInfo", selectedCarwashId],
-        queryFn: () => carwashesInfo(selectedCarwashId),
-        enabled: !!carwashId,
-      },
-      {
-        queryKey: ["baylists", selectedCarwashId],
-        queryFn: () => carwashesBays(selectedCarwashId),
-        enabled: !!selectedCarwashId,
-      },
-    ],
+  const { data: carwashInfoData } = useQuery({
+    queryKey: ["getCarwashesInfo", carwashId],
+    queryFn: () => carwashesInfo(carwashId),
+    suspense: true,
+    enabled: !!carwashId,
+    onError: handleError,
   });
-  const detailData = carwashInfo.data.data.response.optime;
-  const bayList = baybookInfo.data.data.response.bayList;
 
-  // 세차장별 예약 내역 조회 '/carwashes/{carwash_id}/bays'
+  const { data: bayListData } = useQuery({
+    queryKey: ["baylists", carwashId],
+    queryFn: () => carwashesBays(carwashId),
+    enabled: !!carwashId,
+  });
+
+  if (!carwashInfoData || !bayListData) {
+    return <div>Loading...</div>;
+  }
+
+  const detailData = carwashInfoData.data.response.optime;
+  const name = carwashInfoData.data.response.name;
+  const bayList = bayListData.data.response.bayList;
 
   const handleBayClick = (bayId) => {
     dispatch({ type: "SET_BAY_ID", payload: bayId });
-    navigate(`/schedule/${selectedCarwashId}/${bayId}`);
+    navigate(`/schedule/${carwashId}/${bayId}`);
   };
 
   return (
@@ -63,7 +59,6 @@ const BaySelectionTemplate = ({ carwashId }) => {
           openingHours={detailData}
           selectedDate={new Date()}
           onClick={handleBayClick}
-          // 여기서 해당 /schdule 링크로 이동해야함 (id값)
         />
       </div>
     </div>

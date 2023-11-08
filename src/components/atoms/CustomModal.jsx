@@ -29,7 +29,9 @@ const CustomModal = ({
         </button>
         <button
           onClick={onRequestClose}
-          className="px-4 py-2 bg-gray-300 rounded-md"
+          className={`px-4 py-2 bg-gray-300 rounded-md ${
+            !cancelText && "hidden"
+          } `}
         >
           {cancelText}
         </button>

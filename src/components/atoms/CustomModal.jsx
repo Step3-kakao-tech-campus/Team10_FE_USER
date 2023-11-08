@@ -27,12 +27,14 @@ const CustomModal = ({
         >
           {confirmText}
         </button>
-        <button
-          onClick={onRequestClose}
-          className="px-4 py-2 bg-gray-300 rounded-md"
-        >
-          {cancelText}
-        </button>
+        {cancelText && (
+          <button
+            onClick={onRequestClose}
+            className="px-4 py-2 mr-2 text-black bg-gray-300 rounded-md hover:bg-gray-400"
+          >
+            {cancelText}
+          </button>
+        )}
       </div>
     </Modal>
   );

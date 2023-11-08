@@ -26,15 +26,17 @@ const SignupForm = () => {
     getValues,
     setError,
     clearErrors,
-    formState: { errors, isSubmitting, touchedFields, dirtyFields },
+    formState: { errors, isSubmitting },
   } = useForm({
     mode: "onChange",
+    criteriaMode: "all",
   });
 
   const PATTERNS = {
     username: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,20}$/,
     email: /\S+@\S+\.\S+/,
     password: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,24}$/,
+    tel: /^[0-9]{10,11}$/,
   };
 
   const MESSAGES = {
@@ -57,6 +59,7 @@ const SignupForm = () => {
     },
     tel: {
       required: "전화번호를 입력해주세요.",
+      pattern: "전화번호는 10자리 또는 11자리 숫자여야 합니다",
     },
   };
 
@@ -80,13 +83,20 @@ const SignupForm = () => {
       const errorMessage =
         error.response?.data.error.message || "에러가 발생했습니다.";
       setEmailError(errorMessage);
-      -setError("email", { type: "manual", message: errorMessage });
+      setError("email", { type: "manual", message: errorMessage });
     } finally {
       setCheckingEmail(false);
     }
   };
 
   const onSubmit = async (data) => {
+    if (!data.email) {
+      setError("email", {
+        type: "manual",
+        message: MESSAGES.email.required,
+      });
+      return;
+    }
     if (!emailValid) {
       setError("email", {
         type: "manual",
@@ -94,7 +104,7 @@ const SignupForm = () => {
       });
       return;
     }
-    setSignupError(""); // Clear previous errors
+    setSignupError("");
 
     try {
       await signup(data);
@@ -102,8 +112,8 @@ const SignupForm = () => {
     } catch (error) {
       const errorMessage =
         error.response?.data.error.message ||
-        "회원가입 중 에러가 발생했습니다.";
-      setSignupError(errorMessage); // Set the new error message
+        "회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요";
+      setSignupError(errorMessage);
     }
   };
 
@@ -135,7 +145,6 @@ const SignupForm = () => {
             {errors.username.message}
           </small>
         )}
-
         <div className="flex gap-4">
           <div className="flex justify-between gap-2">
             <TextInput
@@ -150,6 +159,7 @@ const SignupForm = () => {
                 },
               })}
             />
+
             <Button
               type="button"
               variant="checkemail"
@@ -160,6 +170,11 @@ const SignupForm = () => {
             </Button>
           </div>
         </div>
+        {errors.email && (
+          <small className="text-red-500" role="alert">
+            {errors.email.message}
+          </small>
+        )}
         {emailError && (
           <small className="text-red-500" role="alert">
             {emailError}
@@ -200,12 +215,15 @@ const SignupForm = () => {
             {errors.passwordConfirm.message}
           </small>
         )}
-
         <TextInput
           type="tel"
           placeholder="전화번호"
           {...register("tel", {
             required: MESSAGES.tel.required,
+            pattern: {
+              value: PATTERNS.tel,
+              message: MESSAGES.tel.pattern,
+            },
           })}
         />
         {errors.tel && (
@@ -213,26 +231,18 @@ const SignupForm = () => {
             {errors.tel.message}
           </small>
         )}
-
         <Button
           type="submit"
-          disabled={
-            !emailValid ||
-            Object.keys(errors).length > 0 ||
-            isSubmitting ||
-            Object.keys(touchedFields).length === 0 ||
-            Object.keys(dirtyFields).length < Object.keys(register).length
-          }
+          disabled={isSubmitting}
           variant="long"
           className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md"
         >
           회원가입
         </Button>
         {signupError && (
-          <div className="text-red-500" role="alert">
-            {signupError}
-          </div>
+          <p className="mt-4 text-sm text-center text-red-600">{signupError}</p>
         )}
+
         <Link to="/login">로그인</Link>
       </form>
     </div>

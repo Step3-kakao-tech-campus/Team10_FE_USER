@@ -44,9 +44,9 @@ const PaymentTemplate = () => {
     mutationFn: (data) => pgpayment(bayId, data),
     onSuccess: (data) => {
       console.log("data", data);
-      dispatch({ type: "SAVE_TID", payload: data.data.response.tid });
+      dispatch({ type: "SAVE_TID", payload: data?.data?.tid });
       // 이제 setRedirectLink를 사용하여 리다이렉트 URL을 상태로 설정합니다.
-      setRedirectLink(data.data.response.next_redirect_mobile_url);
+      setRedirectLink(data?.data?.next_redirect_mobile_url);
     },
     onError: (err) => {
       console.error("Payment error:", err);

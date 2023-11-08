@@ -22,7 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="notfound" element={<NotFoundPage />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route path="reservation" element={<ReservationPage />} />
           <Route path="history" element={<ReservationHistoryPage />} />
           <Route

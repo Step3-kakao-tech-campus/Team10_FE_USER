@@ -11,41 +11,12 @@ const ReservationHistoryTemplate = () => {
   const [currentReservations, setCurrentReservations] = useState([]);
   const [upcomingReservations, setUpcomingReservations] = useState([]);
   const [completedReservations, setCompletedReservations] = useState([]);
-  const [modalContent, setModalContent] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate();
 
-  const handleError = (err) => {
-    const { status } = err.response || {};
-    if (status === 401) {
-      setModalContent("로그인이 필요합니다.");
-      setIsModalOpen(true);
-    } else if (status === 500) {
-      setModalContent("서버 오류가 발생했습니다. 다시 시도하세요.");
-      setIsModalOpen(true);
-    } else if (status === 404) {
-      navigate("/notfound");
-    } else {
-      setModalContent("알 수 없는 오류가 발생했습니다.");
-      setIsModalOpen(true);
-    }
-  };
-
-  const { data, error } = useQuery({
+  const { data } = useQuery({
     queryKey: ["getHistory"],
     queryFn: reservationsCurrentstatus,
     suspense: true,
-    onError: handleError,
   });
-
-  const handleModalConfirm = () => {
-    setIsModalOpen(false);
-    if (error?.response?.status === 401) {
-      navigate("/login");
-    } else {
-      navigate("/");
-    }
-  };
 
   useEffect(() => {
     if (data) {
@@ -143,13 +114,6 @@ const ReservationHistoryTemplate = () => {
           />
         ))}
       </div>
-      <CustomModal
-        isOpen={isModalOpen}
-        onConfirm={handleModalConfirm}
-        title={modalContent.includes("서버") ? "오류 발생" : "로그인 필요"}
-        content={modalContent}
-        confirmText="확인"
-      />
     </div>
   );
 };

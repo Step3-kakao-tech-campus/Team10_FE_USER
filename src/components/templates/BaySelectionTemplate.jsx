@@ -11,10 +11,8 @@ import CustomModal from "../atoms/CustomModal";
 const BaySelectionTemplate = ({ carwashId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [modalContent, setModalContent] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: carwashInfoData, error: carwashInfoError } = useQuery({
+  const { data: carwashInfoData } = useQuery({
     queryKey: ["getCarwashesInfo", carwashId],
     queryFn: () => carwashesInfo(carwashId),
     suspense: true,
@@ -22,37 +20,11 @@ const BaySelectionTemplate = ({ carwashId }) => {
     onError: handleError,
   });
 
-  const { data: bayListData, error: bayListError } = useQuery({
+  const { data: bayListData } = useQuery({
     queryKey: ["baylists", carwashId],
     queryFn: () => carwashesBays(carwashId),
     enabled: !!carwashId,
-    onError: handleError,
   });
-
-  const handleError = (err) => {
-    const { status } = err.response || {};
-    if (status === 401) {
-      setModalContent("로그인이 필요합니다.");
-      setIsModalOpen(true);
-    } else if (status === 500) {
-      setModalContent("서버 오류가 발생했습니다. 다시 시도하세요.");
-      setIsModalOpen(true);
-    } else if (status === 404) {
-      navigate("/notfound");
-    } else {
-      setModalContent("알 수 없는 오류가 발생했습니다.");
-      setIsModalOpen(true);
-    }
-  };
-
-  const handleModalConfirm = () => {
-    setIsModalOpen(false);
-    if (carwashInfoError?.response?.status === 401) {
-      navigate("/login");
-    } else {
-      navigate("/");
-    }
-  };
 
   if (!carwashInfoData || !bayListData) {
     return <div>Loading...</div>;
@@ -89,14 +61,6 @@ const BaySelectionTemplate = ({ carwashId }) => {
           onClick={handleBayClick}
         />
       </div>
-      <CustomModal
-        isOpen={isModalOpen}
-        onRequestClose={handleModalClose}
-        onConfirm={handleModalConfirm}
-        title={modalContent.includes("서버") ? "오류 발생" : "로그인 필요"}
-        content={modalContent}
-        confirmText="확인"
-      />
     </div>
   );
 };

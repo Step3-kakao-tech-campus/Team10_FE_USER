@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
+import CustomModal from "../atoms/CustomModal";
 import DatePicker from "../molecules/DatePicker";
 import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
@@ -8,62 +9,48 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { saveReservation } from "../../store/action";
-
-import {
-  carwashesInfo,
-  carwashesBays,
-  calculatePayment,
-} from "../../apis/carwashes";
+import { carwashesInfo, carwashesBays } from "../../apis/carwashes";
 
 const ScheduleTemplate = ({ carwashId, bayId }) => {
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState();
   const [duration, setDuration] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const mutatePayment = useMutation({
-    mutationFn: ({ startTime, endTime }) => {
-      return calculatePayment(carwashId, {
-        startTime: startTime,
-        endTime: endTime,
-      });
-    },
-    onSuccess: () => {
-      console.log("success");
-      navigate("/payment");
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
 
   const [washinfo, bayinfo] = useSuspenseQueries({
     queries: [
       {
-        queryKey: ["washinfo"],
+        queryKey: ["washinfo", carwashId],
         queryFn: () => carwashesInfo(carwashId),
       },
       {
-        queryKey: ["bayinfo"],
+        queryKey: ["bayinfo", carwashId],
         queryFn: () => carwashesBays(carwashId),
       },
     ],
   });
 
+  const handleConfirm = () => {
+    setIsModalOpen(false);
+  };
+
   const handleSubmit = () => {
-    const payload = {
-      carwashId,
-      bayId,
-      formattedStartTime,
-      formattedEndTime,
-    };
+    if (!startTime || !duration) {
+      setIsModalOpen(true);
+      return;
+    }
+
     dispatch(saveReservation(formattedStartTime, formattedEndTime));
     navigate("/payment");
   };
 
-  if (washinfo == undefined) {
+  if (washinfo.isLoading || bayinfo.isLoading) {
     return <div>Loading...</div>;
+  }
+  if (washinfo.error || bayinfo.error) {
+    return <div>Error loading information.Please try again later.</div>;
   }
   const name = washinfo?.data?.data?.response?.name;
   const openingHours = washinfo?.data?.data?.response?.optime;
@@ -121,6 +108,12 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
   const formattedEndTime = computedEnd
     ? combineDateTime(computedEnd.date, computedEnd.time)
     : null;
+
+  const modalContent = (
+    <div className="flex flex-col gap-2">
+      <div>시작시간과 사용시간을 모두 선택해주세요</div>
+    </div>
+  );
 
   return (
     <div className="relative p-4">
@@ -192,6 +185,14 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
       >
         예약하기
       </button>
+      <CustomModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirm}
+        title="선택 오류"
+        content={modalContent}
+        confirmText="확인"
+      />
     </div>
   );
 };

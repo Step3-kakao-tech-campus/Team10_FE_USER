@@ -14,6 +14,7 @@ import PaymentWaitingPage from "./pages/PaymentWaitingPage";
 import PaymentFailPage from "./pages/PaymentFailPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 Modal.setAppElement("#root");
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route path="reservation" element={<ReservationPage />} />
           <Route path="history" element={<ReservationHistoryPage />} />
           <Route
@@ -41,7 +43,6 @@ function App() {
         </Route>
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
-        kl
       </Routes>
     </BrowserRouter>
   );

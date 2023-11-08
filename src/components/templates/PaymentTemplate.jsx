@@ -5,6 +5,7 @@ import { calculatePayment } from "../../apis/carwashes";
 import { pgpayment } from "../../apis/payment";
 import dayjs from "dayjs";
 import { Button } from "../atoms/Button";
+import CustomModal from "../atoms/CustomModal";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -13,6 +14,7 @@ const PaymentTemplate = () => {
   const [redirectLink, setRedirectLink] = useState(null);
   const reservations = useSelector((state) => state.reservations);
   const carwashId = useSelector((state) => state.selectedCarwashId);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const bayId = useSelector((state) => state.selectedBayId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const PaymentTemplate = () => {
     isError: paymentCalIsError,
     error: paymentCalError,
   } = useMutation({
-    mutationFn: (data) => calculatePayment(carwashId, data),
+    mutationFn: (data) => calculatePayment(bayId, data),
     onSuccess: (data) => {
       setPaymentData({ price: data.data.response.price });
       console.log("결제금액 계산 성공:", data.data.response.price);
@@ -39,7 +41,7 @@ const PaymentTemplate = () => {
     isError: payIsError,
     error: payError,
   } = useMutation({
-    mutationFn: (data) => pgpayment(carwashId, data),
+    mutationFn: (data) => pgpayment(bayId, data),
     onSuccess: (data) => {
       console.log("data", data);
       dispatch({ type: "SAVE_TID", payload: data.data.response.tid });
@@ -57,7 +59,16 @@ const PaymentTemplate = () => {
     }
   }, [redirectLink]);
 
+  const handleConfirm = () => {
+    setIsModalOpen(false);
+    navigate("/");
+  };
+
   const handlePayment = () => {
+    if (!bayId || !reservations.startTime || !reservations.endTime) {
+      setIsModalOpen(true);
+      return;
+    }
     const paypostData = {
       requestDto: {
         cid: "TC0ONETIME",
@@ -119,6 +130,12 @@ const PaymentTemplate = () => {
     reservations.endTime
   );
   const paymentAmount = paymentData?.price ? paymentData.price : "계산 중...";
+
+  const modalContent = (
+    <div className="flex flex-col gap-2">
+      <div>누락된 데이터가 있습니다. 예약을 처음부터 시도해 주세요.</div>
+    </div>
+  );
   return (
     <div>
       <div className="relative p-4">
@@ -153,6 +170,14 @@ const PaymentTemplate = () => {
       >
         {paymentAmount}원 결제하기
       </Button>
+      <CustomModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirm}
+        title="누락 오류"
+        content={modalContent}
+        confirmText="확인"
+      />
     </div>
   );
 };

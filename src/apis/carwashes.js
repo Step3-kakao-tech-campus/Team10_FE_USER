@@ -30,9 +30,9 @@ export const getReviews = () => {
   return instance.get("/api/reviews");
 };
 
-export const calculatePayment = (carwash_id, data) => {
+export const calculatePayment = (bay_id, data) => {
   console.log(data);
-  return instance.post(`/api/carwashes/${carwash_id}/payment`, data);
+  return instance.post(`/api/carwashes/${bay_id}/payment`, data);
 };
 
 // 리뷰 포스트는 react-hook-form으로 관리할 것

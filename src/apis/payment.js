@@ -1,7 +1,7 @@
 import { instance } from "./instance";
 
-export const pgpayment = (carwash_id, data) => {
-  return instance.post(`/api/payment/ready/${carwash_id}`, data);
+export const pgpayment = (bay_id, data) => {
+  return instance.post(`/api/payment/ready/${bay_id}`, data);
 };
 
 export const pgapprove = (carwash_id, bay_id, data) => {

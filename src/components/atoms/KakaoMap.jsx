@@ -6,10 +6,31 @@ const KakaoMap = ({ currentloc = [], mapdata = [], className }) => {
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
-      center: new kakao.maps.LatLng(currentloc.latitude, currentloc.longitude),
+      center: new kakao.maps.LatLng(
+        currentloc.latitude - 0.04,
+        currentloc.longitude
+      ),
       level: 7,
     };
     const map = new kakao.maps.Map(container, options);
+
+    var imageSrc = "/myloca.png";
+    var imageSize = new kakao.maps.Size(20, 30);
+    var imageOption = { offset: new kakao.maps.Point(10, 25) };
+    var markerImage = new kakao.maps.MarkerImage(
+      imageSrc,
+      imageSize,
+      imageOption
+    );
+    var markerPosition = new kakao.maps.LatLng(
+      currentloc.latitude,
+      currentloc.longitude
+    );
+    var marker = new kakao.maps.Marker({
+      position: markerPosition,
+      image: markerImage, // 마커이미지 설정
+    });
+    marker.setMap(map);
 
     mapdata.forEach((el) => {
       const position = new kakao.maps.LatLng(

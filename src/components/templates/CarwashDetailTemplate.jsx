@@ -14,22 +14,11 @@ const CarwashDetailTemplate = ({ carwashId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const { data } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ["getCarwashesInfo", carwashId],
     queryFn: () => carwashesInfo(carwashId),
     suspense: true,
     enabled: !!carwashId,
-    onError: (err) => {
-      if (err.response?.status === 404) {
-        navigate("/notfound");
-      } else if (err.response?.status === 500) {
-        setModalContent("서버 오류가 발생했습니다. 홈으로 돌아갑니다.");
-        setIsModalOpen(true);
-      } else {
-        setModalContent("알 수 없는 오류가 발생했습니다.");
-        setIsModalOpen(true);
-      }
-    },
   });
 
   const closeModal = () => {
@@ -41,7 +30,10 @@ const CarwashDetailTemplate = ({ carwashId }) => {
     if (data) {
       setData(data?.data?.response);
     }
-  }, [data]);
+    if (error) {
+      setIsModalOpen(true);
+    }
+  }, [data, error]);
 
   if (!detaildata) {
     return <div>Loading...</div>;
@@ -112,7 +104,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
         isOpen={isModalOpen}
         onConfirm={closeModal}
         title="오류 발생"
-        content="오류가 발생했습니다"
+        content="오류가 발생했습니다 잠시 후 다시 시도해주세요 홈화면으로 이동합니다"
         confirmText="확인"
       />
     </div>

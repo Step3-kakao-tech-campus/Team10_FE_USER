@@ -20,7 +20,6 @@ instance.interceptors.response.use(
   (response) => response,
   (error) => {
     const status = error.response ? error.response.status : null;
-
     if (status === 401) {
       //alert("로그인이 필요합니다.");
       window.location.href = "/login";
@@ -32,7 +31,7 @@ instance.interceptors.response.use(
       window.location.href = "/";
     } else {
       //alert("네트워크/기타 오류입니다 잠시 후 다시 시도해주세요");
-      Promise.reject(new Error("기타 에러"), new Error());
+      Promise.reject(new Error("기타 에러"), new Error(), status);
     }
     return Promise.reject(error);
   }

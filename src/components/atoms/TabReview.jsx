@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { carwashesReviews } from "../../apis/carwashes";
 import ReviewList from "../molecules/ReviewList";
 import KeywordReview from "./KeywordReview";
@@ -9,10 +9,23 @@ import { useSelector } from "react-redux";
 const TabReview = ({}) => {
   const selectedCarwashId = useSelector((state) => state.selectedCarwashId);
 
-  const { data: reviewsData } = useSuspenseQuery({
+  const {
+    data: reviewsData,
+    error,
+    isFetching,
+  } = useQuery({
     queryKey: ["carwashesReviews", selectedCarwashId],
     queryFn: () => carwashesReviews(selectedCarwashId),
+    suspense: true,
   });
+
+  if (error) {
+    return <div>Error loading reviews: {error.message}</div>;
+  }
+
+  if (isFetching) {
+    return <div>Loading reviews...</div>;
+  }
 
   const averageStar = reviewsData?.data?.response?.overview?.rate || 0;
   const totalReviews = reviewsData?.data?.response?.overview?.totalCnt || 0;

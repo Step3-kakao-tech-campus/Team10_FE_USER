@@ -70,7 +70,7 @@ const ReservationItem = ({
         <Button
           variant="long"
           onClick={() => setIsModalOpen(true)}
-          className=" bg-red-500 rounded-md"
+          className="bg-red-500 rounded-md "
         >
           예약 취소
         </Button>

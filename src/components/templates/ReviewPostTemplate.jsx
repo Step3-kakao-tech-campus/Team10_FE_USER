@@ -20,28 +20,11 @@ const ReviewPostTemplate = () => {
 
   const carwashId = useSelector((state) => state.selectedCarwashId);
   const reservationId = useSelector((state) => state.selectedReservationId);
-  const handleError = (err) => {
-    const { status } = err.response || {};
-    if (status === 401) {
-      setModalContent("로그인이 필요합니다.");
-      setModalType("login");
-      setIsModalOpen(true);
-    } else if (status === 500) {
-      setModalContent("서버 오류가 발생했습니다. 다시 시도하세요.");
-      setIsModalOpen(true);
-    } else if (status === 404) {
-      navigate("/notfound");
-    } else {
-      setModalContent("알 수 없는 오류가 발생했습니다.");
-      setIsModalOpen(true);
-    }
-  };
 
   const { data, error } = useQuery({
     queryKey: ["getCarwashesInfo"],
     queryFn: () => getReviews(),
     suspense: true,
-    onError: handleError,
   });
 
   useEffect(() => {
@@ -58,14 +41,12 @@ const ReviewPostTemplate = () => {
       console.log("리뷰 등록 성공");
       navigate("/history");
     },
-    onError: handleError,
   });
 
   const handleModalConfirm = () => {
     setIsModalOpen(false);
-    if (modalType === "login" && error?.response?.status === 401) {
-      navigate("/login");
-    } else if (modalType === "info") {
+    if (modalType === "info") {
+      return;
     } else {
       navigate("/");
     }
@@ -73,6 +54,12 @@ const ReviewPostTemplate = () => {
   };
 
   const handleSubmit = () => {
+    if (!carwashId || !reservationId) {
+      setModalContent("예약 정보를 찾을 수 없습니다");
+      setModalType("error");
+      setIsModalOpen(true);
+      return;
+    }
     if (rate === 0 || comment.trim().length === 0) {
       setModalContent(
         rate === 0 ? "별점을 선택해주세요." : "후기를 입력해주세요."
@@ -114,7 +101,7 @@ const ReviewPostTemplate = () => {
       <CustomModal
         isOpen={isModalOpen}
         onConfirm={handleModalConfirm}
-        title={modalContent.includes("서버") ? "오류 발생" : "알림창"}
+        title="알림창"
         content={modalContent}
         confirmText="확인"
       />

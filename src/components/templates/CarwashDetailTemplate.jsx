@@ -73,8 +73,8 @@ const CarwashDetailTemplate = ({ carwashId }) => {
             <div className="flex flex-col">
               <div className="text-xl font-bold">{detaildata?.name}</div>
               <Star
-                starCount={parseFloat(detaildata?.rate)}
-                reviewCount={parseFloat(detaildata?.reviewCnt)}
+                starCount={(detaildata?.rate).toFixed(1)}
+                reviewCount={detaildata?.reviewCnt}
               />
             </div>
             <div className="flex flex-col">

@@ -45,8 +45,17 @@ const PaymentTemplate = () => {
     onSuccess: (data) => {
       console.log("data", data);
       dispatch({ type: "SAVE_TID", payload: data?.data?.response?.tid });
+      const isMobile = window.matchMedia(
+        "only screen and (max-width: 600px)"
+      ).matches;
+      if (isMobile) {
+        // 모바일 환경일 때
+        setRedirectLink(data?.data?.response?.next_redirect_mobile_url);
+      } else {
+        // PC 환경일 때
+        setRedirectLink(data?.data?.response?.next_redirect_pc_url);
+      }
       // 이제 setRedirectLink를 사용하여 리다이렉트 URL을 상태로 설정합니다.
-      setRedirectLink(data?.data?.response?.next_redirect_mobile_url);
     },
     onError: (err) => {
       console.error("Payment error:", err);
@@ -155,12 +164,12 @@ const PaymentTemplate = () => {
         </div>
         <div className="py-8 text-2xl font-bold"> 결제 수단 </div>
         <div className="flex flex-col gap-4">
-          <button className="w-full py-4 text-lg font-bold bg-yellow-300 rounded-lg">
+          <Button
+            className="w-full py-4 text-lg font-bold bg-yellow-300 rounded-lg"
+            onClick={handlePayment}
+          >
             카카오페이
-          </button>
-          <button className="w-full py-4 text-lg font-bold bg-green-400 rounded-lg">
-            네이버페이
-          </button>
+          </Button>
         </div>
       </div>
       <Button

@@ -76,6 +76,7 @@ const PaymentTemplate = () => {
         partner_user_id: "partner_user_id",
         item_name: "구름 세차장 예약",
         quantity: 1,
+        total_amount: paymentData?.price,
         tax_free_amount: 0,
       },
       saveDTO: {

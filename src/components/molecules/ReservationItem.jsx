@@ -83,7 +83,6 @@ const ReservationItem = ({
         >
           리뷰 작성
         </Button>
-        //<button onClick={handleBayClick(rsvid, carwashid)}>리뷰 작성 </button>
       )}
       <CustomModal
         isOpen={isModalOpen}

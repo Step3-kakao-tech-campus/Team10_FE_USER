@@ -2,8 +2,6 @@ import { TextWithIcon } from "../atoms/TextWithIcon";
 import { MapWithPin } from "../atoms/MapWithPin";
 import { Button } from "../atoms/Button";
 import { useEffect, useState } from "react";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { reservations } from "../../apis/reservations";
 import { useDispatch } from "react-redux";
 import { resetStore } from "../../store/action";
 import { useNavigate, useLocation } from "react-router-dom";

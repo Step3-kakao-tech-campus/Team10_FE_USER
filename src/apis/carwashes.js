@@ -26,10 +26,6 @@ export const carwashesReviews = (carwash_id) => {
   return instance.get(`/api/open/carwashes/${carwash_id}/reviews`);
 };
 
-export const getReviews = () => {
-  return instance.get("/api/open/reviews");
-};
-
 export const calculatePayment = (bay_id, data) => {
   console.log(data);
   return instance.post(`/api/user/carwashes/${bay_id}/payment`, data);

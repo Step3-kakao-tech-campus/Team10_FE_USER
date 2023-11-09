@@ -27,13 +27,15 @@ export const RecentCarwashItem = ({
             className="absolute top-0 object-cover w-24 h-24"
           />
         ) : (
-          <div className="absolute top-0 flex items-center justify-center w-24 h-24 text-gray-400">
-            이미지 없음
-          </div>
+          <img
+            src="/CarwashDetail/CarwashImgNotFound.png"
+            alt="이미지 없음"
+            className="absolute top-0 object-cover w-24 h-24"
+          />
         )}
       </div>
-      <div className="text-xs text-center text-gray-400">{reservationDate}</div>
-      <div className="overflow-hidden text-sm text-center text-gray-700 text-ellipsis whitespace-nowrap">
+      <div className="text-xs text-center text-gray-500">{reservationDate}</div>
+      <div className="overflow-hidden text-sm text-center text-ellipsis whitespace-nowrap">
         {carwashName}
       </div>
     </div>

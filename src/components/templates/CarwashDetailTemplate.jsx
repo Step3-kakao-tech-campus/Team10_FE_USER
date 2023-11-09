@@ -7,11 +7,9 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { carwashesInfo } from "../../apis/carwashes";
 import { useNavigate } from "react-router-dom";
-import CustomModal from "../atoms/CustomModal";
 
 const CarwashDetailTemplate = ({ carwashId }) => {
   const [detaildata, setData] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const { data, error, isLoading } = useQuery({
@@ -20,11 +18,6 @@ const CarwashDetailTemplate = ({ carwashId }) => {
     suspense: true,
     enabled: !!carwashId,
   });
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    navigate("/");
-  };
 
   useEffect(() => {
     if (data) {
@@ -84,7 +77,6 @@ const CarwashDetailTemplate = ({ carwashId }) => {
               <div className="text-sm font-semibold">예약베이</div>
             </div>
           </div>
-          {/* 영업 정보 및 탭 메뉴 */}
           <div className="flex flex-col gap-4 py-4">
             <StoreInfo
               weekhour={weekhour}
@@ -103,13 +95,6 @@ const CarwashDetailTemplate = ({ carwashId }) => {
       >
         예약하러 가기
       </button>
-      <CustomModal
-        isOpen={isModalOpen}
-        onConfirm={closeModal}
-        title="오류 발생"
-        content="오류가 발생했습니다 잠시 후 다시 시도해주세요 홈화면으로 이동합니다"
-        confirmText="확인"
-      />
     </div>
   );
 };

@@ -48,7 +48,11 @@ const ReservationHistoryTemplate = () => {
             key={reservation.id}
             rsvid={reservation.id}
             carwashid={reservation.carwashId}
-            imgsrc={reservation.image}
+            imgsrc={
+              reservation.image
+                ? reservation.image.url
+                : "/CarashDetail/imagenotfound.png"
+            }
             reservetime={
               <>
                 {formatTimestamp(reservation.time.start).date}
@@ -69,7 +73,11 @@ const ReservationHistoryTemplate = () => {
               key={reservation.id}
               carwashid={reservation.carwashId}
               rsvid={reservation.id}
-              imgsrc={reservation.image}
+              imgsrc={
+                reservation.image
+                  ? reservation.image.url
+                  : "/CarashDetail/imagenotfound.png"
+              }
               reservetime={
                 <>
                   {formatTimestamp(reservation.time.start).date}
@@ -103,7 +111,11 @@ const ReservationHistoryTemplate = () => {
             key={reservation.id}
             carwashid={reservation.carwashId}
             rsvid={reservation.id}
-            imgsrc={reservation.image}
+            imgsrc={
+              reservation.image
+                ? reservation.image.url
+                : "/CarwashDetail/CarwashImgNotFound.png"
+            }
             reservetime={
               <>
                 {formatTimestamp(reservation.time.start).date}
@@ -121,4 +133,5 @@ const ReservationHistoryTemplate = () => {
     </div>
   );
 };
+
 export default ReservationHistoryTemplate;

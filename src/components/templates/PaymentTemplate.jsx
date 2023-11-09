@@ -44,9 +44,9 @@ const PaymentTemplate = () => {
     mutationFn: (data) => pgpayment(bayId, data),
     onSuccess: (data) => {
       console.log("data", data);
-      dispatch({ type: "SAVE_TID", payload: data?.data?.tid });
+      dispatch({ type: "SAVE_TID", payload: data?.data?.response?.tid });
       // 이제 setRedirectLink를 사용하여 리다이렉트 URL을 상태로 설정합니다.
-      setRedirectLink(data?.data?.next_redirect_mobile_url);
+      setRedirectLink(data?.data?.response?.next_redirect_mobile_url);
     },
     onError: (err) => {
       console.error("Payment error:", err);
@@ -79,7 +79,6 @@ const PaymentTemplate = () => {
         tax_free_amount: 0,
       },
       saveDTO: {
-        bayId: bayId, // 전역 상태에서 bayId 가져오기
         startTime: reservations.startTime, // 전역 상태에서 startTime 가져오기
         endTime: reservations.endTime, // 전역 상태에서 endTime 가져오기
       },

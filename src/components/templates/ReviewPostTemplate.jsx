@@ -30,7 +30,7 @@ const ReviewPostTemplate = () => {
     4: "가격이 합리적이에요",
     5: "타이어 공기를 넣을 수 있어요",
     6: "매장이 깨끗해요",
-    7: "여름엔 시원하고 겨울엔 깨끗해요",
+    7: "여름엔 시원하고 겨울엔 따뜻해요",
   };
 
   useEffect(() => {
@@ -48,14 +48,14 @@ const ReviewPostTemplate = () => {
     },
     onSuccess: () => {
       setModalContent("리뷰 등록에 성공했습니다.");
-      setModalType("info");
+      setModalType("history");
       setIsModalOpen(true);
     },
   });
 
   const handleModalConfirm = () => {
     setIsModalOpen(false);
-    if (modalType === "info") {
+    if (modalType === "history") {
       navigate("/history");
     }
     setModalType(null);
@@ -64,7 +64,7 @@ const ReviewPostTemplate = () => {
   const handleSubmit = () => {
     if (!carwashId || !reservationId) {
       setModalContent("예약 정보를 찾을 수 없습니다");
-      setModalType("error");
+      setModalType("history");
       setIsModalOpen(true);
       return;
     }
@@ -77,10 +77,9 @@ const ReviewPostTemplate = () => {
       return;
     }
     if (comment.length > 100) {
-      setIsOverLimit(true); // 100자 이상 입력 시 플래그 설정
-      return;
+      setIsOverLimit(true);
     }
-    setIsOverLimit(false); // 100자 미만으로 입력 시 플래그 초기화
+    setIsOverLimit(false);
     const payload = {
       carwashId,
       reservationId,

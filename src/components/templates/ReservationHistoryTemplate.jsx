@@ -4,13 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { reservationsCurrentstatus } from "../../apis/reservations";
 import dayjs from "dayjs";
 import { Button } from "../atoms/Button";
-import CustomModal from "../atoms/CustomModal";
 import { useNavigate } from "react-router-dom";
 
 const ReservationHistoryTemplate = () => {
   const [currentReservations, setCurrentReservations] = useState([]);
   const [upcomingReservations, setUpcomingReservations] = useState([]);
   const [completedReservations, setCompletedReservations] = useState([]);
+  const navigate = useNavigate();
 
   const { data } = useQuery({
     queryKey: ["getHistory"],
@@ -86,7 +86,11 @@ const ReservationHistoryTemplate = () => {
         ) : (
           <div>
             <div>예정된 세차가 없습니다. 세차장 예약을 시작해보세요!</div>
-            <Button variant="long" className="my-4 bg-yellow-400 rounded-md">
+            <Button
+              variant="long"
+              className="my-4 bg-yellow-400 rounded-md"
+              onClick={() => navigate("/reservation")}
+            >
               예약하러 가기
             </Button>
           </div>

@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 const { kakao } = window;
 console.log("시작");
+
 const KakaoMap = ({
   currentloc = { latitude: 35.14, longitude: 126.9 },
   mapdata = [],
   className,
 }) => {
   console.log("currentloc: " + currentloc);
+
 
   useEffect(() => {
     console.log("useeffect 시작");

@@ -58,7 +58,7 @@ const HomeTemplate = () => {
     }
   }, [userInfo]);
 
-  console.log(recentList);
+  console.log(recommendedData);
 
   const navigate = useNavigate();
   return (

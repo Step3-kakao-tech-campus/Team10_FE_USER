@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./Button";
 
 export class GeneralErrorBoundary extends React.Component {
   constructor(props) {
@@ -35,15 +36,16 @@ export class GeneralErrorBoundary extends React.Component {
 
       return (
         <React.Fragment>
-          <div className="text-lg font-semibold text-primary">{contents}</div>
+          <div className="mt-5 text-lg font-bold text-primary">{contents}</div>
           <div className="my-6">에러 코드 : {statusCode} </div>
           <div className="flex justify-end">
-            <button
+            <Button
+              variant="long"
               onClick={() => this.props.navigate(errorPageURL)}
               className="px-4 py-2 mr-2 text-white rounded-md bg-primary"
             >
               {buttontext}
-            </button>
+            </Button>
           </div>
           {/* Redirect를 사용해야 하나, class 컴포넌트에서는 이렇게 state를 이용해야 합니다. */}
         </React.Fragment>

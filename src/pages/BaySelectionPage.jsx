@@ -1,13 +1,17 @@
 import React from "react";
 import { Suspense } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import BaySelectionTemplate from "../components/templates/BaySelectionTemplate";
+import { GeneralErrorBoundary } from "../components/atoms/GeneralErrorBoundary";
 const BaySelectionPage = () => {
   const { carwashId } = useParams(); //string
+  const navigate = useNavigate();
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <BaySelectionTemplate carwashId={carwashId} />
-    </Suspense>
+    <GeneralErrorBoundary navigate={navigate}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <BaySelectionTemplate carwashId={carwashId} />
+      </Suspense>
+    </GeneralErrorBoundary>
   );
 };
 

@@ -4,7 +4,7 @@ import StoreItem from "../molecules/StoreItem";
 import { useEffect, useState } from "react";
 import { Badge } from "../atoms/Badge";
 import DualBottomsheet from "../atoms/DualBottomsheet";
-import { carwashesNearby, carwashesSearch } from "../../apis/carwashes";
+import { carwashesSearch } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 const ReservationTemplate = () => {
@@ -84,7 +84,7 @@ const ReservationTemplate = () => {
               <input
                 type="text"
                 id="search-bar"
-                className="w-full px-4 py-2 mt-6 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm form-input focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                className="px-4 py-2 mx-4 mt-6 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm form-input focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary"
                 placeholder="세차장 이름을 검색하세요!"
                 onChange={handleSearchChange}
                 value={searchTerm}

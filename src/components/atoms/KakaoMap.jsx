@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
-
+const { kakao } = window;
 const KakaoMap = ({ currentloc = [], mapdata = [], className }) => {
   useEffect(() => {
+    console.log("currentloc, kakaomap", currentloc);
+    console.log("mapdata, kakaopmap", mapdata);
     // Kakao 지도 API 스크립트 로드 여부 확인
     if (!window.kakao || !window.kakao.maps) {
       console.error("Kakao 지도 API 스크립트가 로드되지 않았습니다.");
       return;
     }
     console.log("test");
+
     // Kakao 지도 API 초기화
     kakao.maps.load(() => {
       console.log("시작");

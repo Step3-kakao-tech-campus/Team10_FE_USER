@@ -15,6 +15,7 @@ import PaymentFailPage from "./pages/PaymentFailPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import ErrorPage from "./pages/ErrorPage";
 
 Modal.setAppElement("#root");
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="paymentfail" element={<PaymentFailPage />} />
           <Route path="paymentresult" element={<PaymentResultPage />} />
           <Route path="reviewpost" element={<ReviewPostPage />} />
+          <Route path="unauthorized" element={<ErrorPage />} />
         </Route>
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />

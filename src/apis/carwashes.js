@@ -2,44 +2,43 @@ import { instance } from "./instance";
 
 export const carwashesRecommended = (u_latitude, u_longitude) => {
   return instance.get(
-    `/api/carwashes/recommended?latitude=${u_latitude}&longitude=${u_longitude}`
+    `/api/open/carwashes/recommended?latitude=${u_latitude}&longitude=${u_longitude}`
   );
 };
 
 export const carwashesNearby = (u_latitude, u_longitude) => {
   return instance.get(
-    `/api/carwashes/nearby?latitude=${u_latitude}&longitude=${u_longitude}`
+    `/api/open/carwashes/nearby?latitude=${u_latitude}&longitude=${u_longitude}`
   );
 };
 
 export const carwashesSearch = (keywordIds, u_latitude, u_longitude) => {
   return instance.get(
-    `/api/carwashes/search?keywordIds=${keywordIds}&latitude=${u_latitude}&longitude=${u_longitude}`
+    `/api/open/carwashes/search?keywordIds=${keywordIds}&latitude=${u_latitude}&longitude=${u_longitude}`
   );
 };
 
 export const carwashesInfo = (carwash_id) => {
-  return instance.get(`/api/carwashes/${carwash_id}/info`);
+  return instance.get(`/api/open/carwashes/${carwash_id}/info`);
 };
 
 export const carwashesReviews = (carwash_id) => {
-  return instance.get(`/api/carwashes/${carwash_id}/reviews`);
+  return instance.get(`/api/open/carwashes/${carwash_id}/reviews`);
 };
 
 export const getReviews = () => {
-  return instance.get("/api/reviews");
+  return instance.get("/api/open/reviews");
 };
 
 export const calculatePayment = (bay_id, data) => {
   console.log(data);
-  return instance.post(`/api/carwashes/${bay_id}/payment`, data);
+  return instance.post(`/api/user/carwashes/${bay_id}/payment`, data);
 };
 
-// 리뷰 포스트는 react-hook-form으로 관리할 것
 export const postReviews = (data) => {
-  return instance.post("/api/reviews", data);
+  return instance.post("/api/user/reviews", data);
 };
 
 export const carwashesBays = (carwash_id) => {
-  return instance.get(`/api/carwashes/${carwash_id}/bays`);
+  return instance.get(`/api/open/carwashes/${carwash_id}/bays`);
 };

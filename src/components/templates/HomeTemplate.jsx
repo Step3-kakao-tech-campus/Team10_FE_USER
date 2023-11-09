@@ -58,9 +58,11 @@ const HomeTemplate = () => {
     }
   }, [userInfo]);
 
+  console.log(recommendedData);
+
   const navigate = useNavigate();
   return (
-    <main className="grid gap-6 py-4">
+    <main className="pt-2 grid-4">
       {
         <div className="text-lg font-semibold text-primary ">
           {userName
@@ -68,8 +70,7 @@ const HomeTemplate = () => {
             : "여유롭게 즐기는 세차, 뽀득뽀득"}
         </div>
       }
-
-      <section className="flex justify-between gap-4">
+      <section className="gap-4 flex-between">
         <Button
           variant="home"
           onClick={() => {
@@ -97,9 +98,8 @@ const HomeTemplate = () => {
           />
         </Button>
       </section>
-      {/* 이런 세차장 어때요? */}
-      <section className="grid gap-4">
-        <h2 className="text-xl font-semibold">이런 세차장 어때요?</h2>
+      <section className="grid-4">
+        <div className="text-xl font-semibold">이런 세차장 어때요?</div>
         <CarwashCard
           id={recommendedData.id}
           image={recommendedData.image}
@@ -110,10 +110,9 @@ const HomeTemplate = () => {
           distance={recommendedData.distance}
         />
       </section>
-      {/* 최근 이용 내역 */}
       {token && (
-        <section className="grid gap-4">
-          <h2 className="text-xl font-semibold">최근 이용 내역</h2>
+        <section className="grid-4">
+          <div className="text-xl font-semibold">최근 이용 내역</div>
           <RecentCarwashSlider recentList={recentList} />
         </section>
       )}

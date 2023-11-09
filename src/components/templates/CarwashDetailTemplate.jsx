@@ -45,10 +45,10 @@ const CarwashDetailTemplate = ({ carwashId }) => {
 
   const images =
     detaildata.imageFiles.length > 0
-      ? detaildata.imageFiles.map((url) => ({
+      ? detaildata.imageFiles.map((image) => ({
           label: "Image",
           alt: "image",
-          url: url,
+          url: image.url,
         }))
       : [
           {
@@ -57,6 +57,9 @@ const CarwashDetailTemplate = ({ carwashId }) => {
             url: "/CarwashDetail/CarwashImgNotFound.png",
           },
         ];
+
+  console.log(images);
+  console.log(detaildata);
 
   const weekhour = `평일 ${detaildata?.optime?.weekday.start} ~ ${detaildata?.optime?.weekday.end}`;
   const weekendhour = `주말 ${detaildata?.optime?.weekend.start} ~ ${detaildata?.optime?.weekend.end}`;
@@ -70,8 +73,8 @@ const CarwashDetailTemplate = ({ carwashId }) => {
             <div className="flex flex-col">
               <div className="text-xl font-bold">{detaildata?.name}</div>
               <Star
-                starCount={parseFloat(detaildata?.rate)}
-                reviewCount={parseFloat(detaildata?.reviewCnt)}
+                starCount={(detaildata?.rate).toFixed(1)}
+                reviewCount={detaildata?.reviewCnt}
               />
             </div>
             <div className="flex flex-col">

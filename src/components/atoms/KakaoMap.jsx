@@ -9,20 +9,21 @@ const KakaoMap = ({ currentloc = [], mapdata = [], className }) => {
       console.error("Kakao 지도 API 스크립트가 로드되지 않았습니다.");
       return;
     }
+    console.log("test");
 
     // Kakao 지도 API 초기화
     kakao.maps.load(() => {
+      console.log("시작");
       const container = document.getElementById("map");
+      console.log("container" + container);
       const options = {
-        center: new kakao.maps.LatLng(
-          currentloc.latitude - 0.04,
-          currentloc.longitude
-        ),
+        center: new kakao.maps.LatLng(37.499453350021426, 127.03316070814535),
         level: 7,
       };
-      console.log("container", container);
-      console.log("options", options);
+      console.log("중간");
       const map = new kakao.maps.Map(container, options);
+      console.log("map: " + map);
+      console.log("종료");
 
       // 마커 아이콘 설정
       var imageSrc = "/myloca.png";

@@ -8,7 +8,7 @@ const DistanceFromHere = ({ distance, className }) => {
       <div className="text-primary">
         {distance >= 1000
           ? (distance / 1000).toFixed(1) + "km"
-          : distance + "m"}
+          : distance + "km"}
       </div>
     </div>
   );

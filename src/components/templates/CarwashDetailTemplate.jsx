@@ -45,10 +45,10 @@ const CarwashDetailTemplate = ({ carwashId }) => {
 
   const images =
     detaildata.imageFiles.length > 0
-      ? detaildata.imageFiles.map((url) => ({
+      ? detaildata.imageFiles.map((image) => ({
           label: "Image",
           alt: "image",
-          url: url,
+          url: image.url,
         }))
       : [
           {
@@ -57,6 +57,9 @@ const CarwashDetailTemplate = ({ carwashId }) => {
             url: "/CarwashDetail/CarwashImgNotFound.png",
           },
         ];
+
+  console.log(images);
+  console.log(detaildata);
 
   const weekhour = `평일 ${detaildata?.optime?.weekday.start} ~ ${detaildata?.optime?.weekday.end}`;
   const weekendhour = `주말 ${detaildata?.optime?.weekend.start} ~ ${detaildata?.optime?.weekend.end}`;

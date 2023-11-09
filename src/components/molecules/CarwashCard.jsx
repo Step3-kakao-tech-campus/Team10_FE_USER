@@ -14,12 +14,18 @@ export const CarwashCard = ({ id, image, name, address, rate, distance }) => {
     navigate(`/carwashdetail/${id}`);
   };
 
+  const imageUrl = image ? image.url : "/CarwashDetail/CarwashImgNotFound.png";
+
   return (
     <div
       className="relative overflow-hidden shadow-xl h-72 rounded-xl"
       onClick={handleClick}
     >
-      <img src={image} alt={name} className="absolute top-0 object-cover" />
+      <img
+        src={imageUrl}
+        alt={name}
+        className="absolute object-cover bottom-20"
+      />
       <div className="absolute bottom-0 justify-between w-full h-24 p-4">
         <div className="relative">
           <UserStar averageStar={rate} />

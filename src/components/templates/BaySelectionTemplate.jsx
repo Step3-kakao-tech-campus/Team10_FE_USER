@@ -39,7 +39,7 @@ const BaySelectionTemplate = ({ carwashId }) => {
 
   return (
     <div className="relative p-4">
-      <div className="mb-4 text-xl font-bold">{name}</div>
+      <div className="mb-4 text-xl font-bold">{name}: 베이 선택</div>
       <div className="flex gap-2 mb-4">
         <Image src={TimeImage} alt="영업시간" className="py-1" />
         <div>

@@ -68,7 +68,7 @@ const TabReview = ({}) => {
             {keywords.map((keywordData) => (
               <KeywordReview
                 key={keywordData.id}
-                keyword={getKeywordText(keywordData.id)} // Replace with actual keyword text if available
+                keyword={getKeywordText(keywordData.id)}
                 reviewCount={keywordData.count}
                 totalReviews={totalReviews}
               />

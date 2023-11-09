@@ -70,15 +70,20 @@ const ReservationTemplate = () => {
       )
     : washlists?.data?.response;
 
+  console.log("location", location);
+  console.log("washlists", washlists);
+
   return (
     <div className="overflow-y-auto">
       <div>
         <div className="flex items-end w-screen h-screen gap-0 bg-white">
-          <KakaoMap
-            currentloc={location}
-            mapdata={washlists?.data?.response}
-            className="fixed left-0 z-0 w-screen h-screen"
-          />
+          {location && washlists?.data?.response && (
+            <KakaoMap
+              currentloc={location}
+              mapdata={washlists?.data?.response}
+              className="fixed left-0 z-0 w-screen h-screen"
+            />
+          )}
           <DualBottomsheet className="fixed left-0 z-10 bottom-16">
             <Bottomsheet className="z-20 flex flex-col h-full gap-3 overflow-y-scroll">
               <input

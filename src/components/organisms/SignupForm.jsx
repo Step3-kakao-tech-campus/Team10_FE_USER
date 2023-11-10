@@ -6,12 +6,38 @@ import { signup, checkEmail } from "../../apis/user";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const SignupForm = () => {
-  const [emailValid, setEmailValid] = useState(false); // Changed default to false
-  const [emailError, setEmailError] = useState("");
-  const [checkingEmail, setCheckingEmail] = useState(false);
-  const [signupError, setSignupError] = useState("");
+const PATTERNS = {
+  username: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,20}$/,
+  email: /\S+@\S+\.\S+/,
+  password: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,24}$/,
+  tel: /^[0-9]{10,11}$/,
+};
 
+const MESSAGES = {
+  username: {
+    required: "이름을 입력해주세요.",
+    pattern: "이름은 2자 이상 20자 이하, 영어 또는 한글로 입력해주세요.",
+  },
+  email: {
+    required: "이메일을 입력해주세요.",
+    pattern: "이메일 형식에 맞지 않습니다.",
+  },
+  password: {
+    required: "비밀번호를 입력해주세요.",
+    pattern:
+      "비밀번호는 영문, 숫자, 특수기호 조합 8자리 이상으로 입력해주세요.",
+  },
+  passwordConfirm: {
+    required: "비밀번호를 입력해주세요.",
+    mismatch: "비밀번호가 일치하지 않습니다.",
+  },
+  tel: {
+    required: "전화번호를 입력해주세요.",
+    pattern: "전화번호는 10자리 또는 11자리 숫자여야 합니다",
+  },
+};
+
+const SignupForm = () => {
   const mutation = useMutation({
     mutationFn: (data) => {
       signup(data);
@@ -24,97 +50,48 @@ const SignupForm = () => {
     register,
     handleSubmit,
     getValues,
-    setError,
-    clearErrors,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    mode: "onChange",
-    criteriaMode: "all",
-  });
+    watch,
+    formState: { isSubmitting, errors },
+  } = useForm({ mode: "onChange" });
 
-  const PATTERNS = {
-    username: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,20}$/,
-    email: /\S+@\S+\.\S+/,
-    password: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,24}$/,
-    tel: /^[0-9]{10,11}$/,
-  };
+  const email = watch("email");
+  const [emailChecked, setEmailChecked] = useState(false);
+  const [emailError, setEmailError] = useState();
+  const [signupStatus, setSignupStatus] = useState();
 
-  const MESSAGES = {
-    username: {
-      required: "닉네임을 입력해주세요.",
-      pattern: "닉네임은 2자 이상 20자 이하, 영어 또는 한글로 입력해주세요.",
-    },
-    email: {
-      required: "이메일을 입력해주세요.",
-      pattern: "이메일 형식에 맞지 않습니다.",
-    },
-    password: {
-      required: "비밀번호를 입력해주세요.",
-      pattern:
-        "비밀번호는 영문, 숫자, 특수기호 조합 8자리 이상으로 입력해주세요.",
-    },
-    passwordConfirm: {
-      required: "비밀번호를 입력해주세요.",
-      mismatch: "비밀번호가 일치하지 않습니다.",
-    },
-    tel: {
-      required: "전화번호를 입력해주세요.",
-      pattern: "전화번호는 10자리 또는 11자리 숫자여야 합니다",
-    },
-  };
-
-  const onEmailCheck = async () => {
-    const email = getValues("email");
-    if (!email) {
-      setEmailError("이메일을 입력해주세요.");
-      return;
-    }
-
-    setCheckingEmail(true);
-    setEmailError("");
-    clearErrors("email");
-
+  const onCheckEmail = async () => {
     try {
-      const response = await checkEmail(email);
-      setEmailValid(true);
-      setEmailError("사용 가능한 이메일입니다.");
+      const result = await checkEmail(email);
+      if (result.data.success) {
+        setEmailChecked(true);
+        setEmailError("");
+      }
+      setSignupStatus("사용 가능한 이메일입니다. 회원가입을 진행해주세요.");
     } catch (error) {
-      setEmailValid(false);
-      const errorMessage =
-        error.response?.data.error.message || "에러가 발생했습니다.";
-      setEmailError(errorMessage);
-      setError("email", { type: "manual", message: errorMessage });
-    } finally {
-      setCheckingEmail(false);
+      setEmailChecked(false);
+      setEmailError("중복된 이메일이 있습니다. 다른 이메일을 입력해주세요.");
     }
   };
+
+  useEffect(() => {
+    setSignupStatus("");
+    if (emailChecked) setEmailChecked(false);
+  }, [email]);
 
   const onSubmit = async (data) => {
-    if (!data.email) {
-      setError("email", {
-        type: "manual",
-        message: MESSAGES.email.required,
-      });
+    if (!emailChecked) {
+      alert("이메일 중복체크를 해주세요.");
       return;
     }
-    if (!emailValid) {
-      setError("email", {
-        type: "manual",
-        message: "이메일 중복확인을 해주세요.",
-      });
-      return;
-    }
-    setSignupError("");
-
-    try {
-      await signup(data);
-      navigate("/login");
-    } catch (error) {
-      const errorMessage =
-        error.response?.data.error.message ||
-        "회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요";
-      setSignupError(errorMessage);
-    }
+    mutation.mutate(data, {
+      onSuccess: () => {
+        alert("회원가입이 완료되었습니다. 로그인해주세요.");
+        navigate("/login");
+      },
+      onError: () => {
+        alert("회원가입에 실패했습니다. 다시 시도해주세요");
+      },
+    });
   };
 
   return (
@@ -130,7 +107,7 @@ const SignupForm = () => {
         <div className="flex flex-col gap-4">
           <TextInput
             type="text"
-            placeholder="닉네임"
+            placeholder="이름"
             {...register("username", {
               required: MESSAGES.username.required,
               pattern: {
@@ -163,10 +140,10 @@ const SignupForm = () => {
             <Button
               type="button"
               variant="checkemail"
-              onClick={onEmailCheck}
-              disabled={checkingEmail}
+              onClick={onCheckEmail}
+              disabled={isSubmitting || !email || errors.email}
             >
-              {checkingEmail ? "확인 중..." : "중복체크"}
+              중복체크
             </Button>
           </div>
         </div>
@@ -175,7 +152,7 @@ const SignupForm = () => {
             {errors.email.message}
           </small>
         )}
-        {emailError && (
+        {emailError && ( // 이메일 오류 메시지 출력
           <small className="text-red-500" role="alert">
             {emailError}
           </small>
@@ -239,10 +216,11 @@ const SignupForm = () => {
         >
           회원가입
         </Button>
-        {signupError && (
-          <p className="mt-4 text-sm text-center text-red-600">{signupError}</p>
+        {signupStatus && ( // 회원가입 상태 메시지 출력
+          <small className="text-green-500" role="alert">
+            {signupStatus}
+          </small>
         )}
-
         <Link to="/login">로그인</Link>
       </form>
     </div>

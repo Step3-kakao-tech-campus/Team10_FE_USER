@@ -19,7 +19,19 @@ const LoginForm = () => {
         navigate("/");
       })
       .catch((error) => {
-        setErrorMessage(error.error.message);
+        if (error.error.code === "1001") {
+          if (error.error.message.email) {
+            setErrorMessage("유효하지 않은 이메일입니다.");
+          } else if (error.error.message.password) {
+            setErrorMessage(
+              "비밀번호는 영소문자, 숫자, 특수문자를 포함해야합니다. 공백은 포함하지 않습니다"
+            );
+          }
+        } else if (error.error.code === "1201") {
+          setErrorMessage("잘못된 비밀번호입니다.");
+        } else if (error.error.code === "1301") {
+          setErrorMessage("존재하지 않는 이메일입니다.");
+        }
       });
   };
 
@@ -41,12 +53,13 @@ const LoginForm = () => {
   }, [email, password]);
 
   return (
-    <div className="flex flex-col p-12 mt-40 border border-gray-300 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-center text-primary">로그인</h1>
+    <div className="flex flex-col p-12 my-10 border border-gray-300 rounded-lg shadow-md">
+      <div className="text-2xl font-bold text-center text-primary">로그인</div>
       <form
         noValidate
         className="flex flex-col gap-4 my-20"
-        onSubmit={handleSubmit(onSubmit)}>
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <TextInput
           type="email"
           placeholder="이메일"
@@ -87,7 +100,8 @@ const LoginForm = () => {
           type="submit"
           disabled={isSubmitting}
           variant="long"
-          className="rounded-lg">
+          className="rounded-lg"
+        >
           로그인
         </Button>
         {errorMessage && (
@@ -95,8 +109,13 @@ const LoginForm = () => {
             {errorMessage}
           </small>
         )}
+        <Link
+          to="/signup"
+          className="text-primary font-semibold underline mt-8"
+        >
+          회원가입
+        </Link>
       </form>
-      <Link to="/signup">회원가입</Link>
     </div>
   );
 };

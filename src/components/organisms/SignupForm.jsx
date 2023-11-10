@@ -38,6 +38,10 @@ const MESSAGES = {
 };
 
 const SignupForm = () => {
+  const [emailChecked, setEmailChecked] = useState(false);
+  const [emailCheckMessage, setEmailCheckMessage] = useState("");
+  const [submitMessage, setSubmitMessage] = useState("");
+
   const mutation = useMutation({
     mutationFn: (data) => {
       signup(data);
@@ -55,41 +59,48 @@ const SignupForm = () => {
   } = useForm({ mode: "onChange" });
 
   const email = watch("email");
-  const [emailChecked, setEmailChecked] = useState(false);
-  const [emailError, setEmailError] = useState();
-  const [signupStatus, setSignupStatus] = useState();
 
   const onCheckEmail = async () => {
+    setEmailCheckMessage("");
     try {
       const result = await checkEmail(email);
       if (result.data.success) {
         setEmailChecked(true);
-        setEmailError("");
+        setEmailCheckMessage("사용 가능한 이메일입니다.");
+      } else {
+        setEmailCheckMessage("이메일 중복 확인에 실패했습니다.");
       }
-      setSignupStatus("사용 가능한 이메일입니다. 회원가입을 진행해주세요.");
     } catch (error) {
       setEmailChecked(false);
-      setEmailError("중복된 이메일이 있습니다. 다른 이메일을 입력해주세요.");
+      setEmailCheckMessage(
+        "중복된 이메일이 있습니다. 다른 이메일을 입력해주세요."
+      );
     }
   };
 
   useEffect(() => {
-    setSignupStatus("");
-    if (emailChecked) setEmailChecked(false);
+    if (email) {
+      setEmailChecked(false);
+      setEmailCheckMessage("");
+    }
   }, [email]);
 
   const onSubmit = async (data) => {
+    setSubmitMessage("");
     if (!emailChecked) {
-      alert("이메일 중복체크를 해주세요.");
+      setEmailCheckMessage("이메일 중복체크를 해주세요.");
       return;
     }
     mutation.mutate(data, {
       onSuccess: () => {
-        alert("회원가입이 완료되었습니다. 로그인해주세요.");
+        setSubmitMessage("회원가입이 완료되었습니다. 로그인해주세요.");
         navigate("/login");
       },
-      onError: () => {
-        alert("회원가입에 실패했습니다. 다시 시도해주세요");
+      onError: (error) => {
+        setSubmitMessage(
+          error.response?.data?.message ||
+            "회원가입에 실패했습니다. 다시 시도해주세요."
+        );
       },
     });
   };
@@ -152,11 +163,9 @@ const SignupForm = () => {
             {errors.email.message}
           </small>
         )}
-        {emailError && ( // 이메일 오류 메시지 출력
-          <small className="text-red-500" role="alert">
-            {emailError}
-          </small>
-        )}
+        <small className="text-red-500" role="alert">
+          {emailCheckMessage}
+        </small>
         <TextInput
           type="password"
           placeholder="비밀번호"
@@ -216,9 +225,14 @@ const SignupForm = () => {
         >
           회원가입
         </Button>
-        {signupStatus && ( // 회원가입 상태 메시지 출력
-          <small className="text-green-500" role="alert">
-            {signupStatus}
+        {submitMessage && (
+          <small
+            className={
+              submitMessage.includes("실패") ? "text-red-500" : "text-green-500"
+            }
+            role="alert"
+          >
+            {submitMessage}
           </small>
         )}
         <Link to="/login">로그인</Link>

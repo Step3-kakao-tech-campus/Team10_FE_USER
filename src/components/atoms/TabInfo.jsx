@@ -1,7 +1,7 @@
 import React from "react";
 
 const TabInfo = ({ introduction }) => {
-  return <p>{introduction}</p>;
+  return <p className="whitespace-pre-wrap">{introduction}</p>;
 };
 
 export default TabInfo;

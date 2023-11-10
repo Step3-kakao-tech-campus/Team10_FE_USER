@@ -8,15 +8,19 @@ import { carwashesRecommended } from "../../apis/carwashes";
 import { reservationsRecent } from "../../apis/reservations";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { UserInfo } from "../../apis/user";
+import Logo from "/bdbd_icon.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/authSlice";
 
 const HomeTemplate = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [location, setLocation] = useState({
     latitude: 35.14,
     longitude: 126.9,
   });
 
-  const [userName, setUserName] = useState("");
+  const { isLoggedIn, userName } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -29,8 +33,7 @@ const HomeTemplate = () => {
     }
   }, []);
 
-  const token = localStorage.getItem("token");
-  const [recommended, recent, userInfo] = useSuspenseQueries({
+  const [recommended, recent] = useSuspenseQueries({
     queries: [
       {
         queryKey: ["recommended"],
@@ -39,33 +42,35 @@ const HomeTemplate = () => {
       },
       {
         queryKey: ["recent"],
-        queryFn: () => (token ? reservationsRecent() : Promise.resolve(null)),
-        enabled: !!token,
-      },
-      {
-        queryKey: ["userInfo"],
-        queryFn: () => (token ? UserInfo() : Promise.resolve(null)),
-        enabled: !!token,
+        queryFn: () =>
+          isLoggedIn ? reservationsRecent() : Promise.resolve(null),
       },
     ],
   });
 
-  console.log(recommended);
-
   const recommendedData = recommended?.data?.data?.response[0];
   const recentList = recent?.data?.data?.response?.recent || [];
 
-  useEffect(() => {
-    if (userInfo.data?.data?.response?.name) {
-      setUserName(userInfo.data.data.response.name);
-    }
-  }, [userInfo]);
-
-  console.log(recommendedData);
-
-  const navigate = useNavigate();
   return (
-    <main className="pt-2 grid-4">
+    <div className="grid-8">
+      <nav className="items-center bg-white flex-between">
+        <img src={Logo} alt="뒤로가기" onClick={() => navigate(-1)} />
+        {isLoggedIn ? (
+          <Button
+            onClick={() => {
+              dispatch(logout());
+            }}>
+            로그아웃
+          </Button>
+        ) : (
+          <Button
+            onClick={() => {
+              navigate("/login");
+            }}>
+            로그인
+          </Button>
+        )}
+      </nav>
       <div className="text-2xl font-bold">
         {userName
           ? `${userName}님 안녕하세요!`
@@ -111,13 +116,17 @@ const HomeTemplate = () => {
           />
         )}
       </section>
-      {token && (
+      {isLoggedIn && (
         <section className="grid-4">
           <div className="text-xl font-semibold">최근 이용 내역</div>
-          <RecentCarwashSlider recentList={recentList} />
+          {recentList.length === 0 ? (
+            <div className="text-center ">최근 이용 내역이 없습니다.</div>
+          ) : (
+            <RecentCarwashSlider recentList={recentList} />
+          )}
         </section>
       )}
-    </main>
+    </div>
   );
 };
 export default HomeTemplate;

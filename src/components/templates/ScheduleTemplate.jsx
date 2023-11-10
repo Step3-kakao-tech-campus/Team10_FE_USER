@@ -6,7 +6,6 @@ import DatePicker from "../molecules/DatePicker";
 import TimePicker from "../molecules/TimePicker";
 import DurationPicker from "../molecules/DurationPicker";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../atoms/Button";
 import { useMutation, useSuspenseQueries } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { saveReservation } from "../../store/action";
@@ -117,14 +116,14 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
   );
 
   return (
-    <div>
-      <div className="p-4 grid-4">
-        <div className="text-xl font-bold">
+    <div className="relative p-4">
+      <div className="flex-grow pb-16 overflow-y-auto">
+        <div className="mb-4 text-xl font-bold">
           {name}: 베이 {bayInfo.bayNo}
         </div>
 
-        <div className="flex gap-2">
-          <Image src={TimeImage} alt="영업시간" />
+        <div className="flex gap-2 mb-4">
+          <Image src={TimeImage} alt="영업시간" className="py-1" />
           <div>
             <div>
               평일 {openingHours.weekday.start} ~ {openingHours.weekday.end}
@@ -137,8 +136,8 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
 
         <DatePicker handleButtonClick={handleDateChange} />
 
-        <div className="">
-          <div className="font-bold">시작 시간</div>
+        <div className="my-4">
+          <div className="my-1 font-bold">시작 시간</div>
           <TimePicker
             bayId={bayInfo.bayId}
             openingHours={openingHours}
@@ -148,8 +147,8 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
             selectedDate={date}
           />
         </div>
-        <div className="">
-          <div className="font-bold">사용 시간</div>
+        <div className="my-4">
+          <div className="mb-2 font-bold">사용 시간</div>
           <DurationPicker
             bayId={bayInfo.bayId}
             handleButtonClick={handleDurationChange}
@@ -160,8 +159,8 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
           />
         </div>
         <div className="p-4 bg-gray-100 rounded-lg">
-          <div className="font-semibold">예약 일정</div>
-          <div className="">
+          <div className="mb-2">예약 일정</div>
+          <div className="mb-4">
             <div>
               시작 시간:&nbsp;
               {date &&
@@ -179,9 +178,13 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
           </div>
         </div>
       </div>
-      <Button onClick={handleSubmit} variant="long" className="fixed bottom-0">
+
+      <button
+        onClick={handleSubmit}
+        className="fixed bottom-0 left-0 block w-full p-4 font-semibold text-white h-14 bg-primary"
+      >
         예약하기
-      </Button>
+      </button>
       <CustomModal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}

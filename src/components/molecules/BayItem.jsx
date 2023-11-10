@@ -41,12 +41,13 @@ const BayItem = ({
 
   return (
     <div
-      className="p-4 overflow-x-auto border rounded-xl"
-      onClick={() => onClick(bayId)}>
-      <div className="font-semibold">베이 {bayNo}</div>
-      <div className="flex justify-center">
+      className="py-4 overflow-x-auto border border-2 cursor-pointer border-primary rounded-xl"
+      onClick={() => onClick(bayId)}
+    >
+      <div className="p-2 font-semibold">베이 {bayNo}</div>
+      <div className="flex justify-center px-4">
         {currentTime > closingHour ? (
-          <div>
+          <div className="">
             오늘 영업이 종료되었습니다 베이를 클릭하여 다음날 예약을 진행해
             보세요
           </div>

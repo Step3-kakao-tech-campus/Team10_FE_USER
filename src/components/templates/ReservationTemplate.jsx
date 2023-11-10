@@ -127,13 +127,14 @@ const ReservationTemplate = () => {
                 onChange={handleSearchChange}
                 value={searchTerm}
               />
-              <div className="flex flex-row gap-2 mx-4 ">
+              <div className="flex flex-row gap-2 mx-4 my-2 overflow-x-auto flex-shrink-0">
                 <Badge
                   key="8"
                   label="하부세차"
                   onClick={() => {
                     handleBadgeClick(8);
                   }}
+                  className="whitespace-nowrap"
                 />
                 <Badge
                   key="9"
@@ -141,6 +142,7 @@ const ReservationTemplate = () => {
                   onClick={() => {
                     handleBadgeClick(9);
                   }}
+                  className="whitespace-nowrap"
                 />
                 <Badge
                   key="10"
@@ -148,6 +150,7 @@ const ReservationTemplate = () => {
                   onClick={() => {
                     handleBadgeClick(10);
                   }}
+                  className="whitespace-nowrap"
                 />
                 <Badge
                   key="11"
@@ -155,6 +158,7 @@ const ReservationTemplate = () => {
                   onClick={() => {
                     handleBadgeClick(11);
                   }}
+                  className="whitespace-nowrap"
                 />
                 <Badge
                   key="12"
@@ -162,6 +166,7 @@ const ReservationTemplate = () => {
                   onClick={() => {
                     handleBadgeClick(12);
                   }}
+                  className="whitespace-nowrap"
                 />
                 <Badge
                   key="13"
@@ -169,6 +174,7 @@ const ReservationTemplate = () => {
                   onClick={() => {
                     handleBadgeClick(13);
                   }}
+                  className="whitespace-nowrap"
                 />
                 <Badge
                   key="14"
@@ -176,6 +182,7 @@ const ReservationTemplate = () => {
                   onClick={() => {
                     handleBadgeClick(14);
                   }}
+                  className="whitespace-nowrap"
                 />
               </div>
               <hr className="" />{" "}

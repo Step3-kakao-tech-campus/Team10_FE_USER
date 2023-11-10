@@ -106,7 +106,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-10 my-20 bg-white border border-gray-300 rounded-lg shadow-md ">
+    <div className="flex flex-col gap-6 p-10 my-10 bg-white border border-gray-300 rounded-lg shadow-md ">
       <div className="text-2xl font-bold text-center text-primary">
         회원가입
       </div>
@@ -119,6 +119,7 @@ const SignupForm = () => {
           <TextInput
             type="text"
             placeholder="이름"
+            className="w-full"
             {...register("username", {
               required: MESSAGES.username.required,
               pattern: {
@@ -133,31 +134,31 @@ const SignupForm = () => {
             {errors.username.message}
           </small>
         )}
-        <div className="flex gap-4">
-          <div className="flex justify-between gap-2">
-            <TextInput
-              type="email"
-              placeholder="이메일"
-              className="w-auto"
-              {...register("email", {
-                required: MESSAGES.email.required,
-                pattern: {
-                  value: PATTERNS.email,
-                  message: MESSAGES.email.pattern,
-                },
-              })}
-            />
 
-            <Button
-              type="button"
-              variant="checkemail"
-              onClick={onCheckEmail}
-              disabled={isSubmitting || !email || errors.email}
-            >
-              중복체크
-            </Button>
-          </div>
+        <div className="flex justify-between gap-2">
+          <TextInput
+            type="email"
+            placeholder="이메일"
+            className="w-full"
+            {...register("email", {
+              required: MESSAGES.email.required,
+              pattern: {
+                value: PATTERNS.email,
+                message: MESSAGES.email.pattern,
+              },
+            })}
+          />
+
+          <Button
+            type="button"
+            variant="checkemail"
+            onClick={onCheckEmail}
+            disabled={isSubmitting || !email || errors.email}
+          >
+            중복체크
+          </Button>
         </div>
+
         {errors.email && (
           <small className="text-red-500" role="alert">
             {errors.email.message}
@@ -221,21 +222,27 @@ const SignupForm = () => {
           type="submit"
           disabled={isSubmitting}
           variant="long"
-          className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md"
+          className="px-4 py-2 font-bold text-white bg-primary rounded-md"
         >
           회원가입
         </Button>
         {submitMessage && (
           <small
             className={
-              submitMessage.includes("실패") ? "text-red-500" : "text-green-500"
+              submitMessage.includes("실패") ? "text-red-500" : "text-primary"
             }
             role="alert"
           >
             {submitMessage}
           </small>
         )}
-        <Link to="/login">로그인</Link>
+
+        <Link
+          to="/login"
+          className="text-primary underline text-lg font-semibold"
+        >
+          로그인
+        </Link>
       </form>
     </div>
   );

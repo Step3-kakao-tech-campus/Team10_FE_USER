@@ -67,19 +67,21 @@ const PaymentWaitingTemplate = () => {
 
   // JSX 리턴
   return (
-    <div>
-      <div>결제가 진행중입니다....!</div>
+    <div className="flex flex-col justify-center">
+      <div className="text-3xl font-semibold m-4 bg-gray-50">결제 진행 중</div>
+      {approveIsError && (
+        <div>오류가 발생했습니다 : {approveError?.message}</div>
+      )}
+
+      {approveIsLoading && <div>처리 중</div>}
+
       <Button
         variant="long"
         className="fixed bottom-0 left-0"
         onClick={handlePayment}
       >
-        결제가 완료되었으면 클릭하세요!
+        결제 완료를 위해 클릭하세요
       </Button>
-      {/* 오류 메시지 표시 */}
-      {approveIsError && <p>오류가 발생했습니다: {approveError?.message}</p>}
-      {/* 로딩 상태 표시 */}
-      {approveIsLoading && <p>결제 처리 중...</p>}
     </div>
   );
 };

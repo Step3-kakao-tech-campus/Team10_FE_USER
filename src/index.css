@@ -9,8 +9,4 @@
   .grid-4 {
     @apply grid gap-4;
   }
-
-  .grid-8 {
-    @apply grid gap-8;
-  }
 }

@@ -237,10 +237,7 @@ const SignupForm = () => {
           </small>
         )}
 
-        <Link
-          to="/login"
-          className="text-primary underline text-lg font-semibold"
-        >
+        <Link to="/login" className="text-primary underline font-semibold mt-4">
           로그인
         </Link>
       </form>

@@ -54,7 +54,7 @@ const LoginForm = () => {
 
   return (
     <div className="flex flex-col p-12 my-10 border border-gray-300 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-center text-primary">로그인</h1>
+      <div className="text-2xl font-bold text-center text-primary">로그인</div>
       <form
         noValidate
         className="flex flex-col gap-4 my-20"
@@ -109,13 +109,13 @@ const LoginForm = () => {
             {errorMessage}
           </small>
         )}
+        <Link
+          to="/signup"
+          className="text-primary font-semibold underline mt-8"
+        >
+          회원가입
+        </Link>
       </form>
-      <Link
-        to="/signup"
-        className="text-primary font-semibold underline text-lg "
-      >
-        회원가입
-      </Link>
     </div>
   );
 };

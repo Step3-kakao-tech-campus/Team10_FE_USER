@@ -13,7 +13,7 @@ export const MainLayout = () => {
 
   return (
     <>
-      <main className="px-4">
+      <main className="p-4 mb-20">
         <Outlet />
       </main>
       <GNB />

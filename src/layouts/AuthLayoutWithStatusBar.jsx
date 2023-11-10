@@ -17,7 +17,9 @@ const AuthLayoutWithStatusBar = () => {
   return (
     <>
       <StatusBar />
-      <Outlet />
+      <main className="p-4 mt-14">
+        <Outlet />
+      </main>
     </>
   );
 };

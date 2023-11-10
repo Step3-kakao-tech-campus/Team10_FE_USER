@@ -22,7 +22,7 @@ const KakaoMap = ({
         const container = document.getElementById("map");
         const options = {
           center: new kakao.maps.LatLng(
-            currentloc.latitude,
+            currentloc.latitude - 0.03,
             currentloc.longitude
           ),
           level: 7,

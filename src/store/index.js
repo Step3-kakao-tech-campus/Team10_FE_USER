@@ -1,7 +1,6 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import authReducer from "./authSlice";
 import {
   SET_BAY_ID,
   SAVE_RESERVATION,
@@ -49,13 +48,10 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-const rootReducer = combineReducers({
-  reservationProcess: persistReducer(persistConfig, reducer),
-  auth: authReducer,
-});
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

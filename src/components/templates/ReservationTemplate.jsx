@@ -111,11 +111,10 @@ const ReservationTemplate = () => {
     <div className="overflow-y-auto">
       <div>
         <div className="flex items-end w-screen h-screen gap-0 bg-white">
-          {location && mockdata && (
+          {location && washlists?.data?.respons && (
             <KakaoMap
               currentloc={location}
-              // mapdata={washlists?.data?.response}
-              mapdata={mockdata}
+              mapdata={washlists?.data?.response}
               className="fixed left-0 z-0 w-screen h-screen"
             />
           )}

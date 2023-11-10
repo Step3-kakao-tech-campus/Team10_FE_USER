@@ -42,7 +42,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 //   },
 // ];
 const ReservationTemplate = () => {
-  const initialKeypoints = [1, 2, 3];
+  const initialKeypoints = [8, 9, 10, 11, 12, 13, 14];
   const [keypoints, setKeypoints] = useState(initialKeypoints);
   const [firstClick, setFirstClick] = useState(true);
   const [washlists, setWashlists] = useState([]);
@@ -111,13 +111,12 @@ const ReservationTemplate = () => {
     <div className="overflow-y-auto">
       <div>
         <div className="flex items-end w-screen h-screen gap-0 bg-white">
-          {location && washlists?.data?.response && (
-            <KakaoMap
-              currentloc={location}
-              mapdata={washlists?.data?.response}
-              className="fixed left-0 z-0 w-screen h-screen"
-            />
-          )}
+          <KakaoMap
+            currentloc={location}
+            mapdata={washlists?.data?.response}
+            className="fixed left-0 z-0 w-screen h-screen"
+          />
+
           <DualBottomsheet className="fixed left-0 z-10 bottom-16">
             <Bottomsheet className="z-20 flex flex-col h-full gap-3 overflow-y-scroll">
               <input
@@ -130,24 +129,52 @@ const ReservationTemplate = () => {
               />
               <div className="flex flex-row gap-2 mx-4 ">
                 <Badge
-                  key="1"
+                  key="8"
                   label="하부세차"
                   onClick={() => {
-                    handleBadgeClick(1);
+                    handleBadgeClick(8);
                   }}
                 />
                 <Badge
-                  key="2"
-                  label="폼건세차"
+                  key="9"
+                  label="개러지형 독립공간"
                   onClick={() => {
-                    handleBadgeClick(2);
+                    handleBadgeClick(9);
                   }}
                 />
                 <Badge
-                  key="3"
-                  label="온수세차"
+                  key="10"
+                  label="야간조명"
                   onClick={() => {
-                    handleBadgeClick(3);
+                    handleBadgeClick(10);
+                  }}
+                />
+                <Badge
+                  key="11"
+                  label="100%수돗물"
+                  onClick={() => {
+                    handleBadgeClick(11);
+                  }}
+                />
+                <Badge
+                  key="12"
+                  label="휴게실"
+                  onClick={() => {
+                    handleBadgeClick(12);
+                  }}
+                />
+                <Badge
+                  key="13"
+                  label="에어컨"
+                  onClick={() => {
+                    handleBadgeClick(13);
+                  }}
+                />
+                <Badge
+                  key="14"
+                  label="발수코팅건"
+                  onClick={() => {
+                    handleBadgeClick(14);
                   }}
                 />
               </div>

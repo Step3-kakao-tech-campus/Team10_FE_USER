@@ -20,7 +20,7 @@ const AuthLayoutWithStatusBar = () => {
   return (
     <>
       <StatusBar />
-      <main className="p-4 mt-14">
+      <main className="mt-14">
         <Outlet />
       </main>
     </>

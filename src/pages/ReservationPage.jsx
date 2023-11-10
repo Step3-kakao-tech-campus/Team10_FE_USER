@@ -7,11 +7,11 @@ import ReservationTemplate from "../components/templates/ReservationTemplate";
 const ReservationPage = () => {
   const navigate = useNavigate();
   return (
-    // <GeneralErrorBoundary navigate={navigate}>
-    <Suspense fallback={<Loader />}>
-      <ReservationTemplate />;
-    </Suspense>
-    // </GeneralErrorBoundary>
+    <GeneralErrorBoundary navigate={navigate}>
+      <Suspense fallback={<Loader />}>
+        <ReservationTemplate />;
+      </Suspense>
+    </GeneralErrorBoundary>
   );
 };
 export default ReservationPage;

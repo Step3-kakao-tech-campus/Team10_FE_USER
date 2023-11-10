@@ -8,14 +8,20 @@ import { Button } from "../atoms/Button";
 import CustomModal from "../atoms/CustomModal";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { isMobile } from "react-device-detect";
+import KakaoPayIcon from "/payment_icon_yellow_small.png";
 
 const PaymentTemplate = () => {
   const [paymentData, setPaymentData] = useState({ price: undefined });
   const [redirectLink, setRedirectLink] = useState(null);
-  const reservations = useSelector((state) => state.reservations);
-  const carwashId = useSelector((state) => state.selectedCarwashId);
+  const reservations = useSelector(
+    (state) => state.reservationProcess.reservations
+  );
+  const carwashId = useSelector(
+    (state) => state.reservationProcess.selectedCarwashId
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const bayId = useSelector((state) => state.selectedBayId);
+  const bayId = useSelector((state) => state.reservationProcess.selectedBayId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -45,9 +51,7 @@ const PaymentTemplate = () => {
     onSuccess: (data) => {
       console.log("data", data);
       dispatch({ type: "SAVE_TID", payload: data?.data?.response?.tid });
-      const isMobile = window.matchMedia(
-        "only screen and (max-width: 600px)"
-      ).matches;
+
       if (isMobile) {
         // 모바일 환경일 때
         setRedirectLink(data?.data?.response?.next_redirect_mobile_url);
@@ -147,37 +151,31 @@ const PaymentTemplate = () => {
   );
   return (
     <div>
-      <div className="relative p-4">
-        <div className="py-8 text-2xl font-bold"> 결제하기</div>
-        <div className="p-4 bg-gray-100 rounded-lg">
-          <div className="text-lg font-semibold">예약 일정</div>
-          <div className="text-right">
-            <div>{datePart}</div>
-            <div>
-              {timePart} - {endTimeFormatted} ({duration})
+      <div className="p-4 grid-4">
+        <div className="text-2xl font-bold">결제하기</div>
+        <div className="p-4 bg-gray-100 rounded-xl grid-4">
+          <div>
+            <div className="text-lg font-semibold">예약 일정</div>
+            <div className="text-right">
+              <div>{datePart}</div>
+              <div>
+                {timePart} - {endTimeFormatted} ({duration})
+              </div>
             </div>
           </div>
-          <div className="flex justify-between py-4 text-lg font-semibold text-red-500">
+          <div className="flex justify-between text-lg font-semibold text-red-500">
             <div>최종 결제 금액</div>
             <div>{paymentAmount}원</div>
           </div>
         </div>
-        <div className="py-8 text-2xl font-bold"> 결제 수단 </div>
-        <div className="flex flex-col gap-4">
-          <Button
-            className="w-full py-4 text-lg font-bold bg-yellow-300 rounded-lg"
-            onClick={handlePayment}
-          >
-            카카오페이
-          </Button>
-        </div>
       </div>
       <Button
-        variant="long"
-        className="fixed bottom-0 left-0"
-        onClick={handlePayment}
-      >
-        {paymentAmount}원 결제하기
+        className="fixed bottom-0 w-full p-4 text-center bg-kakao"
+        onClick={handlePayment}>
+        <div className="flex items-center text-xl font-semibold bg-slate-300">
+          <img src={KakaoPayIcon} alt="카카오페이 아이콘" className="block" />
+          <div>{paymentAmount}원 결제하기</div>
+        </div>
       </Button>
       <CustomModal
         isOpen={isModalOpen}

@@ -1,60 +1,64 @@
 import TextInput from "../atoms/TextInput";
-import { useMutation } from "@tanstack/react-query";
-import { login } from "../../apis/user";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button } from "../atoms/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../../store/authSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const LoginForm = () => {
-  const [loginError, setLoginError] = useState(""); // State to hold login errors
+  const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const mutation = useMutation({
-    mutationFn: (data) => {
-      return login(data);
-    },
-  });
+  const onSubmit = (data) => {
+    dispatch(loginThunk(data))
+      .then(unwrapResult)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        if (error.error.code === "1001") {
+          if (error.error.message.email) {
+            setErrorMessage("유효하지 않은 이메일입니다.");
+          } else if (error.error.message.password) {
+            setErrorMessage(
+              "비밀번호는 영소문자, 숫자, 특수문자를 포함해야합니다. 공백은 포함하지 않습니다"
+            );
+          }
+        } else if (error.error.code === "1201") {
+          setErrorMessage("잘못된 비밀번호입니다.");
+        } else if (error.error.code === "1301") {
+          setErrorMessage("존재하지 않는 이메일입니다.");
+        }
+      });
+  };
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { isSubmitting, errors },
   } = useForm({
     mode: "onChange",
     criteriaMode: "all",
   });
 
+  const email = watch("email");
+  const password = watch("password");
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, [email, password]);
+
   return (
-    <div className="flex flex-col p-12 mt-40 border border-gray-300 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-center text-primary">로그인</h1>
+    <div className="flex flex-col p-12 my-10 border border-gray-300 rounded-lg shadow-md">
+      <div className="text-2xl font-bold text-center text-primary">로그인</div>
       <form
         noValidate
         className="flex flex-col gap-4 my-20"
-        onSubmit={handleSubmit((data) => {
-          mutation.mutate(data, {
-            onSuccess: (response) => {
-              console.log(response);
-              console.log(data);
-              localStorage.setItem("token", response.headers.authorization); // 토큰 저장
-              navigate("/");
-            },
-            onError: (error) => {
-              if (error.response?.data?.error) {
-                setLoginError(
-                  <>
-                    <div>오류: {error.response?.data?.error?.message}</div>
-                    <div>아이디 또는 비밀번호를 다시 확인해주세요.</div>
-                  </>
-                );
-              } else {
-                setLoginError(
-                  "로그인에 실패했습니다. 아이디 또는 비밀번호를 다시 확인해주세요."
-                );
-              }
-            },
-          });
-        })}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <TextInput
           type="email"
@@ -100,11 +104,18 @@ const LoginForm = () => {
         >
           로그인
         </Button>
-        {loginError && (
-          <p className="mt-4 text-sm text-center text-red-600">{loginError}</p>
+        {errorMessage && (
+          <small className="text-red-500" role="alert">
+            {errorMessage}
+          </small>
         )}
+        <Link
+          to="/signup"
+          className="text-primary font-semibold underline mt-8"
+        >
+          회원가입
+        </Link>
       </form>
-      <Link to="/signup">회원가입</Link>
     </div>
   );
 };

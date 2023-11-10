@@ -19,14 +19,15 @@ export const CarwashCard = ({ id, image, name, address, rate, distance }) => {
   return (
     <div
       className="relative overflow-hidden shadow-xl h-72 rounded-xl"
-      onClick={handleClick}
-    >
-      <img
-        src={imageUrl}
-        alt={name}
-        className="absolute object-cover bottom-20"
-      />
-      <div className="absolute bottom-0 justify-between w-full h-24 p-4">
+      onClick={handleClick}>
+      <div className="relative h-48">
+        <img
+          src={imageUrl}
+          alt={name}
+          className="absolute object-cover -translate-y-1/2 top-1/2"
+        />
+      </div>
+      <div className="absolute bottom-0 z-10 w-full h-24 p-4 bg-white">
         <div className="relative">
           <UserStar averageStar={rate} />
           <div>{name}</div>

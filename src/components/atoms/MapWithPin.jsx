@@ -35,8 +35,8 @@ const MapWithPin = ({ lat, lng, text, className }) => {
             <div style="
               position: absolute;
               left: 50%;
-              bottom: -8px; /* Half the height of the arrow */
-              margin-left: -8px; /* Half the width of the arrow */
+              bottom: -8px; 
+              margin-left: -8px; 
               width: 0;
               height: 0;
               border-left: 8px solid transparent;
@@ -54,7 +54,7 @@ const MapWithPin = ({ lat, lng, text, className }) => {
         });
       });
     };
-  }, [lat, lng, text]); // Dependencies should be declared here
+  }, [lat, lng, text]);
 
   return <div id="map" className={`h-72 rounded-3xl ${className}`}></div>;
 };

@@ -1,7 +1,7 @@
 import { TextWithIcon } from "../atoms/TextWithIcon";
 import MapWithPin from "../atoms/MapWithPin";
 import { Button } from "../atoms/Button";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { resetStore } from "../../store/action";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -16,39 +16,11 @@ const iconsrc = {
 };
 
 const PaymentResultTemplate = () => {
-  const [paymentresult, setpaymentresult] = useState(null);
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { reservationData } = location.state || {};
-  // const reservationData = {
-  //   reservation: {
-  //     reservationId: 1,
-  //     time: {
-  //       start: "2023-11-01T12:00:00",
-  //       end: "2023-11-01T13:00:00",
-  //     },
-  //     price: 6000,
-  //     bayNo: 1,
-  //   },
-  //   carwash: {
-  //     name: "구름 세차장",
-  //     location: {
-  //       latitude: 35.1502,
-  //       longitude: 126.9167,
-  //     },
-  //     carwashImages: [
-  //       {
-  //         id: 1,
-  //         name: "image1.jpg",
-  //         url: "http://example.com/image1.jpg",
-  //         path: "/images/image1.jpg",
-  //         uploadedAt: "2023-10-24T10:00:00",
-  //       },
-  //     ],
-  //   },
-  // };
+
   console.log(reservationData);
 
   useEffect(() => {
@@ -59,8 +31,6 @@ const PaymentResultTemplate = () => {
     reservation: {
       time: { start, end },
       price,
-      reservationId,
-      bayNo,
     },
     carwash: {
       name: carwashname,

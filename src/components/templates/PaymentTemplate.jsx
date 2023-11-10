@@ -8,6 +8,7 @@ import { Button } from "../atoms/Button";
 import CustomModal from "../atoms/CustomModal";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { isMobile } from "react-device-detect";
 import KakaoPayIcon from "/payment_icon_yellow_small.png";
 
 const PaymentTemplate = () => {
@@ -50,9 +51,7 @@ const PaymentTemplate = () => {
     onSuccess: (data) => {
       console.log("data", data);
       dispatch({ type: "SAVE_TID", payload: data?.data?.response?.tid });
-      const isMobile = window.matchMedia(
-        "only screen and (max-width: 600px)"
-      ).matches;
+
       if (isMobile) {
         // 모바일 환경일 때
         setRedirectLink(data?.data?.response?.next_redirect_mobile_url);

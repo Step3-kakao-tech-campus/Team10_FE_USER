@@ -11,7 +11,7 @@ const getType = (type) => {
   }
 };
 
-export const Badge = ({ id, label, onClick }) => {
+export const Badge = ({ id, label, onClick, className }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const toggleCheckbox = () => {
@@ -24,7 +24,9 @@ export const Badge = ({ id, label, onClick }) => {
   return (
     <div className="field">
       <label
-        className={`${isChecked ? getType("onclicked") : getType("unclicked")}`}
+        className={`${
+          isChecked ? getType("onclicked") : getType("unclicked")
+        } ${className}`}
       >
         <input
           type="checkbox"

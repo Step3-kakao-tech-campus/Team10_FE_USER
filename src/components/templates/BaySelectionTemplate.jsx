@@ -3,7 +3,7 @@ import TimeImage from "/StoreInfo/Time.svg";
 import Image from "../atoms/Image";
 import BayList from "../organisms/BayList";
 import { carwashesBays, carwashesInfo } from "../../apis/carwashes";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -11,11 +11,9 @@ const BaySelectionTemplate = ({ carwashId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { data: carwashInfoData } = useQuery({
+  const { data: carwashInfoData } = useSuspenseQuery({
     queryKey: ["getCarwashesInfo", carwashId],
     queryFn: () => carwashesInfo(carwashId),
-    suspense: true,
-    enabled: !!carwashId,
   });
 
   const { data: bayListData } = useQuery({

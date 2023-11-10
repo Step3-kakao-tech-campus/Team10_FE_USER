@@ -32,9 +32,10 @@ const TabReview = ({}) => {
 
   const averageStar = reviewsData?.data?.response?.overview?.rate || 0;
   const totalReviews = reviewsData?.data?.response?.overview?.totalCnt || 0;
-  const keywords = reviewsData?.data?.response?.overview?.reviewKeyword || [];
+  const keywords =
+    reviewsData?.data?.response?.overview?.reviewKeywordList || [];
 
-  const carwashreviews = reviewsData?.data?.response?.reviews?.map(
+  const carwashreviews = reviewsData?.data?.response?.reviewList?.map(
     (review) => ({
       rating: review.rate,
       username: review.username,

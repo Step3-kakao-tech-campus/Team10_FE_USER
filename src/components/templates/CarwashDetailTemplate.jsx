@@ -20,8 +20,8 @@ const CarwashDetailTemplate = ({ carwashId }) => {
   const weekendOpeningHours = `주말 ${detailData.optime.weekend.start} ~ ${detailData.optime.weekend.end}`;
 
   const images =
-    detailData.imageFiles.length > 0
-      ? detailData.imageFiles.map((image) => ({
+    detailData.imageFileList.length > 0
+      ? detailData.imageFileList.map((image) => ({
           label: "Image",
           alt: detailData.name,
           url: image.url,
@@ -61,7 +61,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
               tel={detailData.tel}
               address={detailData.locationDTO.address}
             />
-            <KeyPointInfo selectedPoints={detailData.keywordId} />
+            <KeyPointInfo selectedPoints={detailData.keywordIdList} />
           </div>
         </div>
         <Tab introduction={detailData.description} />

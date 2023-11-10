@@ -1,6 +1,9 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import StatusBar from "../components/atoms/StatusBar";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getUserInfoThunk } from "../store/authSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const AuthLayoutWithStatusBar = () => {
   const dispatch = useDispatch();

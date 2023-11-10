@@ -1,5 +1,5 @@
 import { TextWithIcon } from "../atoms/TextWithIcon";
-import { MapWithPin } from "../atoms/MapWithPin";
+import MapWithPin from "../atoms/MapWithPin";
 import { Button } from "../atoms/Button";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -54,10 +54,6 @@ const PaymentResultTemplate = () => {
   useEffect(() => {
     dispatch(resetStore());
   }, [dispatch]);
-
-  if (!reservationData) {
-    return <div>Loading...</div>;
-  }
 
   const {
     reservation: {

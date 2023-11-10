@@ -50,8 +50,11 @@ const HomeTemplate = () => {
     ],
   });
 
+  console.log(recommended);
+
   const recommendedData = recommended?.data?.data?.response[0];
   const recentList = recent?.data?.data?.response?.recent || [];
+
   useEffect(() => {
     if (userInfo.data?.data?.response?.name) {
       setUserName(userInfo.data.data.response.name);
@@ -63,23 +66,20 @@ const HomeTemplate = () => {
   const navigate = useNavigate();
   return (
     <main className="pt-2 grid-4">
-      {
-        <div className="text-lg font-semibold text-primary ">
-          {userName
-            ? `${userName}님 안녕하세요!`
-            : "여유롭게 즐기는 세차, 뽀득뽀득"}
-        </div>
-      }
+      <div className="text-2xl font-bold">
+        {userName
+          ? `${userName}님 안녕하세요!`
+          : "여유롭게 즐기는 세차, 뽀득뽀득"}
+      </div>
       <section className="gap-4 flex-between">
         <Button
           variant="home"
           onClick={() => {
             navigate("/reservation");
-          }}
-        >
+          }}>
           내 주변 세차장 예약하기
           <img
-            className="absolute right-4 -bottom-4"
+            className="absolute right-2 -bottom-4"
             src={Reservation}
             alt="위치 아이콘"
           />
@@ -88,11 +88,10 @@ const HomeTemplate = () => {
           variant="home"
           onClick={() => {
             navigate("/history");
-          }}
-        >
+          }}>
           예약내역 보기
           <img
-            className="absolute right-4 -bottom-4"
+            className="absolute right-2 -bottom-4"
             src={ReservationHistory}
             alt="예약내역 아이콘"
           />
@@ -100,15 +99,17 @@ const HomeTemplate = () => {
       </section>
       <section className="grid-4">
         <div className="text-xl font-semibold">이런 세차장 어때요?</div>
-        <CarwashCard
-          id={recommendedData.id}
-          image={recommendedData.image}
-          name={recommendedData.name}
-          address={recommendedData.location.address}
-          rate={recommendedData.rate}
-          reviewCount={recommendedData.reviewCount}
-          distance={recommendedData.distance}
-        />
+        {recommendedData && (
+          <CarwashCard
+            id={recommendedData.id}
+            image={recommendedData.image}
+            name={recommendedData.name}
+            address={recommendedData.location.address}
+            rate={recommendedData.rate}
+            reviewCount={recommendedData.reviewCount}
+            distance={recommendedData.distance}
+          />
+        )}
       </section>
       {token && (
         <section className="grid-4">

@@ -1,10 +1,13 @@
+
 import React, { useEffect } from "react";
+
 
 const KakaoMap = ({
   currentloc = { latitude: 33.450701, longitude: 126.570667 },
   className,
   mapdata = [],
 }) => {
+
   useEffect(() => {
     const script = document.createElement("script");
     script.async = true;

@@ -5,9 +5,12 @@ import ReviewList from "../molecules/ReviewList";
 import KeywordReview from "./KeywordReview";
 import UserStar from "./UserStar";
 import { useSelector } from "react-redux";
+import Loader from "./Loader";
 
 const TabReview = ({}) => {
-  const selectedCarwashId = useSelector((state) => state.selectedCarwashId);
+  const selectedCarwashId = useSelector(
+    (state) => state.reservationProcess.selectedCarwashId
+  );
 
   const {
     data: reviewsData,
@@ -55,7 +58,7 @@ const TabReview = ({}) => {
   };
 
   return (
-    <Suspense fallback={<div>Loading reviews...</div>}>
+    <Suspense fallback={<Loader />}>
       <div>
         <div className="grid gap-2 py-4">
           <div className="font-semibold">평균별점</div>

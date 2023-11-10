@@ -1,21 +1,24 @@
 import { Button } from "../atoms/Button";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { pgapprove } from "../../apis/payment";
 
 const PaymentWaitingTemplate = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const pgToken = queryParams.get("pg_token");
 
-  const bayId = useSelector((state) => state.selectedBayId);
-  const carwashId = useSelector((state) => state.selectedCarwashId);
-  const reservations = useSelector((state) => state.reservations);
-  const tid = useSelector((state) => state.tid);
+  const bayId = useSelector((state) => state.reservationProcess.electedBayId);
+  const carwashId = useSelector(
+    (state) => state.reservationProcess.selectedCarwashId
+  );
+  const reservations = useSelector(
+    (state) => state.reservationProcess.reservations
+  );
+  const tid = useSelector((state) => state.reservationProcess.tid);
 
   const {
     mutate: approveMutate,

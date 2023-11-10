@@ -1,29 +1,44 @@
 import TextInput from "../atoms/TextInput";
-import { useMutation } from "@tanstack/react-query";
-import { login } from "../../apis/user";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button } from "../atoms/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../../store/authSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const LoginForm = () => {
-  const [loginError, setLoginError] = useState(""); // State to hold login errors
+  const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const mutation = useMutation({
-    mutationFn: (data) => {
-      return login(data);
-    },
-  });
+  const onSubmit = (data) => {
+    dispatch(loginThunk(data))
+      .then(unwrapResult)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        setErrorMessage(error.error.message);
+      });
+  };
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { isSubmitting, errors },
   } = useForm({
     mode: "onChange",
     criteriaMode: "all",
   });
+
+  const email = watch("email");
+  const password = watch("password");
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, [email, password]);
 
   return (
     <div className="flex flex-col p-12 mt-40 border border-gray-300 rounded-lg shadow-md">
@@ -31,31 +46,7 @@ const LoginForm = () => {
       <form
         noValidate
         className="flex flex-col gap-4 my-20"
-        onSubmit={handleSubmit((data) => {
-          mutation.mutate(data, {
-            onSuccess: (response) => {
-              console.log(response);
-              console.log(data);
-              localStorage.setItem("token", response.headers.authorization); // 토큰 저장
-              navigate("/");
-            },
-            onError: (error) => {
-              if (error.response?.data?.error) {
-                setLoginError(
-                  <>
-                    <div>오류: {error.response?.data?.error?.message}</div>
-                    <div>아이디 또는 비밀번호를 다시 확인해주세요.</div>
-                  </>
-                );
-              } else {
-                setLoginError(
-                  "로그인에 실패했습니다. 아이디 또는 비밀번호를 다시 확인해주세요."
-                );
-              }
-            },
-          });
-        })}
-      >
+        onSubmit={handleSubmit(onSubmit)}>
         <TextInput
           type="email"
           placeholder="이메일"
@@ -96,12 +87,13 @@ const LoginForm = () => {
           type="submit"
           disabled={isSubmitting}
           variant="long"
-          className="rounded-lg"
-        >
+          className="rounded-lg">
           로그인
         </Button>
-        {loginError && (
-          <p className="mt-4 text-sm text-center text-red-600">{loginError}</p>
+        {errorMessage && (
+          <small className="text-red-500" role="alert">
+            {errorMessage}
+          </small>
         )}
       </form>
       <Link to="/signup">회원가입</Link>

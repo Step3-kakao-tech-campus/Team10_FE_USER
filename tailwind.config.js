@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         primary: "#0098FF",
+        kakao: "#FCEC4F",
       },
       // 여기에 애니메이션과 keyframes 설정을 추가합니다.
       animation: {

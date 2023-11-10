@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "./Button";
 
 export const Bottomsheet = ({ className, children }) => {
   return (

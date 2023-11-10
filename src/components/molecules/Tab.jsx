@@ -3,7 +3,7 @@ import TabInfo from "../atoms/TabInfo";
 import TabReview from "../atoms/TabReview";
 
 export const Tab = ({ introduction }) => {
-  const [currentTab, clickTab] = useState(0);
+  const [currentTab, setCurrentTab] = useState(0);
 
   const menuArr = [
     { name: "정보", content: <TabInfo introduction={introduction} /> },
@@ -11,7 +11,7 @@ export const Tab = ({ introduction }) => {
   ];
 
   const selectMenuHandler = (index) => {
-    clickTab(index);
+    setCurrentTab(index);
   };
 
   return (
@@ -20,18 +20,16 @@ export const Tab = ({ introduction }) => {
         {menuArr.map((item, index) => (
           <li
             className={`w-1/2 p-4 text-center transition duration-500 ${
-              index === currentTab
-                ? "border border-gray-300 bg-white text-black"
-                : ""
+              index === currentTab &&
+              "border border-gray-300 bg-white text-black"
             }`}
             onClick={() => selectMenuHandler(index)}
-            key={index}
-          >
+            key={index}>
             {item.name}
           </li>
         ))}
       </ul>
-      <div>{menuArr[currentTab].content}</div>
+      <div className="p-4">{menuArr[currentTab].content}</div>
     </div>
   );
 };

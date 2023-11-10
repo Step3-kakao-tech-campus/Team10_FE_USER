@@ -44,7 +44,7 @@ const ReservationItem = ({
   };
 
   const modalContent = (
-    <div class="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <div> {bayname}</div>
       <div>예약일정:</div>
       <div>{reservetime}</div>

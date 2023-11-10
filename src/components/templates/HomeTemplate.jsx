@@ -74,7 +74,7 @@ const HomeTemplate = () => {
       <div className="text-2xl font-bold">
         {userName
           ? `${userName}님 안녕하세요!`
-          : "여유롭게 즐기는 세차, 뽀득뽀득"}
+          : "여유롭게 즐기는 셀프세차, 뽀득뽀득"}
       </div>
       <section className="gap-4 flex-between">
         <Button

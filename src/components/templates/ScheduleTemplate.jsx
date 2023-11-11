@@ -96,10 +96,22 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
   const computedEnd = computeEndTime();
 
   const combineDateTime = (date, time) => {
-    return `${date.toISOString().split("T")[0]}T${time}`;
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    const formattedDate = [
+      year,
+      month.toString().padStart(2, "0"),
+      day.toString().padStart(2, "0"),
+    ].join("-");
+
+    return `${formattedDate}T${time}`;
   };
 
-  const formattedStartTime = combineDateTime(date, startTime);
+  const formattedStartTime = startTime
+    ? combineDateTime(date, startTime)
+    : null;
   const formattedEndTime = computedEnd
     ? combineDateTime(computedEnd.date, computedEnd.time)
     : null;

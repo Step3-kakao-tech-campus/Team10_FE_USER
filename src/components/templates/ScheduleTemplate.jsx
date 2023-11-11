@@ -123,7 +123,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
           {name}: 베이 {bayInfo.bayNo}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           <Image src={TimeImage} alt="영업시간" />
           <div>
             <div>
@@ -137,31 +137,33 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
 
         <DatePicker handleButtonClick={handleDateChange} />
 
-        <div className="">
-          <div className="font-bold">시작 시간</div>
-          <TimePicker
-            bayId={bayInfo.bayId}
-            openingHours={openingHours}
-            handleButtonClick={handleStartTimeChange}
-            bayBookedTimeList={bayInfo.bayBookedTimeList}
-            duration={duration}
-            selectedDate={date}
-          />
+        <div className="grid gap-6">
+          <div className="grid gap-2">
+            <div className="text-lg font-bold">시작 시간</div>
+            <TimePicker
+              bayId={bayInfo.bayId}
+              openingHours={openingHours}
+              handleButtonClick={handleStartTimeChange}
+              bayBookedTimeList={bayInfo.bayBookedTimeList}
+              duration={duration}
+              selectedDate={date}
+            />
+          </div>
+          <div className="grid gap-2">
+            <div className="text-lg font-bold">사용 시간</div>
+            <DurationPicker
+              bayId={bayInfo.bayId}
+              handleButtonClick={handleDurationChange}
+              selectedDate={date}
+              startTime={startTime}
+              bayBookedTimeList={bayInfo.bayBookedTimeList}
+              openingHours={openingHours}
+            />
+          </div>
         </div>
-        <div className="">
-          <div className="font-bold">사용 시간</div>
-          <DurationPicker
-            bayId={bayInfo.bayId}
-            handleButtonClick={handleDurationChange}
-            selectedDate={date}
-            startTime={startTime}
-            bayBookedTimeList={bayInfo.bayBookedTimeList}
-            openingHours={openingHours}
-          />
-        </div>
-        <div className="p-4 bg-gray-100 rounded-lg">
-          <div className="font-semibold">예약 일정</div>
-          <div className="">
+        <div className="grid gap-2 p-4 bg-gray-100 rounded-lg">
+          <div className="text-lg font-semibold">예약 일정</div>
+          <div>
             <div>
               시작 시간:&nbsp;
               {date &&

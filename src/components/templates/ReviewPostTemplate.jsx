@@ -132,14 +132,13 @@ const ReviewPostTemplate = () => {
       <Button
         variant="long"
         onClick={handleSubmit}
-        className="fixed bottom-0 left-0"
-      >
+        className="fixed bottom-0 left-0">
         리뷰 등록하기
       </Button>
       <CustomModal
         isOpen={isModalOpen}
         onConfirm={handleModalConfirm}
-        title="알림창"
+        title="알림"
         content={modalContent}
         confirmText="확인"
       />

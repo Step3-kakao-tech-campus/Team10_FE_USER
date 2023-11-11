@@ -7,6 +7,7 @@ import DualBottomsheet from "../atoms/DualBottomsheet";
 import { carwashesSearch } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useDrag } from "react-use-gesture";
+import StatusBar from "../atoms/StatusBar";
 
 const ReservationTemplate = () => {
   const initialKeypoints = [];
@@ -82,9 +83,6 @@ const ReservationTemplate = () => {
       eventOptions: { passive: false },
     }
   );
-  useEffect(() => {
-    bindScroll();
-  }, [bindScroll]);
 
   return (
     <div className="w-screen">

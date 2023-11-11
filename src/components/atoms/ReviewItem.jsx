@@ -5,13 +5,14 @@ import Star from "./Star";
 
 const ReviewItem = ({ rating, username, date, content }) => {
   return (
-    <div className="justify-center p-4 text-sm border border-gray-300 rounded-xl">
+    <div className="grid gap-2 p-4 text-sm border border-gray-300 rounded-xl">
       <Star starCount={rating} />
-      <div className="flex justify-between">
-        <div className="flex gap-1 my-2 font-semibold flex-items">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1 font-semibold">
           <Image src={ProfileImg} alt="닉네임" />
-          {username}
+          <div>{username}</div>
         </div>
+
         <div>{date}</div>
       </div>
       <div>{content}</div>

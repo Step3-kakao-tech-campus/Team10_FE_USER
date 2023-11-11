@@ -42,14 +42,13 @@ const BayItem = ({
   return (
     <div
       className="p-4 overflow-x-auto border rounded-xl"
-      onClick={() => onClick(bayId)}
-    >
+      onClick={() => onClick(bayId)}>
       <div className="font-semibold">베이 {bayNo}</div>
       <div className="flex justify-center">
         {currentTime > closingHour ? (
           <div>
-            오늘 영업이 종료되었습니다 베이를 클릭하여 다음날 예약을 진행해
-            보세요
+            오늘 영업이 종료되었습니다. 베이를 클릭하여 다음날 예약을
+            진행해보세요.
           </div>
         ) : (
           <TimeSlot

@@ -6,7 +6,6 @@ const EXPANDED_Y = 40;
 const COLLAPSED_Y = 350;
 
 const DualBottomsheet = ({ className, children }) => {
-  const [active, setActive] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   const [{ y }, set] = useSpring(() => ({

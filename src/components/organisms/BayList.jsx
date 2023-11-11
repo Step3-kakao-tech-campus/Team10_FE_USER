@@ -1,4 +1,3 @@
-// BayList.js
 import React from "react";
 import BayItem from "../molecules/BayItem";
 
@@ -11,7 +10,7 @@ const BayList = ({ bays, openingHours, selectedDate, onClick }) => {
           key={item.bayId}
           bayId={item.bayId}
           bayNo={item.bayNo}
-          bayBookedTime={item.bayBookedTime}
+          bayBookedTimeList={item.bayBookedTimeList}
           openingHours={openingHours}
           selectedDate={selectedDate}
           onClick={() => onClick(item.bayId)} // Pass bayId to onClick

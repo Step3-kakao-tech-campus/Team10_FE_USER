@@ -1,4 +1,4 @@
-import { useSuspenseQueries } from "@tanstack/react-query";
+import { useSuspenseQueries, useQueries } from "@tanstack/react-query";
 import { Button } from "../atoms/Button";
 import { CarwashCard } from "../molecules/CarwashCard";
 import { RecentCarwashSlider } from "../organisms/RecentCarwashSlider";
@@ -33,7 +33,7 @@ const HomeTemplate = () => {
     }
   }, []);
 
-  const [recommended, recent] = useSuspenseQueries({
+  const [recommended, recent] = useQueries({
     queries: [
       {
         queryKey: ["recommended"],
@@ -42,14 +42,13 @@ const HomeTemplate = () => {
       },
       {
         queryKey: ["recent"],
-        queryFn: () =>
-          isLoggedIn ? reservationsRecent() : Promise.resolve(null),
+        queryFn: () => reservationsRecent(),
       },
     ],
   });
 
   const recommendedData = recommended?.data?.data?.response[0];
-  const recentList = recent?.data?.data?.response?.recent || [];
+  const recentList = recent?.data?.data?.response?.recentReservationList || [];
 
   return (
     <div className="grid-8">
@@ -59,14 +58,16 @@ const HomeTemplate = () => {
           <Button
             onClick={() => {
               dispatch(logout());
-            }}>
+            }}
+          >
             로그아웃
           </Button>
         ) : (
           <Button
             onClick={() => {
               navigate("/login");
-            }}>
+            }}
+          >
             로그인
           </Button>
         )}
@@ -81,7 +82,8 @@ const HomeTemplate = () => {
           variant="home"
           onClick={() => {
             navigate("/reservation");
-          }}>
+          }}
+        >
           내 주변 세차장 예약하기
           <img
             className="absolute right-2 -bottom-4"
@@ -93,7 +95,8 @@ const HomeTemplate = () => {
           variant="home"
           onClick={() => {
             navigate("/history");
-          }}>
+          }}
+        >
           예약내역 보기
           <img
             className="absolute right-2 -bottom-4"
@@ -111,7 +114,6 @@ const HomeTemplate = () => {
             name={recommendedData.name}
             address={recommendedData.location.address}
             rate={recommendedData.rate}
-            reviewCount={recommendedData.reviewCount}
             distance={recommendedData.distance}
           />
         )}

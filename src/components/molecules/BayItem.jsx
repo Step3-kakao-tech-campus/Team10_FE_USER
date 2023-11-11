@@ -5,7 +5,7 @@ import TimeSlot from "../atoms/TimeSlot";
 const BayItem = ({
   bayId,
   bayNo,
-  bayBookedTime,
+  bayBookedTimeList,
   openingHours,
   selectedDate,
   onClick,
@@ -23,7 +23,7 @@ const BayItem = ({
   const getClosingHour = () => parseInt(openingHoursData.end.split(":")[0]);
 
   const timeIsReserved = (hour, halfHourCheck = false) => {
-    return bayBookedTime.some(({ startTime, endTime }) => {
+    return bayBookedTimeList.some(({ startTime, endTime }) => {
       const checkTime = halfHourCheck
         ? dayjs(selectedDate).hour(hour).minute(30)
         : dayjs(selectedDate).hour(hour).minute(0);
@@ -42,7 +42,8 @@ const BayItem = ({
   return (
     <div
       className="p-4 overflow-x-auto border rounded-xl"
-      onClick={() => onClick(bayId)}>
+      onClick={() => onClick(bayId)}
+    >
       <div className="font-semibold">베이 {bayNo}</div>
       <div className="flex justify-center">
         {currentTime > closingHour ? (

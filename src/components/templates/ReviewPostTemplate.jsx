@@ -20,8 +20,12 @@ const ReviewPostTemplate = () => {
 
   const navigate = useNavigate();
 
-  const carwashId = useSelector((state) => state.selectedCarwashId);
-  const reservationId = useSelector((state) => state.selectedReservationId);
+  const carwashId = useSelector(
+    (state) => state.reservationProcess.selectedCarwashId
+  );
+  const reservationId = useSelector(
+    (state) => state.reservationProcess.selectedReservationId
+  );
 
   const keywordMapping = {
     1: "사장님이 친절해요",

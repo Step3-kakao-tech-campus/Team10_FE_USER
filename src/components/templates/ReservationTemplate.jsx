@@ -161,7 +161,7 @@ const ReservationTemplate = () => {
           </div>
 
           <div
-            className="grid gap-4 overflow-y-scroll"
+            className="grid gap-4 overflow-y-scroll pb-28"
             ref={scrollContainerRef}
             {...bindScroll()}
           >

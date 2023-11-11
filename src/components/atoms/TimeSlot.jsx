@@ -26,7 +26,7 @@ const TimeSlot = ({ startHour, endHour, isReservedCallback }) => {
                   hour === startHour ? "text-yellow-500" : "text-gray-500"
                 }`}
               >
-                {hour}시
+                {hour}
               </div>
             </div>
           );

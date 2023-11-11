@@ -1,8 +1,8 @@
 const TimeSlot = ({ startHour, endHour, isReservedCallback }) => {
   return (
     <div className="flex flex-col m-2">
-      <div className="flex justify-between mb-4">
-        <div className="flex items-center">
+      <div className="flex mb-4 flex-tems">
+        <div className="flex items-center ml-8">
           <div className="w-3 h-3 mr-2 bg-primary" />
           예약 가능 시간
         </div>

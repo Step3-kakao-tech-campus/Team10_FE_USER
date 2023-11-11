@@ -45,7 +45,7 @@ const BayItem = ({
   const renderSlotsOrClosedMessage = () => {
     if (isBusinessClosed) {
       return (
-        <div className="my-2 font-semibold ">
+        <div className="my-2 font-semibold text-center">
           오늘 영업이 종료되었습니다. 다음날 예약을 진행해 보세요.
         </div>
       );

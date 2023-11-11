@@ -14,17 +14,6 @@ const ReservationHistoryTemplate = () => {
   const upcomingReservations = data.data.response.upcomingReservationList;
   const completedReservations = data.data.response.completeReservationList;
 
-  const formatTimestamp = (timestamp) => {
-    return {
-      date: dayjs(timestamp).format("YYYY/MM/DD"),
-      time: dayjs(timestamp).format("HH시 mm분"),
-    };
-  };
-
-  const formatTime = (timestamp) => {
-    return dayjs(timestamp).format("HH시 mm분");
-  };
-
   return (
     <div className="grid gap-4">
       <div className="pt-16 text-2xl font-bold">예약내역</div>

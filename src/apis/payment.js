@@ -1,14 +1,11 @@
 import { instance } from "./instance";
 
-export const pgpayment = (bay_id, data) => {
-  return instance.post(`/api/user/payment/ready/${bay_id}`, data, {
+export const pgpayment = (data) => {
+  return instance.post(`/api/user/payment/ready`, data, {
     withCredentials: true,
   });
 };
 
-export const pgapprove = (carwash_id, bay_id, data) => {
-  return instance.post(
-    `/api/user/payment/approve/${carwash_id}/${bay_id}`,
-    data
-  );
+export const pgapprove = (data) => {
+  return instance.post(`/api/user/payment/approve`, data);
 };

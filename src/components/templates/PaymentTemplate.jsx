@@ -54,7 +54,7 @@ const PaymentTemplate = () => {
     isError: payIsError,
     error: payError,
   } = useMutation({
-    mutationFn: (data) => pgpayment(bayId, data),
+    mutationFn: (data) => pgpayment(data),
     onSuccess: (data) => {
       console.log("data", data);
       dispatch({ type: "SAVE_TID", payload: data?.data?.response?.tid });
@@ -100,6 +100,7 @@ const PaymentTemplate = () => {
         tax_free_amount: 0,
       },
       saveDTO: {
+        bayId: bayId,
         startTime: reservations.startTime, // 전역 상태에서 startTime 가져오기
         endTime: reservations.endTime, // 전역 상태에서 endTime 가져오기
       },

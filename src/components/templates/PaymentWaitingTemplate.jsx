@@ -31,7 +31,7 @@ const PaymentWaitingTemplate = () => {
     isError: approveIsError,
     error: approveError,
   } = useMutation({
-    mutationFn: (data) => pgapprove(carwashId, bayId, data),
+    mutationFn: (data) => pgapprove(data),
     onSuccess: (data) => {
       console.log(data.data);
       navigate("/paymentresult", { state: { reservationData: data.data } });
@@ -69,8 +69,6 @@ const PaymentWaitingTemplate = () => {
         startTime: reservations.startTime,
         endTime: reservations.endTime,
       },
-      carwashId: carwashId,
-      bayId: bayId,
     };
 
     if (carwashId) {
@@ -81,12 +79,6 @@ const PaymentWaitingTemplate = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
       <div className="m-4 text-3xl font-semibold">결제 진행 중</div>
-      {approveIsError && (
-        <div>오류가 발생했습니다 : {approveError?.message}</div>
-      )}
-
-      {approveIsLoading && <div>처리 중</div>}
-
       <Button
         variant="long"
         className="fixed bottom-0 left-0"

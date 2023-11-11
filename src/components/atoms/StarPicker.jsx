@@ -9,7 +9,7 @@ export const StarPicker = ({ onRate }) => {
   const handleChange = (rating) => {
     setCurrentRating(rating);
     if (onRate) {
-      onRate(rating); // 새로운 별점을 상위 컴포넌트에 전달
+      onRate(rating);
     }
   };
 

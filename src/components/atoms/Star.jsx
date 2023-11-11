@@ -1,10 +1,6 @@
 import React from "react";
 import StarImg from "/StarPicker/checkedstar.svg";
-/**
- *
- * @param starcount : 별점, reviewcount : 리뷰수 받아옴
- * @returns 별점 컴포넌트
- */
+
 const Star = ({ starCount, reviewCount }) => {
   return (
     <div className="flex items-center gap-1">

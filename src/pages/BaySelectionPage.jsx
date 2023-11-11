@@ -6,7 +6,7 @@ import { GeneralErrorBoundary } from "../components/atoms/GeneralErrorBoundary";
 import Loader from "../components/atoms/Loader";
 
 const BaySelectionPage = () => {
-  const { carwashId } = useParams(); //string
+  const { carwashId } = useParams();
   const navigate = useNavigate();
   return (
     <GeneralErrorBoundary navigate={navigate}>

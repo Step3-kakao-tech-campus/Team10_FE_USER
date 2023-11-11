@@ -15,7 +15,6 @@ const KakaoMap = ({
     document.head.appendChild(script);
 
     script.onload = () => {
-      // Ensure the global kakao variable is on the window object
       const kakao = window.kakao;
 
       kakao.maps.load(() => {

@@ -7,24 +7,16 @@ import ReservationList from "/GNB/reservationList.svg";
 import ReservationListActive from "/GNB/reservationListActive.svg";
 import { Link, useLocation } from "react-router-dom";
 
-/**
- * GNB
- * - 아이폰으로 접속하는 경우 화면 하단 Home Indicator 공간 고려하여 padding-bottom 값 다르게 부여
- * - 현재 페이지 경로를 상태로 관리하여 접속중인 페이지 파란색으로 표시
- */
 export const GNB = () => {
-  // 현재 pathname을 상태로 관리
   const [currentPage, setCurrentPage] = useState("/");
   const location = useLocation();
   useEffect(() => {
     setCurrentPage(location.pathname);
   }, [location]);
 
-  // 모바일 OS에 따라 다른 padding-bottom (아이폰 32px, 이외 8px)
   const mobileType = navigator.userAgent.toLowerCase();
   const paddingByType = mobileType.indexOf("iphone") > -1 ? "mb-8" : "mb-2";
 
-  // 메뉴 아이템 (메뉴명, 경로, 아이콘, 활성화된 아이콘)
   const menus = [
     { name: "홈", path: "/", icon: Home, iconActive: HomeActive },
     {

@@ -79,8 +79,8 @@ const PaymentWaitingTemplate = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="m-4 text-3xl font-semibold bg-gray-50">결제 진행 중</div>
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+      <div className="m-4 text-3xl font-semibold">결제 진행 중</div>
       {approveIsError && (
         <div>오류가 발생했습니다 : {approveError?.message}</div>
       )}

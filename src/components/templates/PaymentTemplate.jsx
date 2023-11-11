@@ -180,7 +180,7 @@ const PaymentTemplate = () => {
         className="fixed bottom-0 w-full p-4 text-center bg-kakao"
         onClick={handlePayment}
       >
-        <div className="flex items-center text-xl font-semibold bg-slate-300">
+        <div className="flex items-center text-xl font-semibold bg-kakao">
           <img src={KakaoPayIcon} alt="카카오페이 아이콘" className="block" />
           <div>{paymentAmount}원 결제하기</div>
         </div>

@@ -35,8 +35,8 @@ const CarwashDetailTemplate = ({ carwashId }) => {
   console.log("detailData", detailData);
 
   return (
-    <div className="relative">
-      <div className="flex-grow h-screen overflow-y-auto pb-16">
+    <div className="flex flex-col h-screen">
+      <div className="flex-grow pb-16 overflow-y-auto">
         <ImageCarousel images={images} />
         <div className="p-4">
           <div className="grid-4">
@@ -68,7 +68,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
       </div>
       <Button
         variant="long"
-        className="fixed bottom-0"
+        className="fixed bottom-0 p-4"
         onClick={() => {
           navigate(`/bayselection/${carwashId}`);
         }}

@@ -7,12 +7,13 @@ import { cancelReservation } from "../../apis/reservations";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getErrorDetail } from "../../layouts/errorswitch";
+import dayjs from "dayjs";
 
 const ReservationItem = ({
   rsvid,
   carwashid,
   imgsrc,
-  reservetime,
+  reservedTime,
   bayname,
   priceinfo,
   buttontype,
@@ -21,6 +22,9 @@ const ReservationItem = ({
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [failmodalContent, setFailmodalContent] = useState("");
+
+  const start = dayjs(reservedTime.start);
+  const end = dayjs(reservedTime.end);
 
   const handleBayClick = (rsvid, carwashid) => {
     dispatch({ type: "SET_CARWASH_ID", payload: carwashid });
@@ -31,8 +35,6 @@ const ReservationItem = ({
   const mutation = useMutation({
     mutationFn: (rsvid) => cancelReservation(rsvid),
     onSuccess: (data) => {
-      console.log("예약 취소 성공" + data.data);
-      console.log(data);
       location.reload();
     },
     onError: (error) => {
@@ -63,33 +65,37 @@ const ReservationItem = ({
     </div>
   ) : (
     <div className="flex flex-col gap-2">
-      <div> {bayname}</div>
+      <div>{bayname}</div>
       <div>예약일정:</div>
-      <div>{reservetime}</div>
+      <div>
+        {start.format("YYYY-MM-DD HH:MM")} ~ {end.format("HH:MM")}
+      </div>
       <div>취소 금액: {priceinfo}</div>
     </div>
   );
-
   return (
-    <div className="pt-2 mb-4 border border-gray-300 rounded-md">
-      <div className="flex items-center justify-between p-4">
+    <div className="grid gap-4 p-4 border border-gray-300 rounded-xl">
+      <div className="flex items-center gap-4">
         <Image
           src={imgsrc}
-          className="w-20 h-20 mr-8 rounded-md"
+          className="w-20 h-20 rounded-xl"
           alt="세차장 이미지"
         />
-        <div className="flex flex-col flex-grow gap-2">
-          <div className="mt-2 text-sm">{reservetime}</div>
+        <div>
+          <div className="text-sm">
+            {start.format("YYYY-MM-DD HH:MM")} ~ {end.format("HH:MM")}
+          </div>
           <div className="font-semibold">{bayname}</div>
-          <div className="font-bold text-right text-primary">{priceinfo}</div>
+          <div className="font-bold text-primary">
+            {priceinfo.toLocaleString()}원
+          </div>
         </div>
       </div>
       {buttontype === "cancel" && (
         <Button
           variant="long"
           onClick={() => setIsModalOpen(true)}
-          className="bg-red-500 rounded-md "
-        >
+          className="bg-red-500 rounded-md ">
           예약 취소
         </Button>
       )}
@@ -97,8 +103,7 @@ const ReservationItem = ({
         <Button
           variant="long"
           className="rounded-md"
-          onClick={() => handleBayClick(rsvid, carwashid)}
-        >
+          onClick={() => handleBayClick(rsvid, carwashid)}>
           리뷰 작성
         </Button>
       )}

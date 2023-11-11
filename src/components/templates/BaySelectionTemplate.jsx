@@ -11,7 +11,7 @@ const BaySelectionTemplate = ({ carwashId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [carwashInfoData, bayListData] = useSuspenseQueries({
+  const [carwashInfoData, baysData] = useSuspenseQueries({
     queries: [
       {
         queryKey: ["getCarwashesInfo", carwashId],
@@ -26,11 +26,30 @@ const BaySelectionTemplate = ({ carwashId }) => {
 
   const detailData = carwashInfoData.data.data.response.optime;
   const name = carwashInfoData.data.data.response.name;
-  const bayList = bayListData.data.data.response.bayList;
+  const bayListData = baysData.data.data.response.bayList;
 
   const handleBayClick = (bayId) => {
     dispatch({ type: "SET_BAY_ID", payload: bayId });
     navigate(`/schedule/${carwashId}/${bayId}`);
+  };
+
+  const renderBayContent = () => {
+    if (bayListData && bayListData.length > 0) {
+      return (
+        <BayList
+          bays={bayListData}
+          openingHours={detailData}
+          selectedDate={new Date()}
+          onClick={handleBayClick}
+        />
+      );
+    } else {
+      return (
+        <div className="mt-4 font-bold">
+          해당 세차장에는 등록된 베이가 존재하지 않습니다.
+        </div>
+      );
+    }
   };
 
   return (
@@ -47,14 +66,10 @@ const BaySelectionTemplate = ({ carwashId }) => {
           </div>
         </div>
       </div>
-      <div>
-        <BayList
-          bays={bayList}
-          openingHours={detailData}
-          selectedDate={new Date()}
-          onClick={handleBayClick}
-        />
+      <div className="font-semibold text-primary">
+        원하는 베이를 클릭하여 예약을 진행해보세요
       </div>
+      <div>{renderBayContent()}</div>
     </div>
   );
 };

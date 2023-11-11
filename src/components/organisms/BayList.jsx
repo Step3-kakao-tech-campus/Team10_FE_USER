@@ -13,7 +13,7 @@ const BayList = ({ bays, openingHours, selectedDate, onClick }) => {
           bayBookedTimeList={item.bayBookedTimeList}
           openingHours={openingHours}
           selectedDate={selectedDate}
-          onClick={() => onClick(item.bayId)} // Pass bayId to onClick
+          onClick={() => onClick(item.bayId)}
         />
       ))}
     </div>

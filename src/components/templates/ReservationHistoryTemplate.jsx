@@ -20,15 +20,9 @@ const ReservationHistoryTemplate = () => {
 
   useEffect(() => {
     if (data) {
-      setCurrentReservations(
-        data?.data?.response?.currentReservationList || []
-      );
-      setUpcomingReservations(
-        data?.data?.response?.upcomingReservationList || []
-      );
-      setCompletedReservations(
-        data?.data?.response?.completeReservationList || []
-      );
+      setCurrentReservations(data?.data?.response?.currentReservationList);
+      setUpcomingReservations(data?.data?.response?.upcomingReservationList);
+      setCompletedReservations(data?.data?.response?.completeReservationList);
     }
   }, [data]);
 

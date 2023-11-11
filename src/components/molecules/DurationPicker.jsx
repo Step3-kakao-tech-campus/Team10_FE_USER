@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const DurationPicker = ({
   handleButtonClick,
   startTime,
-  bayBookedTime,
+  bayBookedTimeList,
   selectedDate,
   openingHours,
 }) => {
@@ -63,9 +63,9 @@ const DurationPicker = ({
       `${selectedDate.toISOString().split("T")[0]}T${getEndTime(duration)}:00`
     );
 
-    for (let i = 0; i < bayBookedTime.length; i++) {
-      const scheduleStart = new Date(bayBookedTime[i].startTime);
-      const scheduleEnd = new Date(bayBookedTime[i].endTime);
+    for (let i = 0; i < bayBookedTimeList.length; i++) {
+      const scheduleStart = new Date(bayBookedTimeList[i].startTime);
+      const scheduleEnd = new Date(bayBookedTimeList[i].endTime);
 
       if (startTimeWithDate < scheduleEnd && endTimeWithDate > scheduleStart) {
         return true;
@@ -99,7 +99,8 @@ const DurationPicker = ({
               (isEndTimeAfterClosingTime(duration) ||
                 isDurationOverlapping(duration)) &&
               "opacity-50 cursor-not-allowed"
-            }`}>
+            }`}
+          >
             {duration}분
           </button>
         ))}

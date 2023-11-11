@@ -57,11 +57,7 @@ const DualBottomsheet = ({ className, children }) => {
   );
 
   return (
-    <animated.div
-      className={`w-screen h-4/5 ${className}`}
-      style={{ y }}
-      {...bind()}
-    >
+    <animated.div className={`h-screen ${className}`} style={{ y }} {...bind()}>
       {children}
     </animated.div>
   );

@@ -35,6 +35,25 @@ const BaySelectionTemplate = ({ carwashId }) => {
     navigate(`/schedule/${carwashId}/${bayId}`);
   };
 
+  const renderBayContent = () => {
+    if (bayListData && bayListData.length > 0) {
+      return (
+        <BayList
+          bays={bayListData}
+          openingHours={detailData}
+          selectedDate={new Date()}
+          onClick={handleBayClick}
+        />
+      );
+    } else {
+      return (
+        <div className="mt-4 font-bold">
+          해당 세차장에는 등록된 베이가 존재하지 않습니다.
+        </div>
+      );
+    }
+  };
+
   return (
     <div className="p-4 grid-4">
       <div className="text-xl font-bold">{name}: 베이 선택</div>
@@ -49,14 +68,11 @@ const BaySelectionTemplate = ({ carwashId }) => {
           </div>
         </div>
       </div>
-      <div>
-        <BayList
-          bays={bayListData}
-          openingHours={detailData}
-          selectedDate={new Date()}
-          onClick={handleBayClick}
-        />
+      <div className="font-semibold text-primary">
+        {" "}
+        원하는 베이를 클릭하여 예약을 진행해보세요
       </div>
+      <div>{renderBayContent()}</div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useSuspenseQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { calculatePayment } from "../../apis/carwashes";
 import { pgpayment } from "../../apis/payment";
 import dayjs from "dayjs";
@@ -27,54 +27,33 @@ const PaymentTemplate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {
-    mutate: paymentCalMutate, //결제 금액 계산
-    isLoading: paymentCalIsLoading,
-    isError: paymentCalIsError,
-    error: paymentCalError,
-  } = useMutation({
+  const { mutate: paymentCalMutate } = useMutation({
     mutationFn: (data) => calculatePayment(bayId, data),
     onSuccess: (data) => {
       setPaymentData({ price: data.data.response.price });
-      console.log("결제금액 계산 성공:", data.data.response.price);
     },
     onError: (error) => {
       const errorDetail = getErrorDetail(error);
-      console.log("errorDetail", errorDetail);
       setFailmodalContent(errorDetail);
-      console.log(failmodalContent);
       setIsModalOpen(true);
-      console.error("예약 취소 실패 ", error);
     },
   });
 
-  const {
-    mutate: payMutate, // pg 결제 로직
-    isLoading: payIsLoading,
-    isError: payIsError,
-    error: payError,
-  } = useMutation({
+  const { mutate: payMutate } = useMutation({
     mutationFn: (data) => pgpayment(data),
     onSuccess: (data) => {
       console.log("data", data);
       dispatch({ type: "SAVE_TID", payload: data?.data?.response?.tid });
 
       if (isMobile) {
-        // 모바일 환경일 때
         setRedirectLink(data?.data?.response?.next_redirect_mobile_url);
       } else {
-        // PC 환경일 때
         setRedirectLink(data?.data?.response?.next_redirect_pc_url);
       }
-      // 이제 setRedirectLink를 사용하여 리다이렉트 URL을 상태로 설정합니다.
-    },
-    onError: (err) => {
-      console.error("Payment error:", err);
     },
   });
   useEffect(() => {
     if (redirectLink) {
-      // redirectLink가 설정되면, 네비게이트를 사용하여 리디렉션합니다.
       window.location.href = redirectLink;
     }
   }, [redirectLink]);
@@ -94,15 +73,15 @@ const PaymentTemplate = () => {
         cid: "TC0ONETIME",
         partner_order_id: "partner_order_id",
         partner_user_id: "partner_user_id",
-        item_name: "구름 세차장 예약",
+        item_name: "결제하기",
         quantity: 1,
         total_amount: paymentData?.price,
         tax_free_amount: 0,
       },
       saveDTO: {
         bayId: bayId,
-        startTime: reservations.startTime, // 전역 상태에서 startTime 가져오기
-        endTime: reservations.endTime, // 전역 상태에서 endTime 가져오기
+        startTime: reservations.startTime,
+        endTime: reservations.endTime,
       },
     };
     if (carwashId) {
@@ -115,16 +94,6 @@ const PaymentTemplate = () => {
       paymentCalMutate(reservations);
     }
   }, [reservations, carwashId, paymentCalMutate]);
-
-  // UI 로딩 상태 표시
-  if (paymentCalIsLoading) {
-    return <div>Loading...</div>;
-  }
-
-  // UI 에러 상태 표시
-  if (paymentCalIsLoading) {
-    return <div>Error: {paymentCalError.message}</div>;
-  }
 
   const formatDateStart = (dateString) => {
     const datePart = dayjs(dateString).format("YYYY년 MM월 DD일");
@@ -179,11 +148,11 @@ const PaymentTemplate = () => {
       </div>
       <Button
         className="fixed bottom-0 w-full p-4 text-center bg-kakao"
-        onClick={handlePayment}>
+        onClick={handlePayment}
+      >
         <div className="flex items-center justify-center gap-2 text-xl font-semibold">
           <img src={KakaoPayIcon} alt="카카오페이 아이콘" className="w-14" />
           <div>결제하기</div>
-
         </div>
       </Button>
       <CustomModal

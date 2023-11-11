@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../atoms/Button";
 import Image from "../atoms/Image";
 import CustomModal from "../atoms/CustomModal";
@@ -34,16 +34,15 @@ const ReservationItem = ({
 
   const mutation = useMutation({
     mutationFn: (rsvid) => cancelReservation(rsvid),
-    onSuccess: (data) => {
+    onSuccess: () => {
       location.reload();
     },
     onError: (error) => {
       const errorDetail = getErrorDetail(error);
-      console.log("errorDetail", errorDetail);
+
       setFailmodalContent(errorDetail);
       console.log(failmodalContent);
       setIsModalOpen(true);
-      console.error("예약 취소 실패 ", error);
     },
   });
 
@@ -95,7 +94,8 @@ const ReservationItem = ({
         <Button
           variant="long"
           onClick={() => setIsModalOpen(true)}
-          className="bg-red-500 rounded-md ">
+          className="bg-red-500 rounded-md "
+        >
           예약 취소
         </Button>
       )}
@@ -103,7 +103,8 @@ const ReservationItem = ({
         <Button
           variant="long"
           className="rounded-md"
-          onClick={() => handleBayClick(rsvid, carwashid)}>
+          onClick={() => handleBayClick(rsvid, carwashid)}
+        >
           리뷰 작성
         </Button>
       )}

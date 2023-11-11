@@ -37,7 +37,6 @@ const CarwashDetailTemplate = ({ carwashId }) => {
     <div className="relative">
       <StatusBar />
       <div className="flex-grow h-screen pb-16 overflow-y-auto">
-
         <ImageCarousel images={images} />
         <div className="p-4">
           <div className="grid-4">
@@ -72,7 +71,8 @@ const CarwashDetailTemplate = ({ carwashId }) => {
         className="fixed bottom-0 p-4"
         onClick={() => {
           navigate(`/bayselection/${carwashId}`);
-        }}>
+        }}
+      >
         예약하러 가기
       </Button>
     </div>

@@ -1,7 +1,6 @@
 import ReservationItem from "../molecules/ReservationItem";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { reservationsCurrentstatus } from "../../apis/reservations";
-import dayjs from "dayjs";
 import { Button } from "../atoms/Button";
 
 const ReservationHistoryTemplate = () => {
@@ -13,17 +12,6 @@ const ReservationHistoryTemplate = () => {
   const currentReservations = data.data.response.currentReservationList;
   const upcomingReservations = data.data.response.upcomingReservationList;
   const completedReservations = data.data.response.completeReservationList;
-
-  const formatTimestamp = (timestamp) => {
-    return {
-      date: dayjs(timestamp).format("YYYY/MM/DD"),
-      time: dayjs(timestamp).format("HH시 mm분"),
-    };
-  };
-
-  const formatTime = (timestamp) => {
-    return dayjs(timestamp).format("HH시 mm분");
-  };
 
   return (
     <div className="grid gap-4">
@@ -70,7 +58,8 @@ const ReservationHistoryTemplate = () => {
           <Button
             variant="long"
             className="bg-yellow-400 rounded-md"
-            onClick={() => navigate("/reservation")}>
+            onClick={() => navigate("/reservation")}
+          >
             예약하러 가기
           </Button>
         </div>

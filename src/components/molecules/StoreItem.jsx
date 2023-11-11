@@ -27,7 +27,8 @@ const StoreItem = ({
   return (
     <div
       className="relative flex items-center gap-4 p-4 bg-white border border-gray-300 rounded-xl"
-      onClick={handleClick}>
+      onClick={handleClick}
+    >
       <picture className="rounded-xl">
         <img
           className="w-24 h-24 rounded-xl"

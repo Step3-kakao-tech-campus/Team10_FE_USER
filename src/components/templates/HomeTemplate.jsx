@@ -21,7 +21,6 @@ const HomeTemplate = () => {
   });
 
   const { isLoggedIn, userName } = useSelector((state) => state.auth);
-  console.log("로그인 상태" + isLoggedIn + userName);
 
   useEffect(() => {
     if (navigator.geolocation) {

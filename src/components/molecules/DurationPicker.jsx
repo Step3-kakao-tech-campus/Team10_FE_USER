@@ -81,7 +81,7 @@ const DurationPicker = ({
   };
 
   return (
-    <div>
+    <div className="my-2">
       <div className="flex flex-wrap">
         {durations.map((duration) => (
           <button

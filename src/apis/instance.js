@@ -6,7 +6,6 @@ export const instance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  baseURL: "https://k923062c3c512a.user-app.krampoline.com",
 });
 
 instance.interceptors.request.use((config) => {

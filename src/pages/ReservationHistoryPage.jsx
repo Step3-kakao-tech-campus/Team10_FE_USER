@@ -3,6 +3,7 @@ import ReservationHistoryTemplate from "../components/templates/ReservationHisto
 import { GeneralErrorBoundary } from "../components/atoms/GeneralErrorBoundary.jsx";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/atoms/Loader";
+
 const ReservationHistoryPage = () => {
   const navigate = useNavigate();
   return (

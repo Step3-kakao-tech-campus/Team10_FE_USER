@@ -24,7 +24,8 @@ export const Tab = ({ introduction }) => {
               "border border-gray-300 bg-white text-black"
             }`}
             onClick={() => selectMenuHandler(index)}
-            key={index}>
+            key={index}
+          >
             {item.name}
           </li>
         ))}

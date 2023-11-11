@@ -5,7 +5,6 @@ import MapImage from "/StoreInfo/Map.svg";
 import TelImage from "/StoreInfo/Tel.svg";
 
 const StoreInfo = ({ weekhour, weekendhour, tel, address }) => {
-  // 전화번호에 하이픈
   const formatPhoneNumber = (phoneNumber) => {
     const digits = phoneNumber.replace(/\D/g, "");
 

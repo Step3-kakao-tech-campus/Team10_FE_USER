@@ -31,10 +31,9 @@ const TimeSlot = ({ startHour, endHour, isReservedCallback }) => {
                   }`}
                 />
               </div>
-              {/* Time label */}
               <div
                 className={`text-xs mt-1 ${
-                  hour === startHour ? "text-primary" : "text-gray-500"
+                  hour === startHour ? "text-yellow-500" : "text-gray-500"
                 }`}
               >
                 {hour}시

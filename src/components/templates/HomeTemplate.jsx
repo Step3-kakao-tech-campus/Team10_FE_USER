@@ -1,4 +1,4 @@
-import { useSuspenseQueries } from "@tanstack/react-query";
+import { useSuspenseQueries, useQueries } from "@tanstack/react-query";
 import { Button } from "../atoms/Button";
 import { CarwashCard } from "../molecules/CarwashCard";
 import { RecentCarwashSlider } from "../organisms/RecentCarwashSlider";
@@ -21,6 +21,7 @@ const HomeTemplate = () => {
   });
 
   const { isLoggedIn, userName } = useSelector((state) => state.auth);
+  console.log("로그인 상태" + isLoggedIn + userName);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -33,7 +34,7 @@ const HomeTemplate = () => {
     }
   }, []);
 
-  const [recommended, recent] = useSuspenseQueries({
+  const [recommended, recent] = useQueries({
     queries: [
       {
         queryKey: ["recommended"],
@@ -42,9 +43,7 @@ const HomeTemplate = () => {
       },
       {
         queryKey: ["recent"],
-        queryFn: () =>
-          isLoggedIn ? reservationsRecent() : Promise.resolve(null),
-        enabled: isLoggedIn,
+        queryFn: () => reservationsRecent(),
       },
     ],
   });
@@ -116,6 +115,7 @@ const HomeTemplate = () => {
             name={recommendedData.name}
             address={recommendedData.location.address}
             rate={recommendedData.rate}
+            reviewCount={recommendedData.reviewCount}
             distance={recommendedData.distance}
           />
         )}

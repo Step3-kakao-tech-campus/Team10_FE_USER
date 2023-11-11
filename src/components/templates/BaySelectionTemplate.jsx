@@ -11,7 +11,7 @@ const BaySelectionTemplate = ({ carwashId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [carwashInfoData, bayListData] = useSuspenseQueries({
+  const [carwashInfoData, baysData] = useSuspenseQueries({
     queries: [
       {
         queryKey: ["getCarwashesInfo", carwashId],
@@ -26,7 +26,9 @@ const BaySelectionTemplate = ({ carwashId }) => {
 
   const detailData = carwashInfoData.data.data.response.optime;
   const name = carwashInfoData.data.data.response.name;
-  const bayList = bayListData.data.data.response.bayList;
+  const bayListData = baysData.data.data.response.bayList;
+
+  console.log(bayListData);
 
   const handleBayClick = (bayId) => {
     dispatch({ type: "SET_BAY_ID", payload: bayId });
@@ -49,7 +51,7 @@ const BaySelectionTemplate = ({ carwashId }) => {
       </div>
       <div>
         <BayList
-          bays={bayList}
+          bays={bayListData}
           openingHours={detailData}
           selectedDate={new Date()}
           onClick={handleBayClick}

@@ -3,7 +3,7 @@ import React from "react";
 import BayItem from "../molecules/BayItem";
 
 const BayList = ({ bays, openingHours, selectedDate, onClick }) => {
-  console.log(openingHours);
+  console.log(bays);
   return (
     <div className="grid gap-4">
       {bays.map((item) => (
@@ -11,10 +11,10 @@ const BayList = ({ bays, openingHours, selectedDate, onClick }) => {
           key={item.bayId}
           bayId={item.bayId}
           bayNo={item.bayNo}
-          bayBookedTime={item.bayBookedTime}
+          bayBookedTime={item.bayBookedTimeList}
           openingHours={openingHours}
           selectedDate={selectedDate}
-          onClick={() => onClick(item.bayId)} // Pass bayId to onClick
+          onClick={() => onClick(item.bayId)}
         />
       ))}
     </div>

@@ -59,12 +59,12 @@ const ReservationItem = ({
   };
 
   const modalContent = failmodalContent ? (
-    <div className="flex flex-col gap-2">
+    <div className="grid gap-2">
       <div> 오류가 발생하였습니다.</div>
       <div>{failmodalContent}</div>
     </div>
   ) : (
-    <div className="flex flex-col gap-2">
+    <div className="grid gap-2">
       <div>{bayname}</div>
       <div>예약일정:</div>
       <div>

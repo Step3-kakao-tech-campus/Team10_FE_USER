@@ -14,25 +14,22 @@ const CustomModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className="px-8 py-4 mx-4 my-40 bg-white border-2 border-primary rounded-xl"
+      className="mx-4 overflow-auto bg-white shadow-xl my-72 border-primary rounded-xl"
       overlayClassName="fixed inset-0 bg-black bg-opacity-30"
-      contentLabel="Custom Modal"
-    >
-      <div className="text-lg font-semibold text-primary">{title}</div>
-      <div className="my-6">{content}</div>
-      <div className="flex justify-end">
-        <button
-          onClick={onConfirm}
-          className="px-4 py-2 mr-2 text-white rounded-md bg-primary"
-        >
+      contentLabel="Custom Modal">
+      <div className="p-4 grid-4">
+        <div className="text-xl font-semibold text-center text-primary">
+          {title}
+        </div>
+        <div>{content}</div>
+      </div>
+      <div className="flex">
+        <button onClick={onConfirm} className="w-1/2 p-4 text-white bg-primary">
           {confirmText}
         </button>
         <button
           onClick={onRequestClose}
-          className={`px-4 py-2 bg-gray-300 rounded-md ${
-            !cancelText && "hidden"
-          } `}
-        >
+          className={`p-4 w-1/2 bg-gray-300 ${!cancelText && "hidden"} `}>
           {cancelText}
         </button>
       </div>

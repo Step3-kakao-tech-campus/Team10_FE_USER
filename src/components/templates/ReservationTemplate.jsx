@@ -76,9 +76,9 @@ const ReservationTemplate = () => {
   const bindScroll = useDrag(
     (state) => {
       const [, y] = state.offset;
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.scrollTop += y;
-      }
+      // if (scrollContainerRef.current) {
+      //   scrollContainerRef.current.scrollTop += 0;
+      // }
       state.event.stopPropagation();
     },
     {
@@ -102,7 +102,7 @@ const ReservationTemplate = () => {
       />
 
       <DualBottomsheet className="fixed left-0 z-10">
-        <Bottomsheet className="z-20 flex flex-col h-full gap-4 p-4">
+        <Bottomsheet className="z-20 flex flex-col h-full gap-4 p-4 ">
           <input
             type="text"
             id="search-bar"

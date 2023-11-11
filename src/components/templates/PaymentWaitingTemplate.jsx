@@ -31,7 +31,7 @@ const PaymentWaitingTemplate = () => {
     isError: approveIsError,
     error: approveError,
   } = useMutation({
-    mutationFn: (data) => pgapprove(carwashId, bayId, data),
+    mutationFn: (data) => pgapprove(data),
     onSuccess: (data) => {
       console.log(data.data);
       navigate("/paymentresult", { state: { reservationData: data.data } });
@@ -69,8 +69,6 @@ const PaymentWaitingTemplate = () => {
         startTime: reservations.startTime,
         endTime: reservations.endTime,
       },
-      carwashId: carwashId,
-      bayId: bayId,
     };
 
     if (carwashId) {

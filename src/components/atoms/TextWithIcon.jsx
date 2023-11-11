@@ -1,8 +1,3 @@
-/**
- * @param iconsrc : 아이콘의 위치,
- * @param text : 들어갈 문구
- */
-
 import Image from "./Image";
 
 export const TextWithIcon = ({ iconsrc, text, className }) => {

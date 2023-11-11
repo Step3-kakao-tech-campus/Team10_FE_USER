@@ -1,9 +1,10 @@
 import React from "react";
 import { Suspense } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PaymentTemplate from "../components/templates/PaymentTemplate";
 import { GeneralErrorBoundary } from "../components/atoms/GeneralErrorBoundary";
 import Loader from "../components/atoms/Loader";
+
 const PaymentPage = () => {
   const navigate = useNavigate();
   return (

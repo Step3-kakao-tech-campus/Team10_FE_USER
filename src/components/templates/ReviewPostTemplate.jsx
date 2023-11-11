@@ -18,7 +18,6 @@ const ReviewPostTemplate = () => {
   const [modalType, setModalType] = useState(null);
   const [modalContent, setModalContent] = useState("");
   const [isOverLimit, setIsOverLimit] = useState(false);
-  const [failmodalContent, setFailmodalContent] = useState("");
 
   const navigate = useNavigate();
 
@@ -59,12 +58,9 @@ const ReviewPostTemplate = () => {
     },
     onError: (error) => {
       const errorDetail = getErrorDetail(error);
-      console.log("errorDetail", errorDetail);
       setModalType("error");
       setModalContent(errorDetail);
-      console.log(failmodalContent);
       setIsModalOpen(true);
-      console.error("예약 취소 실패 ", error);
     },
   });
 

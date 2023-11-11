@@ -33,12 +33,11 @@ const CarwashDetailTemplate = ({ carwashId }) => {
           url: "/CarwashDetail/CarwashImgNotFound.png",
         };
 
-  console.log("detailData", detailData);
-
   return (
     <div className="relative">
       <StatusBar />
       <div className="flex-grow h-screen pb-16 overflow-y-auto">
+
         <ImageCarousel images={images} />
         <div className="p-4">
           <div className="grid-4">
@@ -70,7 +69,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
       </div>
       <Button
         variant="long"
-        className="fixed bottom-0"
+        className="fixed bottom-0 p-4"
         onClick={() => {
           navigate(`/bayselection/${carwashId}`);
         }}>

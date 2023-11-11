@@ -6,8 +6,8 @@ const PaymentFailPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen  px-4">
-      <div className="text-3xl font-semibold mb-8">결제 실패</div>
+    <div className="flex flex-col items-center justify-center h-screen px-4">
+      <div className="mb-8 text-3xl font-semibold">결제 실패</div>
       <div className="">결제 실패입니다. 잠시 후 다시 시도해주세요.</div>
       <Button
         variant="long"

@@ -53,8 +53,10 @@ const PaymentResultTemplate = () => {
   return (
     <div>
       <div className="relative p-4">
-        <div className="py-8 text-2xl font-bold"> 결제가 완료되었습니다!</div>
-        <div className="py-4 bg-gray-100 rounded-lg ">
+        <div className="py-8 text-2xl font-bold text-center">
+          결제가 완료되었습니다
+        </div>
+        <div className="py-4 overflow-hidden rounded-lg bg-gray-50">
           <div className="flex flex-col gap-4 p-4">
             <TextWithIcon text={formatDate(start)} iconsrc={iconsrc.calendar} />
             <TextWithIcon

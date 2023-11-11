@@ -20,8 +20,7 @@ const HomeTemplate = () => {
     longitude: 126.9,
   });
 
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const userName = useSelector((state) => state.auth.userName);
+  const { isLoggedIn, userName } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -59,14 +58,16 @@ const HomeTemplate = () => {
           <Button
             onClick={() => {
               dispatch(logout());
-            }}>
+            }}
+          >
             로그아웃
           </Button>
         ) : (
           <Button
             onClick={() => {
               navigate("/login");
-            }}>
+            }}
+          >
             로그인
           </Button>
         )}
@@ -81,7 +82,8 @@ const HomeTemplate = () => {
           variant="home"
           onClick={() => {
             navigate("/reservation");
-          }}>
+          }}
+        >
           내 주변 세차장 예약하기
           <img
             className="absolute right-2 -bottom-4"
@@ -93,7 +95,8 @@ const HomeTemplate = () => {
           variant="home"
           onClick={() => {
             navigate("/history");
-          }}>
+          }}
+        >
           예약내역 보기
           <img
             className="absolute right-2 -bottom-4"
@@ -111,6 +114,7 @@ const HomeTemplate = () => {
             name={recommendedData.name}
             address={recommendedData.location.address}
             rate={recommendedData.rate}
+            reviewCount={recommendedData.reviewCount}
             distance={recommendedData.distance}
           />
         )}

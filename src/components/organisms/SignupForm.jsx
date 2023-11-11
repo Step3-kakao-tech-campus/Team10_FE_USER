@@ -222,7 +222,7 @@ const SignupForm = () => {
           type="submit"
           disabled={isSubmitting}
           variant="long"
-          className="px-4 py-2 font-bold text-white bg-primary rounded-md"
+          className="px-4 py-2 font-bold text-white rounded-md bg-primary"
         >
           회원가입
         </Button>
@@ -237,7 +237,10 @@ const SignupForm = () => {
           </small>
         )}
 
-        <Link to="/login" className="text-primary underline font-semibold mt-4">
+        <Link
+          to="/login"
+          className="inline w-12 mt-4 font-semibold underline text-primary"
+        >
           로그인
         </Link>
       </form>

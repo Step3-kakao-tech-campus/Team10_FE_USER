@@ -83,6 +83,7 @@ const ReservationTemplate = () => {
       eventOptions: { passive: false },
     }
   );
+
   return (
     <div className="w-screen">
       <KakaoMap
@@ -163,7 +164,8 @@ const ReservationTemplate = () => {
           <div
             className="grid gap-4 overflow-y-scroll"
             ref={scrollContainerRef}
-            {...bindScroll()}>
+            {...bindScroll()}
+          >
             {filteredWashlists?.length > 0 ? (
               filteredWashlists.map((item, index) => (
                 <StoreItem

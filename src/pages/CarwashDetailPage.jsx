@@ -4,6 +4,7 @@ import CarwashDetailTemplate from "../components/templates/CarwashDetailTemplate
 import { useNavigate } from "react-router-dom";
 import { GeneralErrorBoundary } from "../components/atoms/GeneralErrorBoundary";
 import Loader from "../components/atoms/Loader";
+
 const CarwashDetailPage = () => {
   const navigate = useNavigate();
   const { carwashId } = useParams();

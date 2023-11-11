@@ -6,8 +6,8 @@ import { GeneralErrorBoundary } from "../components/atoms/GeneralErrorBoundary";
 import Loader from "../components/atoms/Loader";
 
 const SchedulePage = () => {
-  const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수를 얻습니다.
-  const { carwashId, bayId } = useParams(); // useParams 훅을 사용하여 URL 파라미터를 얻습니다.
+  const navigate = useNavigate();
+  const { carwashId, bayId } = useParams();
 
   return (
     <GeneralErrorBoundary navigate={navigate}>

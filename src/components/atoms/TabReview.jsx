@@ -22,14 +22,6 @@ const TabReview = ({}) => {
     suspense: true,
   });
 
-  if (error) {
-    return <div>Error loading reviews: {error.message}</div>;
-  }
-
-  if (isFetching) {
-    return <div>Loading reviews...</div>;
-  }
-
   const averageStar = reviewsData?.data?.response?.overview?.rate || 0;
   const totalReviews = reviewsData?.data?.response?.overview?.totalCnt || 0;
   const keywords =

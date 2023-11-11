@@ -32,8 +32,6 @@ const CarwashDetailTemplate = ({ carwashId }) => {
           url: "/CarwashDetail/CarwashImgNotFound.png",
         };
 
-  console.log("detailData", detailData);
-
   return (
     <div className="flex flex-col h-screen">
       <div className="flex-grow pb-16 overflow-y-auto">

@@ -19,7 +19,8 @@ export const CarwashCard = ({ id, image, name, address, rate, distance }) => {
   return (
     <div
       className="relative overflow-hidden shadow-xl h-72 rounded-xl"
-      onClick={handleClick}>
+      onClick={handleClick}
+    >
       <div className="relative h-48">
         <img
           src={imageUrl}

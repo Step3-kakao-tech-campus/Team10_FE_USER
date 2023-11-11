@@ -9,7 +9,7 @@ import CustomModal from "../atoms/CustomModal";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { isMobile } from "react-device-detect";
-import KakaoPayIcon from "/payment_icon_yellow_small.png";
+import KakaoPayIcon from "/kakaopay.png";
 import { getErrorDetail } from "../../layouts/errorswitch";
 
 const PaymentTemplate = () => {
@@ -178,8 +178,7 @@ const PaymentTemplate = () => {
       </div>
       <Button
         className="fixed bottom-0 w-full p-4 text-center bg-kakao"
-        onClick={handlePayment}
-      >
+        onClick={handlePayment}>
         <div className="flex items-center text-xl font-semibold bg-slate-300">
           <img src={KakaoPayIcon} alt="카카오페이 아이콘" className="block" />
           <div>{paymentAmount}원 결제하기</div>

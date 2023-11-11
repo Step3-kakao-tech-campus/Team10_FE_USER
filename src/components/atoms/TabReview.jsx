@@ -61,11 +61,9 @@ const TabReview = ({}) => {
   return (
     <Suspense fallback={<Loader />}>
       <div>
-        <div className="grid gap-2 py-4">
+        <div className="grid gap-2">
           <div className="font-semibold">평균별점</div>
-          <div>
-            <UserStar averageStar={averageStar} />
-          </div>
+          <UserStar averageStar={averageStar} />
           <hr />
           <div className="py-2 font-semibold">키워드 리뷰</div>
           <div className="grid gap-2">

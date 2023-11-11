@@ -82,7 +82,7 @@ const DurationPicker = ({
 
   return (
     <div>
-      <div className="flex flex-wrap">
+      <div className="grid w-full grid-cols-4 gap-2">
         {durations.map((duration) => (
           <button
             key={duration}
@@ -91,7 +91,7 @@ const DurationPicker = ({
               isEndTimeAfterClosingTime(duration) ||
               isDurationOverlapping(duration)
             }
-            className={`p-2 w-16 border ${
+            className={`p-4 border rounded-xl ${
               selectedDuration === duration
                 ? "bg-primary text-white rounded-md"
                 : "bg-white rounded-md"
@@ -99,8 +99,7 @@ const DurationPicker = ({
               (isEndTimeAfterClosingTime(duration) ||
                 isDurationOverlapping(duration)) &&
               "opacity-50 cursor-not-allowed"
-            }`}
-          >
+            }`}>
             {duration}분
           </button>
         ))}

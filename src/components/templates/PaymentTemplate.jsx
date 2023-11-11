@@ -26,7 +26,7 @@ const PaymentTemplate = () => {
   const dispatch = useDispatch();
 
   const {
-    mutate: paymentCalMutate, //결제 금액 계산
+    mutate: paymentCalMutate,
     isLoading: paymentCalIsLoading,
     isError: paymentCalIsError,
     error: paymentCalError,
@@ -42,7 +42,7 @@ const PaymentTemplate = () => {
   });
 
   const {
-    mutate: payMutate, // pg 결제 로직
+    mutate: payMutate,
     isLoading: payIsLoading,
     isError: payIsError,
     error: payError,
@@ -87,7 +87,7 @@ const PaymentTemplate = () => {
         cid: "TC0ONETIME",
         partner_order_id: "partner_order_id",
         partner_user_id: "partner_user_id",
-        item_name: "구름 세차장 예약",
+        item_name: "결제하기",
         quantity: 1,
         total_amount: paymentData?.price,
         tax_free_amount: 0,
@@ -171,8 +171,9 @@ const PaymentTemplate = () => {
       </div>
       <Button
         className="fixed bottom-0 w-full p-4 text-center bg-kakao"
-        onClick={handlePayment}>
-        <div className="flex items-center text-xl font-semibold bg-slate-300">
+        onClick={handlePayment}
+      >
+        <div className="flex items-center text-xl font-semibold bg-kakao">
           <img src={KakaoPayIcon} alt="카카오페이 아이콘" className="block" />
           <div>{paymentAmount}원 결제하기</div>
         </div>

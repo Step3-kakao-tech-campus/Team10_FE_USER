@@ -20,7 +20,6 @@ const ReservationItem = ({
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log(carwashid);
   const handleBayClick = (rsvid, carwashid) => {
     dispatch({ type: "SET_CARWASH_ID", payload: carwashid });
     dispatch({ type: "SET_RESERVATION_ID", payload: rsvid });
@@ -29,9 +28,10 @@ const ReservationItem = ({
 
   const mutation = useMutation({
     mutationFn: (rsvid) => cancelReservation(rsvid),
-    onSuccess: () => {
+    onSuccess: (data) => {
       console.log("예약 취소 성공");
-      location.reload();
+      console.log(data.data.success);
+      // location.reload();
     },
     onError: (error) => {
       console.error("예약 취소 실패 ", error);

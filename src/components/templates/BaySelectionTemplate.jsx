@@ -69,7 +69,6 @@ const BaySelectionTemplate = ({ carwashId }) => {
         </div>
       </div>
       <div className="font-semibold text-primary">
-        {" "}
         원하는 베이를 클릭하여 예약을 진행해보세요
       </div>
       <div>{renderBayContent()}</div>

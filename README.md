@@ -97,6 +97,11 @@ npm install
 npm run dev
 ```
 
+5. **환경변수** : 지도를 화면에 불러오기 위해 [카카오 map api](https://apis.map.kakao.com/)를 사용하고, 해당 키를 .env 파일을 생성 뒤 환경변수에 넣어야 합니다.
+```
+VITE_KAKAOMAP_API_KEY = "카카오javascriptmap api키를 입력하시면 됩니다"
+```
+
 
 ## 사용자 시작 가이드
 우리 웹 앱은 PWA(Progressive Web App)로서, 설치 없이 여기에서 바로 사용할 수 있습니다. 모바일 환경에 맞춰져 있기 때문에, 모바일 환경에서 접속하는 것을 추천드립니다.
@@ -133,16 +138,24 @@ PWA는 웹사이트와 모바일 앱의 장점을 결합하여, 빠른 성능과
 
 
 
-## 디렉토리 구조
+## 디렉터리 구조 
+```
+📂 src
+  ┣ 📂 apis
+  ┣ 📂 components       
+     ┗ 📂 atoms
+     ┗ 📂 molecules
+     ┗ 📂 organisms
+     ┗ 📂 templates
+ ┣ 📂 hooks            
+ ┣ 📂 layouts           
+ ┣ 📂 mocks            
+ ┣ 📂 pages
+ ┣ 📂 store
+ ┣ 📄 App.jsx
+ ┗ 📄 main.jsx
 
-
-
-
-
-
-
-2. 
-<img src="https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/fca1efb4-9600-42f3-b08c-1c9047c27008" align="center" width="24%">
+```
 
 
 

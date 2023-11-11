@@ -143,7 +143,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
             bayId={bayInfo.bayId}
             openingHours={openingHours}
             handleButtonClick={handleStartTimeChange}
-            bayBookedTime={bayInfo.bayBookedTime}
+            bayBookedTimeList={bayInfo.bayBookedTimeList}
             duration={duration}
             selectedDate={date}
           />
@@ -155,7 +155,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
             handleButtonClick={handleDurationChange}
             selectedDate={date}
             startTime={startTime}
-            bayBookedTime={bayInfo.bayBookedTime}
+            bayBookedTimeList={bayInfo.bayBookedTimeList}
             openingHours={openingHours}
           />
         </div>

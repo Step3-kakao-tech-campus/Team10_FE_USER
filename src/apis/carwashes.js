@@ -14,7 +14,7 @@ export const carwashesNearby = (u_latitude, u_longitude) => {
 
 export const carwashesSearch = (keywordIds, u_latitude, u_longitude) => {
   return instance.get(
-    `/api/open/carwashes/search?keywordIdList=${keywordIds}&latitude=${u_latitude}&longitude=${u_longitude}`
+    `/api/open/carwashes/search?keywordIds=${keywordIds}&latitude=${u_latitude}&longitude=${u_longitude}`
   );
 };
 

@@ -10,7 +10,7 @@ const KakaoMap = ({
     script.async = true;
     script.src =
       "https://dapi.kakao.com/v2/maps/sdk.js?appkey=" +
-      "3130c03f68d56e65941b59d55ea82d1c" +
+      import.meta.env.VITE_KAKAOMAP_API_KEY +
       "&autoload=false";
     document.head.appendChild(script);
 

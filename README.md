@@ -1,4 +1,7 @@
 ![뽀득뽀득](https://user-images.githubusercontent.com/104883910/273441051-28dc9814-84e5-4828-abcb-c5e67d3deee4.png)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FStep3-kakao-tech-campus%2FTeam10_FE_USER&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
+
 
 ## 뽀득뽀득
 
@@ -69,8 +72,10 @@
 
 
 ## 개발자 시작 가이드
+0. **필요한 프로그램 설치하기**
+* nodejs 18.17.0
+* npm 10.0.0
 
-프로젝트에 기여하고 싶으신가요? 아래 단계별 지침을 따라 설정을 완료하세요:
 
 1. **소스 코드 복제하기**: `git clone` 명령어를 사용하여 로컬 머신에 프로젝트의 복사본을 만듭니다.
 ```bash
@@ -98,6 +103,51 @@ npm run dev
 웹앱으로 접속하면 끊김 없는 전체 기능을 갖춘 세차 예약 서비스를 즐길 수 있습니다.
 
 PWA는 웹사이트와 모바일 앱의 장점을 결합하여, 빠른 성능과 오프라인 사용 가능성, 장치의 홈 화면에 추가할 수 있는 기능을 제공합니다. 사용하기 위해서는 단순히 이 [링크](https://k923062c3c512a.user-app.krampoline.com/)로 접속하면 됩니다.
+
+
+
+
+
+
+## 화면 구성
+| 메인 화면 (로그인 전)                                                                                                            | 메인 화면 (로그인 후)                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| ![로그인 전](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/50963362-2ee5-4f3d-b451-4690a61b0061)     | ![로그인 후](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/1a002410-b9d3-4ef7-a4e3-bd2da61049c6)     |
+| **회원가입**                                                                                                                     | **로그인**                                                                                                                       |
+| ![회원가입](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/cd415194-09aa-4154-9b01-dc85492827c0)       | ![로그인 화면](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/0d71bb67-6c8c-4255-a34a-1cac328dce2c)   |
+| **지도 예약 화면**                                                                                                               | **예약 내역 화면**                                                                                                               |
+| ![지도 예약 화면](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/7d174559-aa2e-4ea8-870f-8684b6605f7c) | ![예약 내역 화면](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/b3c84811-1a63-41a6-aafc-467d6a0b91b9) |
+| **세차장 상세정보**                                                                                                              | **세차장 리뷰**                                                                                                                  |
+| ![세차장 상세정보](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/47951e82-0e85-4ead-a0e8-86bfc132f6eb) | ![세차장 리뷰](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/840e071a-2188-49d0-b460-59bc1e4f699d)     |
+| **베이 선택 페이지**                                                                                                             | **예약일정 만들기**                                                                                                               |
+| ![베이 선택 페이지](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/7fcf4de8-3e95-4bb5-8023-f632d7ad3bfe) | ![예약일정 만들기](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/4642ac90-cd22-474c-86ce-0365632068a2) |
+| **결제하기 페이지**                                                                                                              | **결제완료 페이지**                                                                                                               |
+| ![결제하기 페이지](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/6abc5d27-36c8-4e70-9a96-6246eee66ae3) | ![결제완료 페이지](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/980d0d91-42bb-4179-af15-518ebe7cae1d) |
+| **리뷰 등록 페이지**                                                                                                             | **없는 페이지 검색 결과**                                                                                                         |
+| ![리뷰 등록 페이지](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/b78707c8-3a30-4ccb-9896-4efc87e08a76) | ![없는 페이지 검색 결과](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/d0dd4261-3aa2-435a-a1e8-391785b55379) |
+| **오류 페이지**                                                                                                                  |                                                                                                                                  |
+| ![오류 페이지](https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/76c53615-9e22-4fc5-95c8-30646254cf1f)     |                                                                                                                                  |
+
+
+
+
+
+
+## 디렉토리 구조
+
+
+
+
+
+
+
+2. 
+<img src="https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/fca1efb4-9600-42f3-b08c-1c9047c27008" align="center" width="24%">
+
+
+
+
+
 
 
 

@@ -25,22 +25,15 @@ const PaymentWaitingTemplate = () => {
   );
   const tid = useSelector((state) => state.reservationProcess.tid);
 
-  const {
-    mutate: approveMutate,
-    isLoading: approveIsLoading,
-    isError: approveIsError,
-    error: approveError,
-  } = useMutation({
+  const { mutate: approveMutate } = useMutation({
     mutationFn: (data) => pgapprove(data),
     onSuccess: (data) => {
-      console.log(data.data);
       navigate("/paymentresult", { state: { reservationData: data.data } });
     },
     onError: (error) => {
       const errorDetail = getErrorDetail(error);
       setFailmodalContent(errorDetail);
       setIsModalOpen(true);
-      console.error("error:", error);
     },
   });
   const handleConfirm = () => {

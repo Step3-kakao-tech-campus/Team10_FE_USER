@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { resetStore } from "../../store/action";
 import { useNavigate, useLocation } from "react-router-dom";
-
 import dayjs from "dayjs";
 
 const iconsrc = {
@@ -29,18 +28,14 @@ const PaymentResultTemplate = () => {
 
   const {
     reservation: {
-      reservationId: reservationid,
       time: { start, end },
       price: price,
-      bayNo: bayno,
     },
     carwash: {
       name: carwashname,
       location: { latitude, longitude },
     },
-    imageList,
   } = reservationData;
-  console.log(latitude);
 
   const formatTime = (dateTime) => {
     return dayjs(dateTime).format("HH시 mm분");
@@ -64,7 +59,10 @@ const PaymentResultTemplate = () => {
               iconsrc={iconsrc.clock}
             />
             <TextWithIcon text={carwashname} iconsrc={iconsrc.location} />
-            <TextWithIcon text={`${price}원`} iconsrc={iconsrc.price} />
+            <TextWithIcon
+              text={`${price.toLocaleString()}원`}
+              iconsrc={iconsrc.price}
+            />
             <MapWithPin lat={latitude} lng={longitude} text={carwashname} />
           </div>
         </div>

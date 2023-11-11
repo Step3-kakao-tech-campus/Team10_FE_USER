@@ -51,9 +51,6 @@ const PaymentTemplate = () => {
         setRedirectLink(data?.data?.response?.next_redirect_pc_url);
       }
     },
-    onError: (err) => {
-      console.error("Payment error:", err);
-    },
   });
   useEffect(() => {
     if (redirectLink) {
@@ -151,11 +148,11 @@ const PaymentTemplate = () => {
       </div>
       <Button
         className="fixed bottom-0 w-full p-4 text-center bg-kakao"
-        onClick={handlePayment}>
+        onClick={handlePayment}
+      >
         <div className="flex items-center justify-center gap-2 text-xl font-semibold">
           <img src={KakaoPayIcon} alt="카카오페이 아이콘" className="w-14" />
           <div>결제하기</div>
-
         </div>
       </Button>
       <CustomModal

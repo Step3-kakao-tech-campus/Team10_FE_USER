@@ -1,7 +1,6 @@
 import ReservationItem from "../molecules/ReservationItem";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { reservationsCurrentstatus } from "../../apis/reservations";
-import dayjs from "dayjs";
 import { Button } from "../atoms/Button";
 
 const ReservationHistoryTemplate = () => {

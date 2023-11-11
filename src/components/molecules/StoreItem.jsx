@@ -26,23 +26,23 @@ const StoreItem = ({
 
   return (
     <div
-      className="relative flex items-center py-2 bg-white border border-gray-300 rounded-xl"
+      className="relative flex items-center gap-4 p-4 bg-white border border-gray-300 rounded-xl"
       onClick={handleClick}
     >
-      <picture className="ml-8 rounded-xl">
+      <picture className="rounded-xl">
         <img
-          className="w-24 h-20 rounded-md"
+          className="w-24 h-24 rounded-xl"
           src={imageUrl}
           alt="세차장이미지"
         />
       </picture>
-      <div className="flex flex-col gap-2 ml-12">
+      <div className="grid gap-2">
         <UserStar averageStar={starcount} />
         <div className="font-semibold ">{storename}</div>
-        <div className="text-primary">30분/{priceinfo}원</div>
+        <div className="text-primary">{priceinfo.toLocaleString()}원/30분</div>
       </div>
       <DistanceFromHere
-        className="ml-auto mr-4"
+        className="absolute right-4"
         distance={distance.toFixed(1)}
       />
     </div>

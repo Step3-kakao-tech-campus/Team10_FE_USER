@@ -11,7 +11,7 @@ const PaymentWaitingTemplate = () => {
   const queryParams = new URLSearchParams(location.search);
   const pgToken = queryParams.get("pg_token");
 
-  const bayId = useSelector((state) => state.reservationProcess.electedBayId);
+  const bayId = useSelector((state) => state.reservationProcess.selectedBayId);
   const carwashId = useSelector(
     (state) => state.reservationProcess.selectedCarwashId
   );
@@ -60,8 +60,8 @@ const PaymentWaitingTemplate = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="text-3xl font-semibold m-4 bg-gray-50">결제 진행 중</div>
+    <div className="flex flex-col items-center justify-center">
+      <div className="m-4 text-3xl font-semibold bg-gray-50">결제 진행 중</div>
       {approveIsError && (
         <div>오류가 발생했습니다 : {approveError?.message}</div>
       )}

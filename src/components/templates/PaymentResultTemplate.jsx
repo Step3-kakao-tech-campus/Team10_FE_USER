@@ -29,13 +29,16 @@ const PaymentResultTemplate = () => {
 
   const {
     reservation: {
+      reservationId: reservationid,
       time: { start, end },
-      price,
+      price: price,
+      bayNo: bayno,
     },
     carwash: {
       name: carwashname,
       location: { latitude, longitude },
     },
+    imageList,
   } = reservationData;
   console.log(latitude);
 

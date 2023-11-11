@@ -7,6 +7,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { carwashesInfo } from "../../apis/carwashes";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../atoms/Button";
+import StatusBar from "../atoms/StatusBar";
 
 const CarwashDetailTemplate = ({ carwashId }) => {
   const { data } = useSuspenseQuery({
@@ -36,7 +37,8 @@ const CarwashDetailTemplate = ({ carwashId }) => {
 
   return (
     <div className="relative">
-      <div className="flex-grow h-screen overflow-y-auto pb-16">
+      <StatusBar />
+      <div className="flex-grow h-screen pb-16 overflow-y-auto">
         <ImageCarousel images={images} />
         <div className="p-4">
           <div className="grid-4">
@@ -71,8 +73,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
         className="fixed bottom-0"
         onClick={() => {
           navigate(`/bayselection/${carwashId}`);
-        }}
-      >
+        }}>
         예약하러 가기
       </Button>
     </div>

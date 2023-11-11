@@ -6,7 +6,6 @@ import { Badge } from "../atoms/Badge";
 import DualBottomsheet from "../atoms/DualBottomsheet";
 import { carwashesSearch } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useSpring, animated, config } from "react-spring";
 import { useDrag } from "react-use-gesture";
 
 const ReservationTemplate = () => {
@@ -102,7 +101,7 @@ const ReservationTemplate = () => {
       />
 
       <DualBottomsheet className="fixed left-0 z-10">
-        <Bottomsheet className="z-20 flex flex-col h-full gap-4 p-4 ">
+        <Bottomsheet className="z-20 flex flex-col h-full gap-4 p-4">
           <input
             type="text"
             id="search-bar"
@@ -111,7 +110,7 @@ const ReservationTemplate = () => {
             onChange={handleSearchChange}
             value={searchTerm}
           />
-          <div className="flex flex-row flex-shrink-0 gap-2 mx-4 my-2 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 pb-6 overflow-x-auto scrollbar-hide">
             <Badge
               key="8"
               label="하부세차"
@@ -171,10 +170,9 @@ const ReservationTemplate = () => {
           </div>
 
           <div
-            className="flex flex-col gap-4 mx-4 overflow-y-scroll"
+            className="grid gap-4 overflow-y-scroll"
             ref={scrollContainerRef}
-            {...bindScroll()}
-          >
+            {...bindScroll()}>
             {filteredWashlists?.length > 0 ? (
               filteredWashlists.map((item, index) => (
                 <StoreItem

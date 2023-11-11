@@ -13,7 +13,13 @@ import { store, persistor } from "./store";
 // if (process.env.NODE_ENV === "development") {
 //   worker.start();
 // }
-const queryClient = new QueryClient({});
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

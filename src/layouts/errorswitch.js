@@ -43,8 +43,6 @@ export function getErrorDetail(error) {
       }
       break;
 
-    // ... (다른 에러 코드 처리 로직)
-
     default:
       errordetail = "알 수 없는 오류가 발생했습니다.";
       break;

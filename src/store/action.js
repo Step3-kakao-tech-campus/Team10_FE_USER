@@ -1,12 +1,9 @@
-// 액션 타입 정의
 export const SET_CARWASH_ID = "SET_CARWASH_ID";
 export const SET_BAY_ID = "SET_BAY_ID";
 export const SET_RESERVATION_ID = "SET_RESERVATION_ID";
 export const SAVE_RESERVATION = "SAVE_RESERVATION";
 export const RESET_STORE = "RESET_STORE";
 export const SAVE_TID = "SAVE_TID";
-
-// 액션 생성자 정의
 
 export const setCarwashId = (carwashId) => ({
   type: SET_CARWASH_ID,

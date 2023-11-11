@@ -1,7 +1,7 @@
 import React from "react";
 import { RecentCarwashItem } from "../molecules/RecentCarwashItem";
 
-export const RecentCarwashSlider = ({ recentList = [] }) => {
+export const RecentCarwashSlider = ({ recentList }) => {
   return (
     <div className="flex gap-4 overflow-x-auto flex-nowrap scrollbar-hide">
       {recentList.map((item, index) => (

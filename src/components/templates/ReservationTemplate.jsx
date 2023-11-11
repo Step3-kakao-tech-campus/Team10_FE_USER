@@ -75,9 +75,6 @@ const ReservationTemplate = () => {
   const bindScroll = useDrag(
     (state) => {
       const [, y] = state.offset;
-      // if (scrollContainerRef.current) {
-      //   scrollContainerRef.current.scrollTop += 0;
-      // }
       state.event.stopPropagation();
     },
     {
@@ -88,9 +85,6 @@ const ReservationTemplate = () => {
   useEffect(() => {
     bindScroll();
   }, [bindScroll]);
-
-  console.log("location", location);
-  console.log("washlists", washlists);
 
   return (
     <div className="w-screen">
@@ -172,7 +166,8 @@ const ReservationTemplate = () => {
           <div
             className="grid gap-4 overflow-y-scroll"
             ref={scrollContainerRef}
-            {...bindScroll()}>
+            {...bindScroll()}
+          >
             {filteredWashlists?.length > 0 ? (
               filteredWashlists.map((item, index) => (
                 <StoreItem

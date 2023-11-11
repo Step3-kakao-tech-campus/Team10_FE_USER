@@ -94,7 +94,7 @@ const TimePicker = ({
 
   return (
     <div className="flex flex-wrap gap-2">
-      <div className="mb-2">
+      <div className="my-2">
         <button
           onClick={() => setIsMorningSelected(true)}
           className={`p-2 border ${
@@ -111,29 +111,29 @@ const TimePicker = ({
         >
           오후
         </button>
-      </div>
-      <div className="mb-2">
-        {currentHours.map((time) => (
-          <button
-            key={time}
-            onClick={() => handleTimeClick(time)}
-            disabled={
-              isScheduled(time) ||
-              (selectedDate.toDateString() === new Date().toDateString() &&
-                isPastTime(time))
-            }
-            className={`w-16 h-12 border rounded-md ${
-              selectedTime === time ? "bg-primary text-white" : "bg-white"
-            } ${
-              (isScheduled(time) ||
+        <div className="my-2">
+          {currentHours.map((time) => (
+            <button
+              key={time}
+              onClick={() => handleTimeClick(time)}
+              disabled={
+                isScheduled(time) ||
                 (selectedDate.toDateString() === new Date().toDateString() &&
-                  isPastTime(time))) &&
-              "opacity-50 cursor-not-allowed"
-            }`}
-          >
-            {time}
-          </button>
-        ))}
+                  isPastTime(time))
+              }
+              className={`w-16 h-12 border rounded-md ${
+                selectedTime === time ? "bg-primary text-white" : "bg-white"
+              } ${
+                (isScheduled(time) ||
+                  (selectedDate.toDateString() === new Date().toDateString() &&
+                    isPastTime(time))) &&
+                "opacity-50 cursor-not-allowed"
+              }`}
+            >
+              {time}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

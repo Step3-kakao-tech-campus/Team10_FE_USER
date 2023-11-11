@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "./Button";
 import { getErrorDetail } from "../../layouts/errorswitch";
 
@@ -16,8 +15,6 @@ export class GeneralErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {}
 
   render() {
-    console.log(this.state.error);
-
     if (this.state.error) {
       const statusCode =
         this.state.error.status || this.state.error.response?.status;
@@ -52,12 +49,10 @@ export class GeneralErrorBoundary extends React.Component {
               {buttontext}
             </Button>
           </div>
-          {/* Redirect를 사용해야 하나, class 컴포넌트에서는 이렇게 state를 이용해야 합니다. */}
         </React.Fragment>
       );
     }
 
-    // 에러가 없을 때는 자식 컴포넌트를 정상적으로 렌더링합니다.
     return this.props.children;
   }
 }

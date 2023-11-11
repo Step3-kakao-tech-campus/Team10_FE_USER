@@ -14,7 +14,7 @@ const CustomModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className="mx-4 overflow-auto bg-white shadow-xl my-72 border-primary rounded-xl"
+      className="mx-4 my-64 overflow-auto bg-white shadow-xl border-primary rounded-xl"
       overlayClassName="fixed inset-0 bg-black bg-opacity-30"
       contentLabel="Custom Modal">
       <div className="p-4 grid-4">
@@ -24,14 +24,26 @@ const CustomModal = ({
         <div>{content}</div>
       </div>
       <div className="flex">
-        <button onClick={onConfirm} className="w-1/2 p-4 text-white bg-primary">
-          {confirmText}
-        </button>
-        <button
-          onClick={onRequestClose}
-          className={`p-4 w-1/2 bg-gray-300 ${!cancelText && "hidden"} `}>
-          {cancelText}
-        </button>
+        {cancelText ? (
+          <>
+            <button
+              onClick={onConfirm}
+              className="w-1/2 p-4 text-white bg-primary">
+              {confirmText}
+            </button>
+            <button
+              onClick={onRequestClose}
+              className={`p-4 w-1/2 bg-gray-300 ${!cancelText && "hidden"} `}>
+              {cancelText}
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={onConfirm}
+            className="w-full p-4 text-white bg-primary">
+            {confirmText}
+          </button>
+        )}
       </div>
     </Modal>
   );

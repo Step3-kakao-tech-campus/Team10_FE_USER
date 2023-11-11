@@ -69,6 +69,16 @@ const BaySelectionTemplate = ({ carwashId }) => {
       <div className="font-semibold text-primary">
         원하는 베이를 클릭하여 예약을 진행해보세요
       </div>
+      <div className="flex mb-4">
+        <div className="flex items-center ml-4">
+          <div className="w-3 h-3 mr-2 bg-primary" />
+          예약 가능 시간
+        </div>
+        <div className="flex items-center ml-4">
+          <div className="w-3 h-3 mr-2 bg-gray-300" />
+          예약된 시간
+        </div>
+      </div>
       <div>{renderBayContent()}</div>
     </div>
   );

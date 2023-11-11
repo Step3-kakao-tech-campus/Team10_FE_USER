@@ -37,6 +37,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem("token");
+      localStorage.removeItem("persist:root");
       state.isLoggedIn = false;
       state.userName = "";
     },

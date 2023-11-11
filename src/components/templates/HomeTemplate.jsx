@@ -20,8 +20,8 @@ const HomeTemplate = () => {
     longitude: 126.9,
   });
 
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const userName = useSelector((state) => state.auth.userName);
+  const { isLoggedIn, userName } = useSelector((state) => state.auth);
+  console.log("로그인 상태" + isLoggedIn + userName);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -111,6 +111,7 @@ const HomeTemplate = () => {
             name={recommendedData.name}
             address={recommendedData.location.address}
             rate={recommendedData.rate}
+            reviewCount={recommendedData.reviewCount}
             distance={recommendedData.distance}
           />
         )}

@@ -1,4 +1,4 @@
-import { useSuspenseQueries } from "@tanstack/react-query";
+import { useSuspenseQueries, useQueries } from "@tanstack/react-query";
 import { Button } from "../atoms/Button";
 import { CarwashCard } from "../molecules/CarwashCard";
 import { RecentCarwashSlider } from "../organisms/RecentCarwashSlider";
@@ -33,7 +33,7 @@ const HomeTemplate = () => {
     }
   }, []);
 
-  const [recommended, recent] = useSuspenseQueries({
+  const [recommended, recent] = useQueries({
     queries: [
       {
         queryKey: ["recommended"],
@@ -42,9 +42,7 @@ const HomeTemplate = () => {
       },
       {
         queryKey: ["recent"],
-        queryFn: () =>
-          isLoggedIn ? reservationsRecent() : Promise.resolve(null),
-        enabled: isLoggedIn,
+        queryFn: () => reservationsRecent(),
       },
     ],
   });

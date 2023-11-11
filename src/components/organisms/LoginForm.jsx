@@ -111,9 +111,12 @@ const LoginForm = () => {
         )}
         <Link
           to="/signup"
-          className="text-primary font-semibold underline mt-8"
+          className="mt-8 font-semibold underline text-primary"
         >
           회원가입
+        </Link>
+        <Link to="/" className="mt-2 font-semibold underline text-primary">
+          로그인 없이 둘러보기
         </Link>
       </form>
     </div>

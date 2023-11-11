@@ -67,7 +67,7 @@ const ReservationItem = ({
       <div>{bayname}</div>
       <div>예약일정:</div>
       <div>
-        {start.format("YYYY-MM-DD HH:MM")} ~ {end.format("HH:MM")}
+        {start.format("YYYY-MM-DD HH:mm")} ~ {end.format("HH:mm")}
       </div>
       <div>취소 금액: {priceinfo}</div>
     </div>
@@ -82,7 +82,7 @@ const ReservationItem = ({
         />
         <div>
           <div className="text-sm">
-            {start.format("YYYY-MM-DD HH:MM")} ~ {end.format("HH:MM")}
+            {start.format("YYYY-MM-DD HH:mm")} ~ {end.format("HH:mm")}
           </div>
           <div className="font-semibold">{bayname}</div>
           <div className="font-bold text-primary">

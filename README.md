@@ -60,12 +60,12 @@ $ npm run dev
      ┗ 📂 molecules
      ┗ 📂 organisms
      ┗ 📂 templates
- ┣ 📂 hooks            
- ┣ 📂 layouts           
- ┣ 📂 mocks            
- ┣ 📂 pages
- ┣ 📂 store
- ┣ 📄 App.jsx
- ┗ 📄 main.jsx
+  ┣ 📂 hooks            
+  ┣ 📂 layouts           
+  ┣ 📂 mocks            
+  ┣ 📂 pages
+  ┣ 📂 store
+  ┣ 📄 App.jsx
+  ┗ 📄 main.jsx
 
 ```

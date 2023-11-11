@@ -8,7 +8,7 @@ const KeywordReview = ({ keyword, reviewCount, totalReviews }) => {
       <div className="text-sm font-semibold text-black">{keyword}</div>
       <div className="text-sm font-semibold text-primary">{reviewCount}</div>
       <div
-        className="absolute top-0 left-0 h-full rounded-lg bg-primary opacity-20"
+        className="absolute top-0 left-0 h-full rounded-lg opacity-20 bg-primary"
         style={{
           width: `${fillPercentage}%`,
         }}

@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { cancelReservation } from "../../apis/reservations";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getErrorDetail } from "../../layouts/errorswitch";
 
 const ReservationItem = ({
   rsvid,
@@ -19,8 +20,8 @@ const ReservationItem = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [failmodalContent, setFailmodalContent] = useState("");
 
-  console.log(carwashid);
   const handleBayClick = (rsvid, carwashid) => {
     dispatch({ type: "SET_CARWASH_ID", payload: carwashid });
     dispatch({ type: "SET_RESERVATION_ID", payload: rsvid });
@@ -29,21 +30,38 @@ const ReservationItem = ({
 
   const mutation = useMutation({
     mutationFn: (rsvid) => cancelReservation(rsvid),
-    onSuccess: () => {
-      console.log("예약 취소 성공");
+    onSuccess: (data) => {
+      console.log("예약 취소 성공" + data.data);
+      console.log(data);
       location.reload();
     },
     onError: (error) => {
+      const errorDetail = getErrorDetail(error);
+      console.log("errorDetail", errorDetail);
+      setFailmodalContent(errorDetail);
+      console.log(failmodalContent);
+      setIsModalOpen(true);
       console.error("예약 취소 실패 ", error);
     },
   });
 
   const handleConfirm = () => {
-    mutation.mutate(rsvid);
+    if (!failmodalContent) {
+      mutation.mutate(rsvid);
+    }
+
     setIsModalOpen(false);
+    if (failmodalContent) {
+      navigate("/");
+    }
   };
 
-  const modalContent = (
+  const modalContent = failmodalContent ? (
+    <div className="flex flex-col gap-2">
+      <div> 오류가 발생하였습니다.</div>
+      <div>{failmodalContent}</div>
+    </div>
+  ) : (
     <div className="flex flex-col gap-2">
       <div> {bayname}</div>
       <div>예약일정:</div>
@@ -88,10 +106,10 @@ const ReservationItem = ({
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirm}
-        title="예약 취소 확인"
+        title={failmodalContent ? "오류발생" : "예약 취소 확인"}
         content={modalContent}
-        confirmText="취소하기"
-        cancelText="닫기"
+        confirmText={failmodalContent ? "홈으로" : "취소하기"}
+        cancelText={failmodalContent ? null : "닫기"}
       />
     </div>
   );

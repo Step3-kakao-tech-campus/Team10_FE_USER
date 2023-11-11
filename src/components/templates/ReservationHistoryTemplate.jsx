@@ -20,7 +20,6 @@ const ReservationHistoryTemplate = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       setCurrentReservations(data?.data?.response?.currentReservationList);
       setUpcomingReservations(data?.data?.response?.upcomingReservationList);
       setCompletedReservations(data?.data?.response?.completeReservationList);

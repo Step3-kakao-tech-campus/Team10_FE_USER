@@ -36,9 +36,9 @@ const StoreItem = ({
           alt="세차장이미지"
         />
       </picture>
-      <div className="grid min-w-0 gap-2">
+      <div className="grid flex-grow gap-2">
         <UserStar averageStar={starcount} />
-        <div className="overflow-hidden font-semibold text-ellipsis whitespace-nowrap max-w-16">
+        <div className="w-4/5 overflow-hidden font-semibold text-ellipsis whitespace-nowrap">
           {storename}
         </div>
         <div className="text-primary">{priceinfo.toLocaleString()}원/30분</div>

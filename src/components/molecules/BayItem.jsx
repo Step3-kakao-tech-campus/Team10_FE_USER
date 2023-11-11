@@ -63,7 +63,10 @@ const BayItem = ({
   };
 
   return (
-    <div className="p-4 border rounded-xl" onClick={() => onClick(bayId)}>
+    <div
+      className="p-4 overflow-x-auto border rounded-xl"
+      onClick={() => onClick(bayId)}
+    >
       <div className="font-semibold">베이 {bayNo}</div>
       {renderSlotsOrClosedMessage()}
     </div>

@@ -9,7 +9,7 @@ import CustomModal from "../atoms/CustomModal";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { isMobile } from "react-device-detect";
-import KakaoPayIcon from "/payment_icon_yellow_small.png";
+import KakaoPayIcon from "/kakaopay.png";
 import { getErrorDetail } from "../../layouts/errorswitch";
 
 const PaymentTemplate = () => {
@@ -145,17 +145,17 @@ const PaymentTemplate = () => {
           </div>
           <div className="flex justify-between text-lg font-semibold text-red-500">
             <div>최종 결제 금액</div>
-            <div>{paymentAmount}원</div>
+            <div>{paymentAmount.toLocaleString()}원</div>
           </div>
         </div>
       </div>
       <Button
         className="fixed bottom-0 w-full p-4 text-center bg-kakao"
-        onClick={handlePayment}
-      >
-        <div className="flex items-center text-xl font-semibold bg-kakao">
-          <img src={KakaoPayIcon} alt="카카오페이 아이콘" className="block" />
-          <div>{paymentAmount}원 결제하기</div>
+        onClick={handlePayment}>
+        <div className="flex items-center justify-center gap-2 text-xl font-semibold">
+          <img src={KakaoPayIcon} alt="카카오페이 아이콘" className="w-14" />
+          <div>결제하기</div>
+
         </div>
       </Button>
       <CustomModal

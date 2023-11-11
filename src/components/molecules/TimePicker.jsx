@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const TimePicker = ({
   openingHours,
   handleButtonClick,
-  bayBookedTime,
+  bayBookedTimeList,
   selectedDate,
 }) => {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -35,7 +35,7 @@ const TimePicker = ({
   };
 
   const isScheduled = (time) => {
-    return bayBookedTime.some((schedule) => {
+    return bayBookedTimeList.some((schedule) => {
       const scheduleDate = new Date(schedule.startTime).toLocaleDateString();
       const selectedDateStr = selectedDate.toLocaleDateString();
       if (scheduleDate !== selectedDateStr) {

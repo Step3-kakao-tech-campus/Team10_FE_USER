@@ -20,8 +20,8 @@ const CarwashDetailTemplate = ({ carwashId }) => {
   const weekendOpeningHours = `주말 ${detailData.optime.weekend.start} ~ ${detailData.optime.weekend.end}`;
 
   const images =
-    detailData.imageFiles.length > 0
-      ? detailData.imageFiles.map((image) => ({
+    detailData.imageFileList.length > 0
+      ? detailData.imageFileList.map((image) => ({
           label: "Image",
           alt: detailData.name,
           url: image.url,
@@ -36,7 +36,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
 
   return (
     <div className="relative">
-      <div className="flex-grow h-screen overflow-y-auto">
+      <div className="flex-grow h-screen overflow-y-auto pb-16">
         <ImageCarousel images={images} />
         <div className="p-4">
           <div className="grid-4">
@@ -61,7 +61,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
               tel={detailData.tel}
               address={detailData.locationDTO.address}
             />
-            <KeyPointInfo selectedPoints={detailData.keywordId} />
+            <KeyPointInfo selectedPoints={detailData.keywordIdList} />
           </div>
         </div>
         <Tab introduction={detailData.description} />
@@ -71,7 +71,8 @@ const CarwashDetailTemplate = ({ carwashId }) => {
         className="fixed bottom-0"
         onClick={() => {
           navigate(`/bayselection/${carwashId}`);
-        }}>
+        }}
+      >
         예약하러 가기
       </Button>
     </div>

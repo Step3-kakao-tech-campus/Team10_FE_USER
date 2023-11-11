@@ -1,14 +1,16 @@
 import KakaoMap from "../atoms/KakaoMap";
 import { Bottomsheet } from "../atoms/Bottomsheet";
 import StoreItem from "../molecules/StoreItem";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Badge } from "../atoms/Badge";
 import DualBottomsheet from "../atoms/DualBottomsheet";
 import { carwashesSearch } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useSpring, animated, config } from "react-spring";
+import { useDrag } from "react-use-gesture";
 
 const ReservationTemplate = () => {
-  const initialKeypoints = [8, 9, 10, 11, 12, 13, 14];
+  const initialKeypoints = [];
   const [keypoints, setKeypoints] = useState(initialKeypoints);
   const [firstClick, setFirstClick] = useState(true);
   const [washlists, setWashlists] = useState([]);
@@ -69,28 +71,47 @@ const ReservationTemplate = () => {
       )
     : washlists?.data?.response;
 
+  const scrollContainerRef = useRef(null);
+
+  const bindScroll = useDrag(
+    (state) => {
+      const [, y] = state.offset;
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop += y;
+      }
+      state.event.stopPropagation();
+    },
+    {
+      domTarget: scrollContainerRef,
+      eventOptions: { passive: false },
+    }
+  );
+  useEffect(() => {
+    bindScroll();
+  }, [bindScroll]);
+
   console.log("location", location);
   console.log("washlists", washlists);
 
   return (
-    <div className="flex items-end w-screen h-screen gap-0 bg-white">
+    <div className="w-screen">
       <KakaoMap
         currentloc={location}
         mapdata={washlists?.data?.response}
         className="fixed left-0 z-0 w-screen h-screen"
       />
 
-      <DualBottomsheet className="fixed left-0 z-10 bottom-20">
-        <Bottomsheet className="z-20 flex flex-col h-full gap-3">
+      <DualBottomsheet className="fixed left-0 z-10">
+        <Bottomsheet className="z-20 flex flex-col h-full gap-4 p-4">
           <input
             type="text"
             id="search-bar"
-            className="px-4 py-2 mx-4 mt-6 transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm form-input focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary"
+            className="p-4 border border-gray-300 shadow-sm rounded-xl form-input focus:outline-none"
             placeholder="세차장 이름을 검색하세요"
             onChange={handleSearchChange}
             value={searchTerm}
           />
-          <div className="flex flex-row gap-2 mx-4 my-2 overflow-x-auto flex-shrink-0">
+          <div className="flex flex-row flex-shrink-0 gap-2 mx-4 my-2 overflow-x-auto scrollbar-hide">
             <Badge
               key="8"
               label="하부세차"
@@ -117,7 +138,7 @@ const ReservationTemplate = () => {
             />
             <Badge
               key="11"
-              label="100%수돗물"
+              label="100% 수돗물"
               onClick={() => {
                 handleBadgeClick(11);
               }}
@@ -149,7 +170,11 @@ const ReservationTemplate = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-4 mx-4 overflow-y-scroll">
+          <div
+            className="flex flex-col gap-4 mx-4 overflow-y-scroll"
+            ref={scrollContainerRef}
+            {...bindScroll()}
+          >
             {filteredWashlists?.length > 0 ? (
               filteredWashlists.map((item, index) => (
                 <StoreItem

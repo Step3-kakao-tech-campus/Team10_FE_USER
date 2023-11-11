@@ -6,14 +6,18 @@
 
 ## 주요 기능
 
-사용자의 위치 기반으로 주변 셀프세차장을 검색해 시간 단위로 예약하는 기능을 제공합니다.
-
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/104883910/273441056-05c43463-5bd5-4656-95fb-f6b135d64659.png" align="center" width="24%">
-  <img src="https://user-images.githubusercontent.com/104883910/273441057-8feb9154-acc2-499d-9b1a-833f59a0cebc.png" align="center" width="24%">
-  <img src="https://user-images.githubusercontent.com/104883910/273441058-d923cc94-5b53-4ab2-9f52-67ebb8a6454c.png" align="center" width="24%">
-  <img src="https://user-images.githubusercontent.com/104883910/273443450-10a46190-e2b8-427d-803d-ba2001291a68.png" align="center" width="24%">
+  <img src="https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/4c0e5cf4-4370-4fcf-842d-a77a2eba2bb9.png" align="center" width="24%">
+  <img src="https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/b909c41f-67d0-411d-ab0e-49cafe49a3f1.png" align="center" width="24%">
+  <img src="https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/a7c3866e-8d38-4bd9-86f6-fc711cecef6d.png" align="center" width="24%">
+  <img src="https://github.com/Step3-kakao-tech-campus/Team10_FE_USER/assets/50255093/9bffc4db-74a6-43f6-af53-86706c22b164.png" align="center" width="24%">
 </p>
+
+1. 뽀득뽀득 서비스는 사용자의 위치 기반으로 주변 셀프세차장을 검색해 시간 단위로 예약하는 기능을 제공합니다.
+
+2. 예약한 정보를 조회, 삭제, 완료한 세차에 대한 평가 기능 또한 제공합니다.
+
+3. 에러 처리와 상태 관리를 통해, 예상치 못한 상황에도 대비하였습니다.  
 
 ## 개발 문서
 
@@ -37,6 +41,14 @@ $ cd Team10_FE_USER
 $ npm install
 $ npm run dev
 ```
+
+
+
+
+
+
+
+
 
 ## 함께한 사람들
 

@@ -10,10 +10,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { isMobile } from "react-device-detect";
 import KakaoPayIcon from "/payment_icon_yellow_small.png";
+import { getErrorDetail } from "../../layouts/errorswitch";
 
 const PaymentTemplate = () => {
   const [paymentData, setPaymentData] = useState({ price: undefined });
   const [redirectLink, setRedirectLink] = useState(null);
+  const [failmodalContent, setFailmodalContent] = useState("");
   const reservations = useSelector(
     (state) => state.reservationProcess.reservations
   );
@@ -36,8 +38,13 @@ const PaymentTemplate = () => {
       setPaymentData({ price: data.data.response.price });
       console.log("결제금액 계산 성공:", data.data.response.price);
     },
-    onError: (err) => {
-      console.error("결제금액 계산 error:", err);
+    onError: (error) => {
+      const errorDetail = getErrorDetail(error);
+      console.log("errorDetail", errorDetail);
+      setFailmodalContent(errorDetail);
+      console.log(failmodalContent);
+      setIsModalOpen(true);
+      console.error("예약 취소 실패 ", error);
     },
   });
 
@@ -173,7 +180,11 @@ const PaymentTemplate = () => {
         className="fixed bottom-0 w-full p-4 text-center bg-kakao"
         onClick={handlePayment}
       >
+<<<<<<< HEAD
         <div className="flex items-center text-xl font-semibold bg-kakao">
+=======
+        <div className="flex items-center text-xl font-semibold bg-slate-300">
+>>>>>>> 977f6db9cf4a51029125911111ff09bed710d4a4
           <img src={KakaoPayIcon} alt="카카오페이 아이콘" className="block" />
           <div>{paymentAmount}원 결제하기</div>
         </div>
@@ -183,7 +194,7 @@ const PaymentTemplate = () => {
         onRequestClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirm}
         title="누락 오류"
-        content={modalContent}
+        content={failmodalContent ? failmodalContent : modalContent}
         confirmText="확인"
       />
     </div>

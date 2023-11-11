@@ -7,6 +7,7 @@ import { Button } from "../atoms/Button";
 import { postReviews } from "../../apis/carwashes";
 import { useSelector } from "react-redux";
 import CustomModal from "../atoms/CustomModal";
+import { getErrorDetail } from "../../layouts/errorswitch";
 
 const ReviewPostTemplate = () => {
   const [keywords, setKeywords] = useState([]);
@@ -17,6 +18,7 @@ const ReviewPostTemplate = () => {
   const [modalType, setModalType] = useState(null);
   const [modalContent, setModalContent] = useState("");
   const [isOverLimit, setIsOverLimit] = useState(false);
+  const [failmodalContent, setFailmodalContent] = useState("");
 
   const navigate = useNavigate();
 
@@ -55,12 +57,24 @@ const ReviewPostTemplate = () => {
       setModalType("history");
       setIsModalOpen(true);
     },
+    onError: (error) => {
+      const errorDetail = getErrorDetail(error);
+      console.log("errorDetail", errorDetail);
+      setModalType("error");
+      setModalContent(errorDetail);
+      console.log(failmodalContent);
+      setIsModalOpen(true);
+      console.error("예약 취소 실패 ", error);
+    },
   });
 
   const handleModalConfirm = () => {
     setIsModalOpen(false);
     if (modalType === "history") {
       navigate("/history");
+    }
+    if (modalType === "error") {
+      navigate("/");
     }
     setModalType(null);
   };

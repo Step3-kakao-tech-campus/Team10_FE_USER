@@ -93,25 +93,26 @@ const TimePicker = ({
     : generateTime("12:00", currentOpeningHours.end);
 
   return (
-    <div className="flex flex-wrap gap-2">
-      <div className="my-2">
+    <div className="grid gap-2">
+      <div>
         <button
           onClick={() => setIsMorningSelected(true)}
-          className={`p-2 border ${
+          className={`p-4 border w-1/2 ${
             isMorningSelected ? "bg-primary text-white" : "bg-white"
-          } rounded-md cursor-pointer`}
-        >
+          } `}>
           오전
         </button>
         <button
           onClick={() => setIsMorningSelected(false)}
-          className={`p-2 border ${
+          className={`p-4 border w-1/2 ${
             !isMorningSelected ? "bg-primary text-white" : "bg-white"
-          } rounded-md cursor-pointer`}
-        >
+          } `}>
           오후
         </button>
-        <div className="my-2">
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <div className="grid w-full grid-cols-4 gap-2">
+
           {currentHours.map((time) => (
             <button
               key={time}
@@ -121,15 +122,15 @@ const TimePicker = ({
                 (selectedDate.toDateString() === new Date().toDateString() &&
                   isPastTime(time))
               }
-              className={`w-16 h-12 border rounded-md ${
+              className={`p-4 border rounded-xl ${
                 selectedTime === time ? "bg-primary text-white" : "bg-white"
               } ${
                 (isScheduled(time) ||
                   (selectedDate.toDateString() === new Date().toDateString() &&
                     isPastTime(time))) &&
                 "opacity-50 cursor-not-allowed"
-              }`}
-            >
+              }`}>
+
               {time}
             </button>
           ))}

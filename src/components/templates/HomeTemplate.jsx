@@ -1,4 +1,4 @@
-import { useSuspenseQueries, useQueries } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { Button } from "../atoms/Button";
 import { CarwashCard } from "../molecules/CarwashCard";
 import { RecentCarwashSlider } from "../organisms/RecentCarwashSlider";

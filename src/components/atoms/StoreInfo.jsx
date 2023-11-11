@@ -5,22 +5,13 @@ import MapImage from "/StoreInfo/Map.svg";
 import TelImage from "/StoreInfo/Tel.svg";
 
 const StoreInfo = ({ weekhour, weekendhour, tel, address }) => {
-  const formatPhoneNumber = (phoneNumber) => {
-    const digits = phoneNumber.replace(/\D/g, "");
-
-    if (digits.length === 11) {
-      return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(
-        7,
-        11
-      )}`;
-    } else if (digits.length === 10) {
-      return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(
-        6,
-        10
-      )}`;
-    } else {
-      return phoneNumber;
-    }
+  // 전화번호에 하이픈
+  const telFormatter = (tel) => {
+    tel = tel.replace(/[^0-9]/g, "");
+    return tel.replace(
+      /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,
+      "$1-$2-$3"
+    );
   };
 
   return (
@@ -35,7 +26,7 @@ const StoreInfo = ({ weekhour, weekendhour, tel, address }) => {
       <div className="flex items-center gap-2">
         <Image src={TelImage} alt="전화번호" />
         <a href={`tel:${tel}`} className="text-xs text-primary">
-          {formatPhoneNumber(tel)}
+          {telFormatter(tel)}
         </a>
       </div>
       <div className="flex items-center gap-2">

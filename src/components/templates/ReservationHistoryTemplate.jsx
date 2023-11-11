@@ -62,7 +62,7 @@ const ReservationHistoryTemplate = () => {
               </>
             }
             bayname={`${reservation.carwashName}: 베이${reservation.bayNum}`}
-            priceinfo={`${reservation.price}원`}
+            priceinfo={`${reservation.price.toLocaleString()}원`}
           />
         ))}
         <hr className="mb-8" />
@@ -87,7 +87,7 @@ const ReservationHistoryTemplate = () => {
                 </>
               }
               bayname={`${reservation.carwashName}: 베이${reservation.bayNum}`}
-              priceinfo={`${reservation.price}원`}
+              priceinfo={`${reservation.price.toLocaleString()}원`}
               buttontype="cancel"
             />
           ))
@@ -125,7 +125,7 @@ const ReservationHistoryTemplate = () => {
               </>
             }
             bayname={`${reservation.carwashName}: 베이${reservation.bayNum}`}
-            priceinfo={`${reservation.price}원`}
+            priceinfo={`${reservation.price.toLocaleString()}원`}
             buttontype="review"
           />
         ))}

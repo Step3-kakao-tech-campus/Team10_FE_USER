@@ -34,12 +34,13 @@ export class GeneralErrorBoundary extends React.Component {
         statusCode == 401
           ? "로그인이 필요한 페이지입니다. 로그인을 해 주세요."
           : "에러가 발생하였습니다. 잠시 후 다시 시도해주세요.";
-      const buttontext = statusCode == 401 ? "로그인 페이지로" : "홈으로";
+      const buttontext =
+        statusCode == 401 ? "로그인 페이지로 이동" : "홈으로 이동";
 
       return (
         <React.Fragment>
           <div className="mt-5 text-lg font-bold text-primary">{contents}</div>
-          <div className="my-6">에러 원인 : {errordetail} </div>
+          <div className="my-6">세부 정보: {errordetail} </div>
           <div className="flex justify-end">
             <Button
               variant="long"

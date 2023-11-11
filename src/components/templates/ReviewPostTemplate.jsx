@@ -139,7 +139,7 @@ const ReviewPostTemplate = () => {
       <CustomModal
         isOpen={isModalOpen}
         onConfirm={handleModalConfirm}
-        title="알림창"
+        title="알림"
         content={modalContent}
         confirmText="확인"
       />

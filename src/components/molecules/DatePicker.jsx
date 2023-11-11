@@ -24,7 +24,7 @@ const DatePicker = ({ handleButtonClick }) => {
   const weekDates = generateWeekDates();
 
   return (
-    <div className="p-4 bg-gray-100 rounded-lg">
+    <div className="p-4 rounded-lg bg-gray-50">
       <div className="flex justify-between">
         {weekDates.map((date) => (
           <div

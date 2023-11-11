@@ -25,22 +25,15 @@ const PaymentWaitingTemplate = () => {
   );
   const tid = useSelector((state) => state.reservationProcess.tid);
 
-  const {
-    mutate: approveMutate,
-    isLoading: approveIsLoading,
-    isError: approveIsError,
-    error: approveError,
-  } = useMutation({
+  const { mutate: approveMutate } = useMutation({
     mutationFn: (data) => pgapprove(data),
     onSuccess: (data) => {
-      console.log(data.data);
       navigate("/paymentresult", { state: { reservationData: data.data } });
     },
     onError: (error) => {
       const errorDetail = getErrorDetail(error);
       setFailmodalContent(errorDetail);
       setIsModalOpen(true);
-      console.error("error:", error);
     },
   });
   const handleConfirm = () => {
@@ -78,7 +71,7 @@ const PaymentWaitingTemplate = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
-      <div className="m-4 text-3xl font-semibold">결제 진행 중</div>
+      <div className="mx-4 text-3xl font-semibold">결제 진행 중</div>
       <Button
         variant="long"
         className="fixed bottom-0 left-0"

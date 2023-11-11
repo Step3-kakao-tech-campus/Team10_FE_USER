@@ -28,8 +28,6 @@ const BaySelectionTemplate = ({ carwashId }) => {
   const name = carwashInfoData.data.data.response.name;
   const bayListData = baysData.data.data.response.bayList;
 
-  console.log(bayListData);
-
   const handleBayClick = (bayId) => {
     dispatch({ type: "SET_BAY_ID", payload: bayId });
     navigate(`/schedule/${carwashId}/${bayId}`);

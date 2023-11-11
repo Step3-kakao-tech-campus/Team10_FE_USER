@@ -31,15 +31,9 @@ const ReservationItem = ({
   const mutation = useMutation({
     mutationFn: (rsvid) => cancelReservation(rsvid),
     onSuccess: (data) => {
-<<<<<<< HEAD
-      console.log("예약 취소 성공");
-      console.log(data.data.success);
-      // location.reload();
-=======
       console.log("예약 취소 성공" + data.data);
       console.log(data);
       location.reload();
->>>>>>> 977f6db9cf4a51029125911111ff09bed710d4a4
     },
     onError: (error) => {
       const errorDetail = getErrorDetail(error);

@@ -2,12 +2,15 @@ import ReservationItem from "../molecules/ReservationItem";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { reservationsCurrentstatus } from "../../apis/reservations";
 import { Button } from "../atoms/Button";
+import { useNavigate } from "react-router-dom";
 
 const ReservationHistoryTemplate = () => {
   const { data } = useSuspenseQuery({
     queryKey: ["getHistory"],
     queryFn: reservationsCurrentstatus,
   });
+
+  const navigate = useNavigate();
 
   const currentReservations = data.data.response.currentReservationList;
   const upcomingReservations = data.data.response.upcomingReservationList;

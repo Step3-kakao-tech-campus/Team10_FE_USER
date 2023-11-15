@@ -21,9 +21,6 @@ const BayItem = ({
     const startTimeToCheck = dayjs(selectedDate)
       .hour(hour)
       .minute(minutesToAdd);
-    const endTimeToCheck = dayjs(selectedDate)
-      .hour(hour)
-      .minute(30 + minutesToAdd);
 
     return bayBookedTimeList.some((timeSlot) => {
       const startTime = dayjs(timeSlot.startTime);

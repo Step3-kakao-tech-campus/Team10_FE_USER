@@ -36,10 +36,13 @@ const BayItem = ({
     : openingHours.weekday;
 
   const now = dayjs();
-  const closingTimeToday = dayjs()
-    .set("hour", parseInt(openingHoursForToday.end.split(":")[0]))
-    .set("minute", parseInt(openingHoursForToday.end.split(":")[1]));
-
+  const closingTimeToday =
+    openingHoursForToday.end != "00:00"
+      ? dayjs()
+          .set("hour", parseInt(openingHoursForToday.end.split(":")[0]))
+          .set("minute", parseInt(openingHoursForToday.end.split(":")[1]))
+      : dayjs().set("hour", parseInt("23")).set("minute", parseInt("59"));
+  console.log(closingTimeToday.minute());
   const isBusinessClosed = now.isAfter(closingTimeToday);
 
   const renderSlotsOrClosedMessage = () => {
@@ -54,7 +57,11 @@ const BayItem = ({
       return (
         <TimeSlot
           startHour={now.hour()}
-          endHour={closingTimeToday.hour()}
+          endHour={
+            closingTimeToday.minute() == 0
+              ? closingTimeToday.hour()
+              : closingTimeToday.hour() + 1
+          }
           isReservedCallback={(hour) =>
             timeIsReserved(hour, bayBookedTimeList, selectedDate)
           }

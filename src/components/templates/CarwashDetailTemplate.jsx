@@ -17,8 +17,16 @@ const CarwashDetailTemplate = ({ carwashId }) => {
   const navigate = useNavigate();
   const detailData = data.data.response;
 
-  const weekdayOpeningHours = `평일 ${detailData.optime.weekday.start} ~ ${detailData.optime.weekday.end}`;
-  const weekendOpeningHours = `주말 ${detailData.optime.weekend.start} ~ ${detailData.optime.weekend.end}`;
+  const weekdayOpeningHours = `평일 ${detailData.optime.weekday.start} ~ ${
+    detailData.optime.weekday.end === "00:00"
+      ? "24:00"
+      : detailData.optime.weekday.end
+  }`;
+  const weekendOpeningHours = `주말 ${detailData.optime.weekend.start} ~ ${
+    detailData.optime.weekend.end === "00:00"
+      ? "24:00"
+      : detailData.optime.weekend.end
+  }`;
 
   const images =
     detailData.imageFileList.length > 0

@@ -4,9 +4,10 @@ const TimeSlot = ({ startHour, endHour, isReservedCallback }) => {
       <div className="flex justify-center w-full overflow-x-auto">
         {Array.from({ length: endHour - startHour }, (_, index) => {
           const hour = startHour + index;
-          const isStartReserved = isReservedCallback(hour);
+          const isStartReserved = isReservedCallback(hour, false);
           const isHalfReserved = isReservedCallback(hour, true);
 
+          console.log(index, hour, isStartReserved);
           return (
             <div key={hour} className="flex flex-col items-center px-1">
               <div className="w-2 h-8 overflow-hidden rounded-sm">

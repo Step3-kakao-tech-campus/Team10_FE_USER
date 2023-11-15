@@ -50,7 +50,7 @@ const BayItem = ({
           .set("hour", parseInt(openingHoursForToday.end.split(":")[0]))
           .set("minute", parseInt(openingHoursForToday.end.split(":")[1]))
       : dayjs().set("hour", parseInt("23")).set("minute", parseInt("59"));
-  console.log(closingTimeToday.minute());
+
   const isBusinessClosed = now.isAfter(closingTimeToday);
 
   const renderSlotsOrClosedMessage = () => {

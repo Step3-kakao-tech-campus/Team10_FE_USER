@@ -21,16 +21,15 @@ const UserStar = ({ averageStar }) => {
   const ratesResArr = calculateStarRates();
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center text-sm">
       {STAR_IDX_ARR.map((item, idx) => (
         <div className="star_icon" key={`${uniqueId}-${item}`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="14"
-            height="13"
+            height="14"
             viewBox="0 0 14 13"
-            fill="#F4F4F4"
-          >
+            fill="#F4F4F4">
             <clipPath id={`clip-${uniqueId}-${item}`}>
               <rect width={ratesResArr[idx]} height="13" />
             </clipPath>
@@ -47,7 +46,7 @@ const UserStar = ({ averageStar }) => {
           </svg>
         </div>
       ))}
-      <span>{averageStar.toFixed(1)}</span>
+      <div className="ml-2">{averageStar.toFixed(1)}점</div>
     </div>
   );
 };

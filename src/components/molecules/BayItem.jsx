@@ -53,9 +53,12 @@ const BayItem = ({
   const renderSlotsOrClosedMessage = () => {
     if (isBusinessClosed) {
       return (
-        <div className="my-2 font-semibold text-center">
-          오늘 영업이 종료되었습니다.
-          <div>다음날 예약을 진행해 보세요.</div>
+        <div className="text-center text-gray-700">
+          <div>
+            오늘 영업이 종료되었습니다.
+            <br />
+            다음날 예약을 진행해 보세요.
+          </div>
         </div>
       );
     } else {
@@ -78,9 +81,8 @@ const BayItem = ({
   return (
     <div
       className="p-4 overflow-x-auto border rounded-xl"
-      onClick={() => onClick(bayId)}
-    >
-      <div className="font-semibold">베이 {bayNo}</div>
+      onClick={() => onClick(bayId)}>
+      <h2 className="font-semibold">베이 {bayNo}</h2>
       {renderSlotsOrClosedMessage()}
     </div>
   );

@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { signup, checkEmail } from "../../apis/user";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Close from "/close.svg";
 
 const PATTERNS = {
   username: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,20}$/,
@@ -106,144 +107,149 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-10 my-10 bg-white border border-gray-300 rounded-lg shadow-md ">
-      <div className="text-2xl font-bold text-center text-primary">
-        회원가입
-      </div>
-      <form
-        noValidate
-        className="flex flex-col gap-4 "
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="flex flex-col gap-4">
+    <div className="relative flex flex-col justify-center h-screen p-4">
+      <Button
+        className="absolute left-4 top-4"
+        onClick={() => {
+          navigate("/");
+        }}>
+        <img src={Close} alt="닫기 버튼" />
+      </Button>
+      <div className="grid gap-16">
+        <h1 className="text-2xl font-bold text-center">회원가입</h1>
+        <form
+          noValidate
+          className="flex flex-col gap-4"
+          onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-4">
+            <TextInput
+              type="text"
+              placeholder="이름"
+              className="w-full"
+              {...register("username", {
+                required: MESSAGES.username.required,
+                pattern: {
+                  value: PATTERNS.username,
+                  message: MESSAGES.username.pattern,
+                },
+              })}
+            />
+          </div>
+          {errors.username && (
+            <small className="text-red-500" role="alert">
+              {errors.username.message}
+            </small>
+          )}
+
+          <div className="flex justify-between gap-2">
+            <TextInput
+              type="email"
+              placeholder="이메일"
+              className="w-full"
+              {...register("email", {
+                required: MESSAGES.email.required,
+                pattern: {
+                  value: PATTERNS.email,
+                  message: MESSAGES.email.pattern,
+                },
+              })}
+            />
+
+            <Button
+              type="button"
+              variant="small"
+              onClick={onCheckEmail}
+              disabled={isSubmitting || !email || errors.email}>
+              중복체크
+            </Button>
+          </div>
+
+          {errors.email && (
+            <small className="text-red-500" role="alert">
+              {errors.email.message}
+            </small>
+          )}
+          {emailCheckMessage && (
+            <small className="text-red-500" role="alert">
+              {emailCheckMessage}
+            </small>
+          )}
+
           <TextInput
-            type="text"
-            placeholder="이름"
-            className="w-full"
-            {...register("username", {
-              required: MESSAGES.username.required,
+            type="password"
+            placeholder="비밀번호"
+            {...register("password", {
+              required: MESSAGES.password.required,
               pattern: {
-                value: PATTERNS.username,
-                message: MESSAGES.username.pattern,
+                value: PATTERNS.password,
+                message: MESSAGES.password.pattern,
               },
             })}
           />
-        </div>
-        {errors.username && (
-          <small className="text-red-500" role="alert">
-            {errors.username.message}
-          </small>
-        )}
-
-        <div className="flex justify-between gap-2">
+          {errors.password && (
+            <small className="text-red-500" role="alert">
+              {errors.password.message}
+            </small>
+          )}
           <TextInput
-            type="email"
-            placeholder="이메일"
-            className="w-full"
-            {...register("email", {
-              required: MESSAGES.email.required,
-              pattern: {
-                value: PATTERNS.email,
-                message: MESSAGES.email.pattern,
+            type="password"
+            placeholder="비밀번호 확인"
+            {...register("passwordConfirm", {
+              required: MESSAGES.passwordConfirm.required,
+              validate: {
+                check: (value) => {
+                  if (getValues("password") !== value) {
+                    return MESSAGES.passwordConfirm.mismatch;
+                  }
+                },
               },
             })}
           />
-
+          {errors.passwordConfirm && (
+            <small className="text-red-500" role="alert">
+              {errors.passwordConfirm.message}
+            </small>
+          )}
+          <TextInput
+            type="tel"
+            placeholder="전화번호"
+            {...register("tel", {
+              required: MESSAGES.tel.required,
+              pattern: {
+                value: PATTERNS.tel,
+                message: MESSAGES.tel.pattern,
+              },
+            })}
+          />
+          {errors.tel && (
+            <small className="text-red-500" role="alert">
+              {errors.tel.message}
+            </small>
+          )}
           <Button
-            type="button"
-            variant="checkemail"
-            onClick={onCheckEmail}
-            disabled={isSubmitting || !email || errors.email}
-          >
-            중복체크
+            type="submit"
+            disabled={isSubmitting}
+            variant="long"
+            className="rounded-xl">
+            회원가입
           </Button>
-        </div>
+          {submitMessage && (
+            <small
+              className={
+                submitMessage.includes("실패") ? "text-red-500" : "text-primary"
+              }
+              role="alert">
+              {submitMessage}
+            </small>
+          )}
 
-        {errors.email && (
-          <small className="text-red-500" role="alert">
-            {errors.email.message}
-          </small>
-        )}
-        <small className="text-red-500" role="alert">
-          {emailCheckMessage}
-        </small>
-        <TextInput
-          type="password"
-          placeholder="비밀번호"
-          {...register("password", {
-            required: MESSAGES.password.required,
-            pattern: {
-              value: PATTERNS.password,
-              message: MESSAGES.password.pattern,
-            },
-          })}
-        />
-        {errors.password && (
-          <small className="text-red-500" role="alert">
-            {errors.password.message}
-          </small>
-        )}
-        <TextInput
-          type="password"
-          placeholder="비밀번호 확인"
-          {...register("passwordConfirm", {
-            required: MESSAGES.passwordConfirm.required,
-            validate: {
-              check: (value) => {
-                if (getValues("password") !== value) {
-                  return MESSAGES.passwordConfirm.mismatch;
-                }
-              },
-            },
-          })}
-        />
-        {errors.passwordConfirm && (
-          <small className="text-red-500" role="alert">
-            {errors.passwordConfirm.message}
-          </small>
-        )}
-        <TextInput
-          type="tel"
-          placeholder="전화번호"
-          {...register("tel", {
-            required: MESSAGES.tel.required,
-            pattern: {
-              value: PATTERNS.tel,
-              message: MESSAGES.tel.pattern,
-            },
-          })}
-        />
-        {errors.tel && (
-          <small className="text-red-500" role="alert">
-            {errors.tel.message}
-          </small>
-        )}
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          variant="long"
-          className="px-4 py-2 font-bold text-white rounded-md bg-primary"
-        >
-          회원가입
-        </Button>
-        {submitMessage && (
-          <small
-            className={
-              submitMessage.includes("실패") ? "text-red-500" : "text-primary"
-            }
-            role="alert"
-          >
-            {submitMessage}
-          </small>
-        )}
-
-        <Link
-          to="/login"
-          className="inline w-12 mt-4 font-semibold underline text-primary"
-        >
-          로그인
-        </Link>
-      </form>
+          <Link
+            to="/login"
+            className="w-full p-4 font-semibold text-center text-gray-700 bg-white h-14 rounded-xl active:filter active:brightness-75">
+            로그인
+          </Link>
+        </form>
+      </div>
     </div>
   );
 };

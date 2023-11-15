@@ -42,25 +42,25 @@ const CarwashDetailTemplate = ({ carwashId }) => {
         };
 
   return (
-    <div className="relative">
+    <div className="relative h-screen pb-16 overflow-y-auto">
       <StatusBar />
-      <div className="flex-grow h-screen pb-16 overflow-y-auto">
+      <div>
         <ImageCarousel images={images} />
         <div className="p-4">
           <div className="grid-4">
             <div className="flex justify-between">
               <div>
-                <div className="text-xl font-bold">{detailData.name}</div>
+                <h1 className="text-2xl font-bold">{detailData.name}</h1>
                 <Star
                   starCount={detailData.rate.toFixed(1)}
                   reviewCount={detailData.reviewCnt}
                 />
               </div>
               <div>
-                <div className="text-3xl font-bold text-center text-primary">
+                <div className="text-3xl text-center text-primary">
                   {detailData.bayCnt}
                 </div>
-                <div className="text-sm font-semibold">예약베이</div>
+                <h2 className="text-sm">예약베이</h2>
               </div>
             </div>
             <StoreInfo
@@ -76,11 +76,10 @@ const CarwashDetailTemplate = ({ carwashId }) => {
       </div>
       <Button
         variant="long"
-        className="fixed bottom-0 p-4"
+        className="fixed bottom-0"
         onClick={() => {
           navigate(`/bayselection/${carwashId}`);
-        }}
-      >
+        }}>
         예약하러 가기
       </Button>
     </div>

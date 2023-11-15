@@ -15,9 +15,9 @@ const ReservationHistoryTemplate = () => {
 
   return (
     <div className="grid gap-4">
-      <div className="pt-16 text-2xl font-bold">예약내역</div>
+      <h1 className="pt-16 text-2xl font-bold">예약내역</h1>
 
-      <div className="text-lg font-semibold">현재 진행중인 세차</div>
+      <h2 className="text-lg font-semibold">현재 진행중인 세차</h2>
       {currentReservations.map((reservation) => (
         <ReservationItem
           key={reservation.id}
@@ -34,7 +34,7 @@ const ReservationHistoryTemplate = () => {
         />
       ))}
       <hr />
-      <div className="text-lg font-semibold">예정된 세차</div>
+      <h2 className="text-lg font-semibold">예정된 세차</h2>
       {upcomingReservations.length ? (
         upcomingReservations.map((reservation) => (
           <ReservationItem
@@ -58,15 +58,14 @@ const ReservationHistoryTemplate = () => {
           <Button
             variant="long"
             className="bg-yellow-400 rounded-md"
-            onClick={() => navigate("/reservation")}
-          >
+            onClick={() => navigate("/reservation")}>
             예약하러 가기
           </Button>
         </div>
       )}
 
       <hr />
-      <div className="text-lg font-semibold">완료한 세차</div>
+      <h2 className="text-lg font-semibold">완료한 세차</h2>
       {completedReservations.map((reservation) => (
         <ReservationItem
           key={reservation.id}

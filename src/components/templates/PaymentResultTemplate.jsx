@@ -48,9 +48,9 @@ const PaymentResultTemplate = () => {
   return (
     <div>
       <div className="relative p-4">
-        <div className="py-8 text-2xl font-bold text-center">
+        <h1 className="py-8 text-2xl font-bold text-center">
           결제가 완료되었습니다
-        </div>
+        </h1>
         <div className="py-4 overflow-hidden rounded-lg bg-gray-50">
           <div className="flex flex-col gap-4 p-4">
             <TextWithIcon text={formatDate(start)} iconsrc={iconsrc.calendar} />
@@ -70,8 +70,7 @@ const PaymentResultTemplate = () => {
       <Button
         variant="long"
         className="fixed bottom-0 left-0"
-        onClick={() => navigate("/")}
-      >
+        onClick={() => navigate("/")}>
         홈으로
       </Button>
     </div>

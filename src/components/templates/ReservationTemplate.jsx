@@ -7,12 +7,13 @@ import DualBottomsheet from "../atoms/DualBottomsheet";
 import { carwashesSearch } from "../../apis/carwashes";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useDrag } from "react-use-gesture";
+import TextInput from "../atoms/TextInput";
 
 const ReservationTemplate = () => {
   const initialKeypoints = [];
   const [keypoints, setKeypoints] = useState(initialKeypoints);
   const [firstClick, setFirstClick] = useState(true);
-  const [washlists, setWashlists] = useState([]);
+  const [carwashList, setCarwashList] = useState([]);
   const [location, setLocation] = useState({
     latitude: 35.14,
     longitude: 126.9,
@@ -43,7 +44,7 @@ const ReservationTemplate = () => {
   });
   useEffect(() => {
     if (data) {
-      setWashlists(data);
+      setCarwashList(data);
     }
   }, [data]);
 
@@ -64,11 +65,11 @@ const ReservationTemplate = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredWashlists = searchTerm
-    ? washlists?.data?.response.filter((item) =>
+  const filteredCarwashList = searchTerm
+    ? carwashList?.data?.response.filter((item) =>
         item?.name.includes(searchTerm)
       )
-    : washlists?.data?.response;
+    : carwashList?.data?.response;
 
   const scrollContainerRef = useRef(null);
 
@@ -87,21 +88,21 @@ const ReservationTemplate = () => {
     <div className="w-screen">
       <KakaoMap
         currentloc={location}
-        mapdata={washlists?.data?.response}
+        mapdata={carwashList?.data?.response}
         className="fixed left-0 z-0 w-screen h-screen"
       />
 
       <DualBottomsheet className="fixed left-0 z-10">
         <Bottomsheet className="z-20 flex flex-col h-full gap-4 p-4">
-          <input
+          <TextInput
             type="text"
             id="search-bar"
-            className="p-4 border border-gray-300 shadow-sm rounded-xl form-input focus:outline-none"
-            placeholder="세차장 이름을 검색하세요"
+            placeholder="검색할 세차장 이름을 입력하세요"
+            className="p-4"
             onChange={handleSearchChange}
             value={searchTerm}
           />
-          <div className="flex gap-2 pb-6 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 pb-8 overflow-x-auto scrollbar-hide">
             <Badge
               key="8"
               label="하부세차"
@@ -163,10 +164,9 @@ const ReservationTemplate = () => {
           <div
             className="grid gap-4 overflow-y-scroll pb-28"
             ref={scrollContainerRef}
-            {...bindScroll()}
-          >
-            {filteredWashlists?.length > 0 ? (
-              filteredWashlists.map((item, index) => (
+            {...bindScroll()}>
+            {filteredCarwashList?.length > 0 ? (
+              filteredCarwashList.map((item, index) => (
                 <StoreItem
                   key={index}
                   carwashId={item.id}

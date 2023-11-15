@@ -15,25 +15,26 @@ const StoreInfo = ({ weekhour, weekendhour, tel, address }) => {
   };
 
   return (
-    <div className="grid gap-2 p-4 bg-gray-100 rounded-lg">
+    <section className="grid gap-2 p-4 bg-gray-100 rounded-lg">
+      <h2 className="font-semibold">매장정보</h2>
       <div className="flex items-center gap-2">
         <Image src={TimeImage} alt="영업시간" />
-        <div className="text-xs">
+        <div className="text-sm">
           <div>{weekhour}</div>
-          <div className="text-left">{weekendhour}</div>
+          <div>{weekendhour}</div>
         </div>
       </div>
       <div className="flex items-center gap-2">
         <Image src={TelImage} alt="전화번호" />
-        <a href={`tel:${tel}`} className="text-xs text-primary">
+        <a href={`tel:${tel}`} className="text-sm underline">
           {telFormatter(tel)}
         </a>
       </div>
       <div className="flex items-center gap-2">
         <Image src={MapImage} alt="주소" />
-        <div className="text-xs">{address}</div>
+        <div className="text-sm">{address}</div>
       </div>
-    </div>
+    </section>
   );
 };
 

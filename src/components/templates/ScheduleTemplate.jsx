@@ -134,11 +134,11 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
   return (
     <div>
       <div className="p-4 grid-4">
-        <div className="text-xl font-bold">
+        <h1 className="text-2xl font-bold">
           {name}: 베이 {bayInfo.bayNo}
-        </div>
+        </h1>
 
-        <div className="flex items-center gap-2">
+        <section className="flex items-center gap-2">
           <Image src={TimeImage} alt="영업시간" />
           <div>
             <div>
@@ -148,13 +148,13 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
               주말 {openingHours.weekend.start} ~ {openingHours.weekend.end}
             </div>
           </div>
-        </div>
+        </section>
 
         <DatePicker handleButtonClick={handleDateChange} />
 
         <div className="grid gap-6">
-          <div className="grid gap-2">
-            <div className="text-lg font-bold">시작 시간</div>
+          <section className="grid gap-2">
+            <h2 className="text-lg font-bold">시작 시간</h2>
             <TimePicker
               bayId={bayInfo.bayId}
               openingHours={openingHours}
@@ -163,9 +163,9 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
               duration={duration}
               selectedDate={date}
             />
-          </div>
-          <div className="grid gap-2">
-            <div className="text-lg font-bold">사용 시간</div>
+          </section>
+          <section className="grid gap-2">
+            <h2 className="text-lg font-bold">사용 시간</h2>
             <DurationPicker
               bayId={bayInfo.bayId}
               handleButtonClick={handleDurationChange}
@@ -174,10 +174,10 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
               bayBookedTimeList={bayInfo.bayBookedTimeList}
               openingHours={openingHours}
             />
-          </div>
+          </section>
         </div>
-        <div className="grid gap-2 p-4 border-2 rounded-lg bg-gray-50 border-primary">
-          <div className="text-lg font-semibold">예약 일정</div>
+        <section className="grid gap-2 p-4 bg-gray-100 border rounded-lg">
+          <h2 className="text-lg font-semibold">예약 일정</h2>
           <div>
             <div>
               시작 시간:&nbsp;
@@ -194,7 +194,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
                 }월 ${computedEnd.date.getDate()}일 ${computedEnd.time}`}
             </div>
           </div>
-        </div>
+        </section>
       </div>
       <Button onClick={handleSubmit} variant="long" className="fixed bottom-0">
         예약하기
@@ -203,7 +203,7 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirm}
-        title="선택 오류"
+        title="알림"
         content={modalContent}
         confirmText="확인"
       />

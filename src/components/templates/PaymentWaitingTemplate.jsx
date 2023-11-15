@@ -71,12 +71,11 @@ const PaymentWaitingTemplate = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
-      <div className="mx-4 text-3xl font-semibold">결제 진행 중</div>
+      <h1 className="mx-4 text-3xl font-semibold">결제 진행 중</h1>
       <Button
         variant="long"
         className="fixed bottom-0 left-0"
-        onClick={handlePayment}
-      >
+        onClick={handlePayment}>
         결제 완료를 위해 클릭하세요
       </Button>
       <CustomModal

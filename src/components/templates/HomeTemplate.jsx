@@ -58,32 +58,29 @@ const HomeTemplate = () => {
           <Button
             onClick={() => {
               dispatch(logout());
-            }}
-          >
+            }}>
             로그아웃
           </Button>
         ) : (
           <Button
             onClick={() => {
               navigate("/login");
-            }}
-          >
+            }}>
             로그인
           </Button>
         )}
       </nav>
-      <div className="text-2xl font-bold">
+      <h1 className="text-2xl font-bold">
         {userName
           ? `${userName}님 안녕하세요!`
           : "여유롭게 즐기는 셀프세차, 뽀득뽀득"}
-      </div>
+      </h1>
       <section className="gap-4 flex-between">
         <Button
           variant="home"
           onClick={() => {
             navigate("/reservation");
-          }}
-        >
+          }}>
           내 주변 세차장 예약하기
           <img
             className="absolute right-2 -bottom-4"
@@ -95,8 +92,7 @@ const HomeTemplate = () => {
           variant="home"
           onClick={() => {
             navigate("/history");
-          }}
-        >
+          }}>
           예약내역 보기
           <img
             className="absolute right-2 -bottom-4"
@@ -106,7 +102,7 @@ const HomeTemplate = () => {
         </Button>
       </section>
       <section className="grid-4">
-        <div className="text-xl font-semibold">이런 세차장 어때요?</div>
+        <h2 className="text-xl font-semibold">이런 세차장 어때요?</h2>
         {recommendedData && (
           <CarwashCard
             id={recommendedData.id}
@@ -121,7 +117,7 @@ const HomeTemplate = () => {
       </section>
       {isLoggedIn && (
         <section className="grid-4">
-          <div className="text-xl font-semibold">최근 이용 내역</div>
+          <h2 className="text-xl font-semibold">최근 이용 내역</h2>
           {recentList.length === 0 ? (
             <div className="text-center ">최근 이용 내역이 없습니다.</div>
           ) : (

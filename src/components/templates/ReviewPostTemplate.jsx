@@ -8,6 +8,7 @@ import { postReviews } from "../../apis/carwashes";
 import { useSelector } from "react-redux";
 import CustomModal from "../atoms/CustomModal";
 import { getErrorDetail } from "../../layouts/errorswitch";
+import Close from "/close.svg";
 
 const ReviewPostTemplate = () => {
   const [keywords, setKeywords] = useState([]);
@@ -105,44 +106,52 @@ const ReviewPostTemplate = () => {
   };
 
   return (
-    <div className="relative grid gap-6 m-4">
-      <div className="mt-8 text-2xl font-bold text-center">
-        예약한 세차장이 어땠나요?
-      </div>
-      <StarPicker onRate={setRate} />
-      <BadgeSet keywords={keywords} onSelectKeyword={setSelectedKeywords} />
-      <textarea
-        className={`mt-10 px-4 pt-4 pb-40 bg-gray-100 border border-gray-300 rounded-lg resize-none ${
-          isOverLimit ? "border-red-500" : ""
-        }`}
-        placeholder="후기를 입력해주세요."
-        value={comment}
-        onChange={(e) => {
-          if (e.target.value.length <= 100) {
-            setComment(e.target.value);
-            setIsOverLimit(false);
-          } else {
-            setIsOverLimit(true);
-          }
-        }}
-      />
-      {isOverLimit && (
-        <div className="text-red-500">100자 이내로만 작성 가능합니다.</div>
-      )}
+    <div className="relative flex flex-col justify-center h-screen p-4">
       <Button
-        variant="long"
-        onClick={handleSubmit}
-        className="fixed bottom-0 left-0"
-      >
-        리뷰 등록하기
+        className="absolute left-4 top-4"
+        onClick={() => {
+          navigate("/history");
+        }}>
+        <img src={Close} alt="닫기 버튼" />
       </Button>
-      <CustomModal
-        isOpen={isModalOpen}
-        onConfirm={handleModalConfirm}
-        title="알림"
-        content={modalContent}
-        confirmText="확인"
-      />
+      <div className="grid gap-8">
+        <h1 className="mt-8 text-2xl font-bold text-center">
+          예약한 세차장이 어땠나요?
+        </h1>
+        <StarPicker onRate={setRate} />
+        <BadgeSet keywords={keywords} onSelectKeyword={setSelectedKeywords} />
+        <textarea
+          className={`p-4 pb-40 bg-gray-100 border border-gray-300 rounded-lg resize-none ${
+            isOverLimit ? "border-red-500" : ""
+          }`}
+          placeholder="후기를 입력해주세요."
+          value={comment}
+          onChange={(e) => {
+            if (e.target.value.length <= 100) {
+              setComment(e.target.value);
+              setIsOverLimit(false);
+            } else {
+              setIsOverLimit(true);
+            }
+          }}
+        />
+        {isOverLimit && (
+          <div className="text-red-500">100자 이내로만 작성 가능합니다.</div>
+        )}
+        <Button
+          variant="long"
+          onClick={handleSubmit}
+          className="fixed bottom-0 left-0">
+          리뷰 등록하기
+        </Button>
+        <CustomModal
+          isOpen={isModalOpen}
+          onConfirm={handleModalConfirm}
+          title="알림"
+          content={modalContent}
+          confirmText="확인"
+        />
+      </div>
     </div>
   );
 };

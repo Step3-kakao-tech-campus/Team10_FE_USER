@@ -129,7 +129,7 @@ const PaymentTemplate = () => {
   return (
     <div>
       <div className="p-4 grid-4">
-        <div className="text-2xl font-bold">결제하기</div>
+        <h1 className="text-2xl font-bold">결제하기</h1>
         <div className="p-4 bg-gray-100 rounded-xl grid-4">
           <div>
             <div className="text-lg font-semibold">예약 일정</div>
@@ -148,8 +148,7 @@ const PaymentTemplate = () => {
       </div>
       <Button
         className="fixed bottom-0 w-full p-4 text-center bg-kakao"
-        onClick={handlePayment}
-      >
+        onClick={handlePayment}>
         <div className="flex items-center justify-center gap-2 text-xl font-semibold">
           <img src={KakaoPayIcon} alt="카카오페이 아이콘" className="w-14" />
           <div>결제하기</div>

@@ -12,11 +12,11 @@ const KeyPointInfo = ({ selectedPoints }) => {
   };
 
   return (
-    <div className="grid gap-2 p-4 bg-gray-100 rounded-lg">
-      <div className="font-bold">키포인트</div>
+    <section className="grid gap-2 p-4 bg-gray-100 rounded-lg">
+      <h2 className="font-semibold">키포인트</h2>
       <div className="grid grid-cols-2 gap-2">
         {selectedPoints.map((point) => (
-          <div className="flex items-center text-xs" key={point}>
+          <div className="flex items-center text-sm" key={point}>
             <img
               src={keypointToText[point].icon}
               alt={keypointToText[point].text}
@@ -26,7 +26,7 @@ const KeyPointInfo = ({ selectedPoints }) => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

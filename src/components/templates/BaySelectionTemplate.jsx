@@ -6,6 +6,7 @@ import { carwashesBays, carwashesInfo } from "../../apis/carwashes";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Warning from "/warning.svg";
 
 const BaySelectionTemplate = ({ carwashId }) => {
   const navigate = useNavigate();
@@ -36,17 +37,33 @@ const BaySelectionTemplate = ({ carwashId }) => {
   const renderBayContent = () => {
     if (bayListData && bayListData.length > 0) {
       return (
-        <BayList
-          bays={bayListData}
-          openingHours={detailData}
-          selectedDate={new Date()}
-          onClick={handleBayClick}
-        />
+        <div className="grid gap-4">
+          <div className="font-semibold text-primary">
+            원하는 베이를 클릭하여 예약을 진행해보세요
+          </div>
+          <div className="flex gap-2">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-primary" />
+              예약 가능 시간
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-gray-300" />
+              예약된 시간
+            </div>
+          </div>
+          <BayList
+            bays={bayListData}
+            openingHours={detailData}
+            selectedDate={new Date()}
+            onClick={handleBayClick}
+          />
+        </div>
       );
     } else {
       return (
-        <div className="mt-4 font-bold">
-          해당 세차장에는 등록된 베이가 존재하지 않습니다.
+        <div className="flex flex-col items-center gap-8 mt-16">
+          <img src={Warning} alt="경고 아이콘" className="block w-12" />
+          <div>해당 세차장에는 등록된 베이가 없습니다.</div>
         </div>
       );
     }
@@ -54,8 +71,8 @@ const BaySelectionTemplate = ({ carwashId }) => {
 
   return (
     <div className="p-4 grid-4">
-      <div className="text-xl font-bold">{name}: 베이 선택</div>
-      <div className="flex items-center gap-2 mb-4">
+      <h1 className="text-2xl font-bold">{name}: 베이 선택</h1>
+      <section className="flex items-center gap-2">
         <Image src={TimeImage} alt="영업시간" className="" />
         <div>
           <div>
@@ -71,20 +88,7 @@ const BaySelectionTemplate = ({ carwashId }) => {
               : detailData.weekend.end}
           </div>
         </div>
-      </div>
-      <div className="font-semibold text-primary">
-        원하는 베이를 클릭하여 예약을 진행해보세요
-      </div>
-      <div className="flex mb-4">
-        <div className="flex items-center ml-4">
-          <div className="w-3 h-3 mr-2 bg-primary" />
-          예약 가능 시간
-        </div>
-        <div className="flex items-center ml-4">
-          <div className="w-3 h-3 mr-2 bg-gray-300" />
-          예약된 시간
-        </div>
-      </div>
+      </section>
       <div>{renderBayContent()}</div>
     </div>
   );

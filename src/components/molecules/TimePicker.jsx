@@ -97,14 +97,14 @@ const TimePicker = ({
       <div>
         <button
           onClick={() => setIsMorningSelected(true)}
-          className={`p-4 border w-1/2 ${
+          className={`p-1 rounded-l-xl border w-1/2 ${
             isMorningSelected ? "bg-primary text-white" : "bg-white"
           } `}>
           오전
         </button>
         <button
           onClick={() => setIsMorningSelected(false)}
-          className={`p-4 border w-1/2 ${
+          className={`p-1 rounded-r-xl border w-1/2 ${
             !isMorningSelected ? "bg-primary text-white" : "bg-white"
           } `}>
           오후
@@ -112,7 +112,6 @@ const TimePicker = ({
       </div>
       <div className="flex flex-wrap gap-2">
         <div className="grid w-full grid-cols-4 gap-2">
-
           {currentHours.map((time) => (
             <button
               key={time}
@@ -130,7 +129,6 @@ const TimePicker = ({
                     isPastTime(time))) &&
                 "opacity-50 cursor-not-allowed"
               }`}>
-
               {time}
             </button>
           ))}

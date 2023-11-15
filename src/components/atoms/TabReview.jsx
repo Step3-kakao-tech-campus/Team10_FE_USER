@@ -53,26 +53,32 @@ const TabReview = ({}) => {
   return (
     <Suspense fallback={<Loader />}>
       <div>
-        <div className="grid gap-2">
-          <div className="font-semibold">평균별점</div>
-          <UserStar averageStar={averageStar} />
+        <div className="grid-4">
+          <section className="grid gap-2">
+            <h2 className="font-semibold">평균별점</h2>
+            <UserStar averageStar={averageStar} />
+          </section>
           <hr />
-          <div className="py-2 font-semibold">키워드 리뷰</div>
-          <div className="grid gap-2">
-            {keywords.map((keywordData) => (
-              <KeywordReview
-                key={keywordData.id}
-                keyword={getKeywordText(keywordData.id)}
-                reviewCount={keywordData.count}
-                totalReviews={totalReviews}
-              />
-            ))}
-          </div>
+          <section className="grid gap-2">
+            <h2 className="font-semibold">키워드 리뷰</h2>
+            <div className="grid gap-2">
+              {keywords.map((keywordData) => (
+                <KeywordReview
+                  key={keywordData.id}
+                  keyword={getKeywordText(keywordData.id)}
+                  reviewCount={keywordData.count}
+                  totalReviews={totalReviews}
+                />
+              ))}
+            </div>
+          </section>
           <hr />
-          <div className="py-2 font-semibold">
-            리뷰 {carwashreviews?.length || 0}건
-          </div>
-          <ReviewList reviews={carwashreviews} />
+          <section className="grid gap-2">
+            <h2 className="font-semibold">
+              리뷰 {carwashreviews?.length || 0}건
+            </h2>
+            <ReviewList reviews={carwashreviews} />
+          </section>
         </div>
       </div>
     </Suspense>

@@ -12,10 +12,9 @@ const ReviewItem = ({ rating, username, date, content }) => {
           <Image src={ProfileImg} alt="닉네임" />
           <div>{username}</div>
         </div>
-
         <div>{date}</div>
       </div>
-      <div>{content}</div>
+      <p>{content}</p>
     </div>
   );
 };

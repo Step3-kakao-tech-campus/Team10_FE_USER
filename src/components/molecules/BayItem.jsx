@@ -10,9 +10,20 @@ const BayItem = ({
   selectedDate,
   onClick,
 }) => {
-  const timeIsReserved = (hour, bayBookedTimeList, selectedDate) => {
-    const startTimeToCheck = dayjs(selectedDate).hour(hour).minute(0);
-    const halfPastTimeToCheck = dayjs(selectedDate).hour(hour).minute(30);
+  const timeIsReserved = (
+    hour,
+    isHalfHour,
+    bayBookedTimeList,
+    selectedDate
+  ) => {
+    const minutesToAdd = isHalfHour ? 30 : 0;
+
+    const startTimeToCheck = dayjs(selectedDate)
+      .hour(hour)
+      .minute(minutesToAdd);
+    const endTimeToCheck = dayjs(selectedDate)
+      .hour(hour)
+      .minute(30 + minutesToAdd);
 
     return bayBookedTimeList.some((timeSlot) => {
       const startTime = dayjs(timeSlot.startTime);
@@ -21,10 +32,7 @@ const BayItem = ({
       return (
         startTimeToCheck.isSame(startTime) ||
         (startTimeToCheck.isBefore(endTime) &&
-          startTimeToCheck.isAfter(startTime)) ||
-        halfPastTimeToCheck.isSame(startTime) ||
-        (halfPastTimeToCheck.isBefore(endTime) &&
-          halfPastTimeToCheck.isAfter(startTime))
+          startTimeToCheck.isAfter(startTime))
       );
     });
   };
@@ -62,8 +70,8 @@ const BayItem = ({
               ? closingTimeToday.hour()
               : closingTimeToday.hour() + 1
           }
-          isReservedCallback={(hour) =>
-            timeIsReserved(hour, bayBookedTimeList, selectedDate)
+          isReservedCallback={(hour, isHalfHour) =>
+            timeIsReserved(hour, isHalfHour, bayBookedTimeList, selectedDate)
           }
         />
       );

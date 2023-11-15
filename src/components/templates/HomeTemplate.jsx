@@ -6,7 +6,7 @@ import Reservation from "/Button/home/reservation.svg";
 import ReservationHistory from "/Button/home/reservationHistory.svg";
 import { carwashesRecommended } from "../../apis/carwashes";
 import { reservationsRecent } from "../../apis/reservations";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Logo from "/bdbd_icon.svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -76,30 +76,26 @@ const HomeTemplate = () => {
           : "여유롭게 즐기는 셀프세차, 뽀득뽀득"}
       </h1>
       <section className="gap-4 flex-between">
-        <Button
-          variant="home"
-          onClick={() => {
-            navigate("/reservation");
-          }}>
-          내 주변 세차장 예약하기
+        <Link
+          to="/reservation"
+          className="relative flex items-start w-full h-20 p-4 overflow-hidden text-left bg-white shadow-xl break-keep rounded-xl">
+          내 주변 세차장 에약하기
           <img
             className="absolute right-2 -bottom-4"
             src={Reservation}
             alt="위치 아이콘"
           />
-        </Button>
-        <Button
-          variant="home"
-          onClick={() => {
-            navigate("/history");
-          }}>
+        </Link>
+        <Link
+          to="/history"
+          className="relative flex items-start w-full h-20 p-4 overflow-hidden text-left bg-white shadow-xl break-keep rounded-xl">
           예약내역 보기
           <img
             className="absolute right-2 -bottom-4"
             src={ReservationHistory}
             alt="예약내역 아이콘"
           />
-        </Button>
+        </Link>
       </section>
       <section className="grid-4">
         <h2 className="text-xl font-semibold">이런 세차장 어때요?</h2>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "./Button";
 import { getErrorDetail } from "../../layouts/errorswitch";
+import Warning from "/warning.svg";
 
 export class GeneralErrorBoundary extends React.Component {
   constructor(props) {
@@ -38,19 +39,18 @@ export class GeneralErrorBoundary extends React.Component {
         statusCode == 401 ? "로그인 페이지로 이동" : "홈으로 이동";
 
       return (
-        <React.Fragment>
-          <div className="mt-5 text-lg font-bold text-primary">{contents}</div>
-          <div className="my-6">세부 정보: {errordetail} </div>
-          <div className="flex justify-end">
-            <Button
-              variant="long"
-              onClick={() => this.props.navigate(errorPageURL)}
-              className="px-4 py-2 mr-2 text-white rounded-md bg-primary"
-            >
-              {buttontext}
-            </Button>
+        <div className="flex items-center h-screen flex-cols">
+          <div className="flex flex-col items-center gap-8">
+            <img src={Warning} alt="에러 아이콘" className="block w-12" />
+            <p className="px-8 text-center">{errordetail}</p>
           </div>
-        </React.Fragment>
+          <Button
+            variant="long"
+            onClick={() => this.props.navigate(errorPageURL)}
+            className="fixed bottom-0">
+            {buttontext}
+          </Button>
+        </div>
       );
     }
 

@@ -59,10 +59,16 @@ const BaySelectionTemplate = ({ carwashId }) => {
         <Image src={TimeImage} alt="영업시간" className="" />
         <div>
           <div>
-            평일 {detailData.weekday.start} ~ {detailData.weekday.end}
+            평일 {detailData.weekday.start} ~
+            {detailData.weekday.end === "00:00"
+              ? "24:00"
+              : detailData.weekday.end}
           </div>
           <div>
-            주말 {detailData.weekend.start} ~ {detailData.weekend.end}
+            주말 {detailData.weekend.start} ~
+            {detailData.weekend.end === "00:00"
+              ? "24:00"
+              : detailData.weekend.end}
           </div>
         </div>
       </div>

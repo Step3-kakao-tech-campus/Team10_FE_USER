@@ -7,7 +7,6 @@ const TimeSlot = ({ startHour, endHour, isReservedCallback }) => {
           const isStartReserved = isReservedCallback(hour, false);
           const isHalfReserved = isReservedCallback(hour, true);
 
-          console.log(index, hour, isStartReserved);
           return (
             <div key={hour} className="flex flex-col items-center px-1">
               <div className="w-2 h-8 overflow-hidden rounded-sm">

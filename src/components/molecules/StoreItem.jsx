@@ -28,13 +28,13 @@ const StoreItem = ({
     <div
       className="relative flex items-center gap-4 p-4 bg-white border border-gray-300 rounded-xl"
       onClick={handleClick}>
-      <picture className="rounded-xl">
+      <div className="w-24 h-24 overflow-auto rounded-xl">
         <img
-          className="w-24 h-24 rounded-xl"
+          className="object-cover w-full h-full"
           src={imageUrl}
           alt="세차장이미지"
         />
-      </picture>
+      </div>
       <div className="grid flex-grow gap-2">
         <UserStar averageStar={starcount} />
         <div className="w-4/5 overflow-hidden font-semibold text-ellipsis whitespace-nowrap">

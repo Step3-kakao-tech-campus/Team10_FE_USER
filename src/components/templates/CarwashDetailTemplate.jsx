@@ -42,7 +42,7 @@ const CarwashDetailTemplate = ({ carwashId }) => {
         };
 
   return (
-    <div className="relative h-screen pb-16 overflow-y-auto">
+    <div className="relative mb-16 overflow-y-auto">
       <StatusBar />
       <div>
         <ImageCarousel images={images} />

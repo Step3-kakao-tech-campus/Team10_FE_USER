@@ -50,6 +50,15 @@ const ScheduleTemplate = ({ carwashId, bayId }) => {
   const name = washinfo?.data?.data?.response?.name;
   const openingHours = washinfo?.data?.data?.response?.optime;
 
+  const updateOpeningHours = (openingHours) => {
+    for (let day in openingHours) {
+      if (openingHours[day].end === "00:00") {
+        openingHours[day].end = "24:00";
+      }
+    }
+  };
+  updateOpeningHours(openingHours);
+
   const bayInfo = bayinfo?.data?.data?.response.bayList.find(
     (bay) => bay.bayId === parseInt(bayId)
   );

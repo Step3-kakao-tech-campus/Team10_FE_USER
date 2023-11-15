@@ -41,6 +41,10 @@ const DurationPicker = ({
     let [endHour, endMin] = endTime.split(":").map(Number);
     let [closingHour, closingMin] = currentClosingTime.split(":").map(Number);
 
+    if (currentClosingTime === "24:00" && endHour === 0) {
+      return false;
+    }
+
     if (currentClosingTime !== "24:00") {
       if (
         endHour > closingHour ||
@@ -50,8 +54,16 @@ const DurationPicker = ({
       }
     }
 
+    if (
+      endHour > closingHour ||
+      (endHour === closingHour && endMin > closingMin)
+    ) {
+      return true;
+    }
+
     return false;
   };
+
 
   const isDurationOverlapping = (duration) => {
     if (!startTime) return true;
